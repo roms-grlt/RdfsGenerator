@@ -1,16 +1,11 @@
 package org.example.service;
 
-import org.example.dto.ImdbFilmCsvModel;
-import org.example.model.NameExtractor;
-import org.example.model.NameExtractors;
-import org.example.model.Range;
+import org.example.model.rdfs.NameExtractor;
+import org.example.model.rdfs.Range;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,9 +22,9 @@ public class RdfsWriter {
             long.class
     );
 
-    public static <T> void writeRdfsModel(Class<T> clazz, List<T> objects, String prefix,  NameExtractor nameExtractor, Writer writer) throws IOException, IllegalAccessException {
+    public static void writeRdfsModel(Class<?> clazz, List<?> objects, String prefix,  NameExtractor nameExtractor, Writer writer) throws IOException, IllegalAccessException {
         writeRdfsModel(clazz, prefix, writer);
-        for (T object : objects) {
+        for (Object object : objects) {
             String name = nameExtractor.getName(object);
             writer.write(String.format(":%s a %s:%s .\n", name, prefix, clazz.getSimpleName()));
             for(Field field : clazz.getDeclaredFields()) {
@@ -60,14 +55,18 @@ public class RdfsWriter {
                 }
             }
         }
+        writer.flush();
     }
 
     private static void writeRdfsProperty(String subject, String predicate, Object value, NameExtractor nameExtractor, Writer writer) throws IOException {
         String serializedValue;
         if(!DEFAULT_LITERAL_TYPES.contains(value.getClass())) {
-            serializedValue = nameExtractor.getName(value);
+            serializedValue = String.format(":%s", nameExtractor.getName(value));
         }else{
-            serializedValue = String.valueOf(value);
+            if(value.getClass().equals(String.class)) {
+                serializedValue = String.format("\"%s\"", value);
+            }
+            else serializedValue = String.valueOf(value);
         }
         writer.write(String.format("%s %s %s .\n", subject, predicate, serializedValue));
     }
@@ -77,7 +76,7 @@ public class RdfsWriter {
         writer.write(String.format("%s:%s a rdfs:Class .\n", prefix, className));
         for (Field declaredField : clazz.getDeclaredFields()) {
             String fieldName = declaredField.getName();
-            writer.write(String.format("%s:%s a rdfs:Property ;\n\t", prefix,  fieldName));
+            writer.write(String.format("%s:%s a rdf:Property ;\n\t", prefix,  fieldName));
             writer.write(String.format("rdfs:domain %s ;\n\t", className));
             writer.write(String.format("rdfs:range %s .\n", calculateRange(declaredField, prefix)));
         }
@@ -100,12 +99,4 @@ public class RdfsWriter {
 
         else return prefix + ":" + field.getType().getSimpleName();
     }
-
-    public static void main(String[] args) throws IOException, NoSuchFieldException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        List<ImdbFilmCsvModel> films = CsvReader.readFile("src/main/resources/imdb.csv", ImdbFilmCsvModel.class);
-        File file = new File("src/main/resources/out.ttl");
-        Writer writer = new FileWriter(file);
-        writeRdfsModel(ImdbFilmCsvModel.class, List.of(films.get(0)),"", NameExtractors.NAME_FIELD, writer);
-    }
-
 }

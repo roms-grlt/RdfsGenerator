@@ -1,8 +1,7 @@
 package org.example.service;
 
-import org.example.model.Ignore;
-import org.example.model.Remove;
-import org.example.dto.ImdbFilmCsvModel;
+import org.example.model.csv.Ignore;
+import org.example.model.csv.Remove;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -55,7 +54,7 @@ public class CsvReader {
         Class<?> fieldType = field.getType();
         Object valueToSet;
 
-        if (field.isAnnotationPresent(Ignore.class) && value.equals(field.getAnnotation(Ignore.class).value()))
+        if (field.isAnnotationPresent(Ignore.class) && Arrays.asList(field.getAnnotation(Ignore.class).value().split(",")).contains(value))
             return;
 
         if (field.isAnnotationPresent(Remove.class))
@@ -137,10 +136,4 @@ public class CsvReader {
         return value != null && !value.isBlank();
     }
 
-    public static void main(String[] args) throws NoSuchFieldException, ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        List<ImdbFilmCsvModel> films = readFile("src/main/resources/imdb.csv", ImdbFilmCsvModel.class);
-
-        for (String string : splitAndClean("\"salut\", 10, 8.5, \"salut, au revoir, bonsoir\""))
-            System.out.println(": " + string);
-    }
 }

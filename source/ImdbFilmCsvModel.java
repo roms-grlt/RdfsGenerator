@@ -1,13 +1,13 @@
-package org.example.dto;
-
-import org.example.model.Ignore;
-import org.example.model.Remove;
+import org.example.model.csv.Ignore;
+import org.example.model.csv.Remove;
+import org.example.model.rdfs.Replace;
 
 import java.util.List;
 
 public class ImdbFilmCsvModel {
 
     @Ignore("No Rate")
+    @Replace("_")
     private String name;
     @Ignore("No Rate")
     private Integer date;
@@ -24,8 +24,8 @@ public class ImdbFilmCsvModel {
     private String type;
     @Ignore("No Rate")
     private String certificate;
-    @Ignore("No Rate")
-    private String episodes;
+    @Ignore("No Rate,-")
+    private Integer episodes;
     @Ignore("No Rate")
     private String nudity;
     @Ignore("No Rate")

@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.model.csv;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Replace {
+public @interface Ignore {
     String value();
 }

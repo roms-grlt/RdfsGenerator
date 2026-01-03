@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.model.rdfs;
 
 import java.lang.reflect.Field;
 
@@ -10,6 +10,7 @@ public enum NameExtractors implements NameExtractor {
             field.setAccessible(true);
             String value = (String) field.get(obj);
             field.setAccessible(accessible);
+            value = value.replaceAll("[^\\p{L}\\p{N} ]", "");
             if(field.isAnnotationPresent(Replace.class)){
                value = value.replace(" ", field.getAnnotation(Replace.class).value());
             }
