@@ -1,16 +1,18 @@
-package org.example;
+package org.example.service;
 
-import org.example.model.ImdbFilm;
+import org.example.model.Ignore;
+import org.example.model.Remove;
+import org.example.dto.ImdbFilmCsvModel;
 
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.example.utils.ClassUtils.getItemType;
 
 public class CsvReader {
 
@@ -81,7 +83,6 @@ public class CsvReader {
     }
 
     private static List<?> deserializeList(String value, Field field) {
-
         String[] list = Arrays.stream(value.split(","))
                 .map(String::trim)
                 .toArray(String[]::new);
@@ -91,7 +92,7 @@ public class CsvReader {
         if (itemType.equals(String.class)) {
             List<String> temp = new ArrayList<>();
             for (String item : list) {
-                temp.add(value);
+                temp.add(item);
             }
             listValue = temp;
         } else if (itemType.equals(Long.class)) {
@@ -128,14 +129,6 @@ public class CsvReader {
         return listValue;
     }
 
-    private static Class<?> getItemType(Field fieldType) {
-        if (fieldType.getGenericType() instanceof ParameterizedType parameterizedType) {
-            Type[] actualTypes = parameterizedType.getActualTypeArguments();
-            return (Class<?>) actualTypes[0];
-        }
-        throw new IllegalArgumentException();
-    }
-
     private static Field getField(Class<?> type, String field) throws NoSuchFieldException {
         return type.getDeclaredField(field);
     }
@@ -145,7 +138,7 @@ public class CsvReader {
     }
 
     public static void main(String[] args) throws NoSuchFieldException, ClassNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        List<ImdbFilm> films = readFile("src/main/resources/imdb.csv", ImdbFilm.class);
+        List<ImdbFilmCsvModel> films = readFile("src/main/resources/imdb.csv", ImdbFilmCsvModel.class);
 
         for (String string : splitAndClean("\"salut\", 10, 8.5, \"salut, au revoir, bonsoir\""))
             System.out.println(": " + string);

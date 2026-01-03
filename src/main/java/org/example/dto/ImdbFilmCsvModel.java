@@ -1,11 +1,11 @@
-package org.example.model;
+package org.example.dto;
 
-import org.example.Ignore;
-import org.example.Remove;
+import org.example.model.Ignore;
+import org.example.model.Remove;
 
 import java.util.List;
 
-public class ImdbFilm {
+public class ImdbFilmCsvModel {
 
     @Ignore("No Rate")
     private String name;
