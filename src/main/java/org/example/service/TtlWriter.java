@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.example.utils.ClassUtils.getItemType;
 
-public class RdfsWriter {
+public class TtlWriter {
     private static final List<Class<?>> DEFAULT_LITERAL_TYPES = Arrays.asList(
             String.class,
             Integer.class,

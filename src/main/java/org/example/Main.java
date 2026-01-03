@@ -10,7 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import static org.example.service.ClassLoader.loadClass;
 import static org.example.service.CsvReader.readFile;
-import static org.example.service.RdfsWriter.writeRdfsModel;
+import static org.example.service.TtlWriter.writeRdfsModel;
 
 public class Main {
 
