@@ -10,8 +10,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.example.NTriplesValidator.cleanAndConvert;
-import static org.example.TtlConverter.convertToTtl;
+import static org.example.service.TtlConverter.convertToTtl;
 import static org.example.service.ClassLoader.loadClass;
 import static org.example.service.CsvReader.readFile;
 import static org.example.service.TtlImporter.importFrom;
@@ -35,7 +34,6 @@ public class Main {
     }
 
     private static void convertToTurtle(String format, String source, String prefixesPath, String target) throws IOException {
-        //cleanAndConvert(source, target);
         convertToTtl(format, source, prefixMap(prefixesPath), new FileWriter(target, false));
     }
 
@@ -48,7 +46,7 @@ public class Main {
             while (true) {
                 String line = fileReader.readLine();
                 if(line == null) break;
-                String[] split = line.trim().split(",");
+                String[] split = line.replace(" ", "").split(",");
                 prefixMap.put(split[0], split[1]);
                 System.out.printf("%s\t%s%n", split[0], split[1]);
             }
