@@ -15,6 +15,7 @@ import static org.example.service.ClassLoader.loadClass;
 import static org.example.service.CsvReader.readFile;
 import static org.example.service.TtlImporter.importFrom;
 import static org.example.service.TtlWriter.writeRdfsModel;
+import static org.example.service.DataIntegrator.integrateDatasets;
 
 public class Main {
 
@@ -29,6 +30,9 @@ public class Main {
                 break;
             case "convert" :
                 convertToTurtle(args[1], args[2], args.length == 5 ? args[4] : null, args[3]);
+                break;
+            case "integrate" :
+                integrateData(args);
                 break;
         }
     }
@@ -67,5 +71,50 @@ public class Main {
         Writer writer = new FileWriter(file);
         writeRdfsModel(clazz, readFile(csvFilePath, clazz),prefix, prefixFullValue, NameExtractors.NAME_FIELD, writer);
         writer.close();
+    }
+
+    /**
+     * Integrates multiple RDF datasets.
+     * Usage: integrate <output_file> <dataset1_name> <dataset1_file> <dataset2_name> <dataset2_file> ...
+     * Add --no-ontology flag to skip unified ontology creation
+     */
+    private static void integrateData(String[] args) throws IOException {
+        if (args.length < 4) {
+            System.err.println("Usage: integrate <output_file> <dataset1_name> <dataset1_file> <dataset2_name> <dataset2_file> ... [--no-ontology]");
+            return;
+        }
+
+        String outputFile = args[1];
+        boolean createOntology = true;
+
+        // Check for --no-ontology flag
+        int lastArgIndex = args.length;
+        if (args[args.length - 1].equals("--no-ontology")) {
+            createOntology = false;
+            lastArgIndex--;
+        }
+
+        // Parse dataset name-file pairs
+        Map<String, String> inputFiles = new HashMap<>();
+        for (int i = 2; i < lastArgIndex; i += 2) {
+            if (i + 1 < lastArgIndex) {
+                String datasetName = args[i];
+                String filePath = args[i + 1];
+                inputFiles.put(datasetName, filePath);
+                System.out.println("Added dataset: " + datasetName + " -> " + filePath);
+            }
+        }
+
+        if (inputFiles.isEmpty()) {
+            System.err.println("Error: No input datasets specified");
+            return;
+        }
+
+        System.out.println("\n=== Starting Data Integration ===");
+        System.out.println("Output file: " + outputFile);
+        System.out.println("Create unified ontology: " + createOntology);
+        System.out.println("Number of datasets: " + inputFiles.size());
+
+        integrateDatasets(inputFiles, outputFile, createOntology);
     }
 }

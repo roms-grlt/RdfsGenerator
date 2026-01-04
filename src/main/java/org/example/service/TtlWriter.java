@@ -64,7 +64,14 @@ public class TtlWriter {
             serializedValue = String.format(":%s", nameExtractor.getName(value));
         }else{
             if(value.getClass().equals(String.class)) {
-                serializedValue = String.format("\"%s\"", value);
+                // Escape quotes and backslashes in string literals for Turtle syntax
+                String escapedValue = value.toString()
+                    .replace("\\", "\\\\")  // Escape backslashes first
+                    .replace("\"", "\\\"")  // Escape double quotes
+                    .replace("\n", "\\n")   // Escape newlines
+                    .replace("\r", "\\r")   // Escape carriage returns
+                    .replace("\t", "\\t");  // Escape tabs
+                serializedValue = String.format("\"%s\"", escapedValue);
             }
             else serializedValue = String.valueOf(value);
         }
@@ -80,7 +87,7 @@ public class TtlWriter {
         for (Field declaredField : clazz.getDeclaredFields()) {
             String fieldName = declaredField.getName();
             writer.write(String.format("%s:%s a rdf:Property ;\n\t", prefix,  fieldName));
-            writer.write(String.format("rdfs:domain %s ;\n\t", className));
+            writer.write(String.format("rdfs:domain %s:%s ;\n\t", prefix, className));
             writer.write(String.format("rdfs:range %s .\n", calculateRange(declaredField, prefix)));
         }
     }

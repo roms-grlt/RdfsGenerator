@@ -3,22 +3,22 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema> .
 netflix:NetflixFilm a rdfs:Class .
 netflix:title a rdf:Property ;
-	rdfs:domain NetflixFilm ;
+	rdfs:domain netflix:NetflixFilm ;
 	rdfs:range rdfs:Literal .
 netflix:genre a rdf:Property ;
-	rdfs:domain NetflixFilm ;
+	rdfs:domain netflix:NetflixFilm ;
 	rdfs:range rdfs:Literal .
 netflix:premiere a rdf:Property ;
-	rdfs:domain NetflixFilm ;
+	rdfs:domain netflix:NetflixFilm ;
 	rdfs:range rdfs:Literal .
 netflix:runtime a rdf:Property ;
-	rdfs:domain NetflixFilm ;
+	rdfs:domain netflix:NetflixFilm ;
 	rdfs:range rdfs:Literal .
 netflix:imdbScore a rdf:Property ;
-	rdfs:domain NetflixFilm ;
+	rdfs:domain netflix:NetflixFilm ;
 	rdfs:range rdfs:Literal .
 netflix:language a rdf:Property ;
-	rdfs:domain NetflixFilm ;
+	rdfs:domain netflix:NetflixFilm ;
 	rdfs:range rdfs:Literal .
 netflix:1 a netflix:NetflixFilm .
 netflix:1 netflix:title "Enter the Anime" .

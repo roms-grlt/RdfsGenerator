@@ -3,34 +3,34 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema> .
 amazon:AmazonFilm a rdfs:Class .
 amazon:id a rdf:Property ;
-	rdfs:domain AmazonFilm ;
+	rdfs:domain amazon:AmazonFilm ;
 	rdfs:range rdfs:Literal .
 amazon:title a rdf:Property ;
-	rdfs:domain AmazonFilm ;
+	rdfs:domain amazon:AmazonFilm ;
 	rdfs:range rdfs:Literal .
 amazon:rating a rdf:Property ;
-	rdfs:domain AmazonFilm ;
+	rdfs:domain amazon:AmazonFilm ;
 	rdfs:range rdfs:Literal .
 amazon:numberOfRating a rdf:Property ;
-	rdfs:domain AmazonFilm ;
+	rdfs:domain amazon:AmazonFilm ;
 	rdfs:range rdfs:Literal .
 amazon:format a rdf:Property ;
-	rdfs:domain AmazonFilm ;
+	rdfs:domain amazon:AmazonFilm ;
 	rdfs:range rdfs:Literal .
 amazon:releaseYear a rdf:Property ;
-	rdfs:domain AmazonFilm ;
+	rdfs:domain amazon:AmazonFilm ;
 	rdfs:range rdfs:Literal .
 amazon:mpaaRating a rdf:Property ;
-	rdfs:domain AmazonFilm ;
+	rdfs:domain amazon:AmazonFilm ;
 	rdfs:range rdfs:Literal .
 amazon:directedBy a rdf:Property ;
-	rdfs:domain AmazonFilm ;
+	rdfs:domain amazon:AmazonFilm ;
 	rdfs:range rdfs:Literal .
 amazon:starring a rdf:Property ;
-	rdfs:domain AmazonFilm ;
+	rdfs:domain amazon:AmazonFilm ;
 	rdfs:range rdfs:Literal .
 amazon:price a rdf:Property ;
-	rdfs:domain AmazonFilm ;
+	rdfs:domain amazon:AmazonFilm ;
 	rdfs:range rdfs:Literal .
 amazon:1 a amazon:AmazonFilm .
 amazon:1 amazon:id 0 .
@@ -2497,7 +2497,7 @@ amazon:194 amazon:numberOfRating 4 .
 amazon:194 amazon:format "Prime Video" .
 amazon:194 amazon:releaseYear "2023" .
 amazon:194 amazon:directedBy "Pedro Pablo Ibarra" .
-amazon:194 amazon:directedBy """Pitipol Ybarra""" .
+amazon:194 amazon:directedBy "\"\"Pitipol Ybarra\"\"" .
 amazon:194 amazon:starring "Adrián Uribe" .
 amazon:194 amazon:starring "Memo Villegas" .
 amazon:194 amazon:starring "Jorge Perugorría" .
@@ -8146,7 +8146,7 @@ amazon:653 amazon:numberOfRating 1035 .
 amazon:653 amazon:format "Prime Video" .
 amazon:653 amazon:releaseYear "2018" .
 amazon:653 amazon:mpaaRating "R" .
-amazon:653 amazon:directedBy "Robert ""Bobby"" Moresco" .
+amazon:653 amazon:directedBy "Robert \"\"Bobby\"\" Moresco" .
 amazon:653 amazon:starring "Crime" .
 amazon:653 amazon:starring "Thriller" .
 amazon:654 a amazon:AmazonFilm .
@@ -8235,7 +8235,7 @@ amazon:660 amazon:numberOfRating 764 .
 amazon:660 amazon:format "Prime Video" .
 amazon:660 amazon:releaseYear "2018" .
 amazon:660 amazon:mpaaRating "R" .
-amazon:660 amazon:directedBy "Guillaume ""Run"" Renard" .
+amazon:660 amazon:directedBy "Guillaume \"\"Run\"\" Renard" .
 amazon:660 amazon:directedBy "Shojiro Nishimi" .
 amazon:660 amazon:starring "Michael Chiklis" .
 amazon:660 amazon:starring "Giancarlo Esposito" .
@@ -12468,7 +12468,7 @@ amazon:1006 amazon:releaseYear "1996" .
 amazon:1006 amazon:directedBy "Andrzej Bartkowiak" .
 amazon:1006 amazon:starring "Karl Urban" .
 amazon:1006 amazon:starring "Dhobi Oparei" .
-amazon:1006 amazon:starring "Dwayne ""The Rock"" Johnson" .
+amazon:1006 amazon:starring "Dwayne \"\"The Rock\"\" Johnson" .
 amazon:1006 amazon:price 3.99 .
 amazon:1007 a amazon:AmazonFilm .
 amazon:1007 amazon:id 1006 .

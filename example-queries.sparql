@@ -1,0 +1,310 @@
+# Exemples de Requêtes SPARQL pour l'Intégration de Données
+
+# ===================================
+# 1. Lister tous les films via l'ontologie unifiée
+# ===================================
+PREFIX unified: <http://www.filmdata.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?film ?title
+WHERE {
+    ?filmClass rdfs:subClassOf unified:Film .
+    ?film a ?filmClass .
+
+    ?titleProp rdfs:subPropertyOf unified:title .
+    ?film ?titleProp ?title .
+}
+LIMIT 100
+
+# ===================================
+# 2. Comparer les notes des films sur différentes plateformes
+# ===================================
+PREFIX unified: <http://www.filmdata.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?film ?title ?rating
+WHERE {
+    ?filmClass rdfs:subClassOf unified:Film .
+    ?film a ?filmClass .
+
+    ?titleProp rdfs:subPropertyOf unified:title .
+    ?film ?titleProp ?title .
+
+    OPTIONAL {
+        ?ratingProp rdfs:subPropertyOf unified:rating .
+        ?film ?ratingProp ?rating .
+    }
+}
+ORDER BY DESC(?rating)
+LIMIT 50
+
+# ===================================
+# 3. Trouver les films présents dans plusieurs datasets
+# ===================================
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX amazon: <http://www.amazon.org/>
+PREFIX imdb: <http://www.imdb.org/>
+PREFIX netflix: <http://www.netflix.org/>
+
+SELECT ?film1 ?title1 ?film2 ?title2
+WHERE {
+    ?film1 owl:sameAs ?film2 .
+    ?film1 amazon:title ?title1 .
+    ?film2 imdb:name ?title2 .
+}
+
+# ===================================
+# 4. Films par genre (utilisant l'ontologie unifiée)
+# ===================================
+PREFIX unified: <http://www.filmdata.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?title ?genre
+WHERE {
+    ?filmClass rdfs:subClassOf unified:Film .
+    ?film a ?filmClass .
+
+    ?titleProp rdfs:subPropertyOf unified:title .
+    ?film ?titleProp ?title .
+
+    ?genreProp rdfs:subPropertyOf unified:genre .
+    ?film ?genreProp ?genre .
+
+    FILTER(CONTAINS(LCASE(?genre), "action"))
+}
+LIMIT 50
+
+# ===================================
+# 5. Films avec leurs années de sortie (multi-datasets)
+# ===================================
+PREFIX unified: <http://www.filmdata.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?title ?year
+WHERE {
+    ?filmClass rdfs:subClassOf unified:Film .
+    ?film a ?filmClass .
+
+    ?titleProp rdfs:subPropertyOf unified:title .
+    ?film ?titleProp ?title .
+
+    ?yearProp rdfs:subPropertyOf unified:releaseYear .
+    ?film ?yearProp ?year .
+}
+ORDER BY DESC(?year)
+LIMIT 100
+
+# ===================================
+# 6. Statistiques par dataset
+# ===================================
+PREFIX amazon: <http://www.amazon.org/>
+PREFIX netflix: <http://www.netflix.org/>
+PREFIX imdb: <http://www.imdb.org/>
+
+SELECT ?dataset (COUNT(?film) AS ?filmCount)
+WHERE {
+    {
+        ?film a amazon:AmazonFilm .
+        BIND("Amazon" AS ?dataset)
+    }
+    UNION
+    {
+        ?film a netflix:NetflixFilm .
+        BIND("Netflix" AS ?dataset)
+    }
+    UNION
+    {
+        ?film a imdb:ImdbFilm .
+        BIND("IMDB" AS ?dataset)
+    }
+}
+GROUP BY ?dataset
+
+# ===================================
+# 7. Films bien notés (rating > 8) de tous les datasets
+# ===================================
+PREFIX unified: <http://www.filmdata.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?title ?rating ?source
+WHERE {
+    ?filmClass rdfs:subClassOf unified:Film .
+    ?film a ?filmClass .
+
+    ?titleProp rdfs:subPropertyOf unified:title .
+    ?film ?titleProp ?title .
+
+    ?ratingProp rdfs:subPropertyOf unified:rating .
+    ?film ?ratingProp ?rating .
+
+    BIND(REPLACE(STR(?filmClass), ".*[/#](.*)Film", "$1") AS ?source)
+
+    FILTER(?rating > 8.0)
+}
+ORDER BY DESC(?rating)
+
+# ===================================
+# 8. Propriétés utilisées par dataset
+# ===================================
+PREFIX amazon: <http://www.amazon.org/>
+PREFIX netflix: <http://www.netflix.org/>
+PREFIX imdb: <http://www.imdb.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT DISTINCT ?property ?dataset
+WHERE {
+    {
+        ?prop a rdf:Property .
+        FILTER(STRSTARTS(STR(?prop), STR(amazon:)))
+        BIND(?prop AS ?property)
+        BIND("Amazon" AS ?dataset)
+    }
+    UNION
+    {
+        ?prop a rdf:Property .
+        FILTER(STRSTARTS(STR(?prop), STR(netflix:)))
+        BIND(?prop AS ?property)
+        BIND("Netflix" AS ?dataset)
+    }
+    UNION
+    {
+        ?prop a rdf:Property .
+        FILTER(STRSTARTS(STR(?prop), STR(imdb:)))
+        BIND(?prop AS ?property)
+        BIND("IMDB" AS ?dataset)
+    }
+}
+ORDER BY ?dataset ?property
+
+# ===================================
+# 9. Films avec durée (runtime) - unification Netflix et IMDB
+# ===================================
+PREFIX unified: <http://www.filmdata.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?title ?runtime
+WHERE {
+    ?filmClass rdfs:subClassOf unified:Film .
+    ?film a ?filmClass .
+
+    ?titleProp rdfs:subPropertyOf unified:title .
+    ?film ?titleProp ?title .
+
+    ?runtimeProp rdfs:subPropertyOf unified:runtime .
+    ?film ?runtimeProp ?runtime .
+
+    FILTER(?runtime > 120)  # Films de plus de 2 heures
+}
+ORDER BY DESC(?runtime)
+LIMIT 50
+
+# ===================================
+# 10. Exploration de l'ontologie - Hiérarchie des classes
+# ===================================
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX unified: <http://www.filmdata.org/>
+
+SELECT ?subClass ?superClass
+WHERE {
+    ?subClass rdfs:subClassOf ?superClass .
+    FILTER(?superClass = unified:Film)
+}
+
+# ===================================
+# 11. Exploration de l'ontologie - Hiérarchie des propriétés
+# ===================================
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX unified: <http://www.filmdata.org/>
+
+SELECT ?subProperty ?superProperty
+WHERE {
+    ?subProperty rdfs:subPropertyOf ?superProperty .
+    FILTER(STRSTARTS(STR(?superProperty), STR(unified:)))
+}
+ORDER BY ?superProperty ?subProperty
+
+# ===================================
+# 12. Films Amazon avec prix et note
+# ===================================
+PREFIX amazon: <http://www.amazon.org/>
+
+SELECT ?title ?rating ?price
+WHERE {
+    ?film a amazon:AmazonFilm ;
+          amazon:title ?title ;
+          amazon:rating ?rating .
+
+    OPTIONAL { ?film amazon:price ?price }
+}
+ORDER BY DESC(?rating)
+LIMIT 50
+
+# ===================================
+# 13. Genres les plus fréquents (agrégation)
+# ===================================
+PREFIX unified: <http://www.filmdata.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?genre (COUNT(?film) AS ?count)
+WHERE {
+    ?filmClass rdfs:subClassOf unified:Film .
+    ?film a ?filmClass .
+
+    ?genreProp rdfs:subPropertyOf unified:genre .
+    ?film ?genreProp ?genre .
+}
+GROUP BY ?genre
+ORDER BY DESC(?count)
+LIMIT 20
+
+# ===================================
+# 14. Films IMDB avec classification de contenu
+# ===================================
+PREFIX imdb: <http://www.imdb.org/>
+
+SELECT ?title ?certificate ?violence ?nudity
+WHERE {
+    ?film a imdb:ImdbFilm ;
+          imdb:name ?title ;
+          imdb:certificate ?certificate .
+
+    OPTIONAL { ?film imdb:violence ?violence }
+    OPTIONAL { ?film imdb:nudity ?nudity }
+}
+LIMIT 50
+
+# ===================================
+# 15. REQUETE FEDEREE - Enrichissement avec DBpedia
+# ===================================
+# Note: Cette requête nécessite un SPARQL endpoint actif
+# Elle illustre comment enrichir vos données avec des sources externes
+
+PREFIX unified: <http://www.filmdata.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT ?title ?localRating ?dbpediaAbstract
+WHERE {
+    # Données locales
+    ?filmClass rdfs:subClassOf unified:Film .
+    ?film a ?filmClass .
+
+    ?titleProp rdfs:subPropertyOf unified:title .
+    ?film ?titleProp ?title .
+
+    ?ratingProp rdfs:subPropertyOf unified:rating .
+    ?film ?ratingProp ?localRating .
+
+    # Requête fédérée vers DBpedia
+    SERVICE <http://dbpedia.org/sparql> {
+        ?dbpediaFilm a dbo:Film ;
+                     rdfs:label ?dbpediaTitle ;
+                     dbo:abstract ?dbpediaAbstract .
+
+        FILTER(LANG(?dbpediaTitle) = "en")
+        FILTER(LANG(?dbpediaAbstract) = "en")
+        FILTER(LCASE(?dbpediaTitle) = LCASE(?title))
+    }
+}
+LIMIT 10

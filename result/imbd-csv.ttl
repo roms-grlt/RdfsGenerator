@@ -3,46 +3,46 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema> .
 imdb:ImdbFilm a rdfs:Class .
 imdb:name a rdf:Property ;
-	rdfs:domain ImdbFilm ;
+	rdfs:domain imdb:ImdbFilm ;
 	rdfs:range rdfs:Literal .
 imdb:date a rdf:Property ;
-	rdfs:domain ImdbFilm ;
+	rdfs:domain imdb:ImdbFilm ;
 	rdfs:range rdfs:Literal .
 imdb:rate a rdf:Property ;
-	rdfs:domain ImdbFilm ;
+	rdfs:domain imdb:ImdbFilm ;
 	rdfs:range rdfs:Literal .
 imdb:votes a rdf:Property ;
-	rdfs:domain ImdbFilm ;
+	rdfs:domain imdb:ImdbFilm ;
 	rdfs:range rdfs:Literal .
 imdb:genre a rdf:Property ;
-	rdfs:domain ImdbFilm ;
+	rdfs:domain imdb:ImdbFilm ;
 	rdfs:range rdfs:Literal .
 imdb:duration a rdf:Property ;
-	rdfs:domain ImdbFilm ;
+	rdfs:domain imdb:ImdbFilm ;
 	rdfs:range rdfs:Literal .
 imdb:type a rdf:Property ;
-	rdfs:domain ImdbFilm ;
+	rdfs:domain imdb:ImdbFilm ;
 	rdfs:range rdfs:Literal .
 imdb:certificate a rdf:Property ;
-	rdfs:domain ImdbFilm ;
+	rdfs:domain imdb:ImdbFilm ;
 	rdfs:range rdfs:Literal .
 imdb:episodes a rdf:Property ;
-	rdfs:domain ImdbFilm ;
+	rdfs:domain imdb:ImdbFilm ;
 	rdfs:range rdfs:Literal .
 imdb:nudity a rdf:Property ;
-	rdfs:domain ImdbFilm ;
+	rdfs:domain imdb:ImdbFilm ;
 	rdfs:range rdfs:Literal .
 imdb:violence a rdf:Property ;
-	rdfs:domain ImdbFilm ;
+	rdfs:domain imdb:ImdbFilm ;
 	rdfs:range rdfs:Literal .
 imdb:profanity a rdf:Property ;
-	rdfs:domain ImdbFilm ;
+	rdfs:domain imdb:ImdbFilm ;
 	rdfs:range rdfs:Literal .
 imdb:alcohol a rdf:Property ;
-	rdfs:domain ImdbFilm ;
+	rdfs:domain imdb:ImdbFilm ;
 	rdfs:range rdfs:Literal .
 imdb:frightening a rdf:Property ;
-	rdfs:domain ImdbFilm ;
+	rdfs:domain imdb:ImdbFilm ;
 	rdfs:range rdfs:Literal .
 imdb:1 a imdb:ImdbFilm .
 imdb:1 imdb:name "No Time to Die" .
