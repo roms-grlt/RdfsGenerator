@@ -8,6 +8,6 @@ public class NetflixFilm {
     private String premiere;
     private String runtime;
     @Column(name = "imdb score")
-    private String imdbScore;
+    private String rating;
     private String language;
 }

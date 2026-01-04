@@ -1,5 +1,6 @@
 import org.example.model.csv.Ignore;
 import org.example.model.csv.Remove;
+import org.example.model.csv.Column;
 import org.example.model.rdfs.Replace;
 
 import java.util.List;
@@ -8,7 +9,8 @@ public class ImdbFilm {
 
     @Ignore("No Rate")
     @Replace("_")
-    private String name;
+    @Column(name="name")
+    private String title;
     @Ignore("No Rate")
     private Integer date;
     @Ignore("No Rate")
