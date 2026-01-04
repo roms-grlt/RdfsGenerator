@@ -22,11 +22,11 @@ public class TtlWriter {
             long.class
     );
 
-    public static void writeRdfsModel(Class<?> clazz, List<?> objects, String prefix,  NameExtractor nameExtractor, Writer writer) throws IOException, IllegalAccessException {
-        writeRdfsModel(clazz, prefix, writer);
+    public static void writeRdfsModel(Class<?> clazz, List<?> objects, String prefix, String prefixFullValue,  NameExtractor nameExtractor, Writer writer) throws IOException, IllegalAccessException {
+        writeRdfsModel(clazz, prefix, prefixFullValue, writer);
+        int i = 0;
         for (Object object : objects) {
-            String name = nameExtractor.getName(object);
-            writer.write(String.format(":%s a %s:%s .\n", name, prefix, clazz.getSimpleName()));
+            writer.write(String.format(":%d a %s:%s .\n", ++i, prefix, clazz.getSimpleName()));
             for(Field field : clazz.getDeclaredFields()) {
                 boolean accessible = field.canAccess(object);
                 field.setAccessible(true);
@@ -36,7 +36,7 @@ public class TtlWriter {
                     if (field.getType().equals(List.class)) {
                         for (Object item : (List<?>) value) {
                             writeRdfsProperty(
-                                    String.format(":%s", name),
+                                    String.format(":%d", i),
                                     String.format("%s:%s", prefix, field.getName()),
                                     item,
                                     nameExtractor,
@@ -45,7 +45,7 @@ public class TtlWriter {
                         }
                     } else {
                         writeRdfsProperty(
-                                String.format(":%s", name),
+                                String.format(":%d", i),
                                 String.format("%s:%s", prefix, field.getName()),
                                 value,
                                 nameExtractor,
@@ -71,7 +71,10 @@ public class TtlWriter {
         writer.write(String.format("%s %s %s .\n", subject, predicate, serializedValue));
     }
 
-    private static void writeRdfsModel(Class<?> clazz, String prefix, Writer writer) throws IOException {
+    private static void writeRdfsModel(Class<?> clazz, String prefix, String prefixFullValue, Writer writer) throws IOException {
+        writer.write(String.format("@prefix %s: <%s> .\n", prefix, prefixFullValue));
+        writer.write("@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns> .\n");
+        writer.write("@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema> .\n");
         String className = clazz.getSimpleName();
         writer.write(String.format("%s:%s a rdfs:Class .\n", prefix, className));
         for (Field declaredField : clazz.getDeclaredFields()) {

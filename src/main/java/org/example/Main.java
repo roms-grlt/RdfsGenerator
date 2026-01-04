@@ -22,7 +22,7 @@ public class Main {
         String command = args[0];
         switch (command) {
             case "csv" :
-                generateTurtleFromCsv(args[1], args[2], args[3]);
+                generateTurtleFromCsv(args[1], args[2], args[3], args[4], args[5]);
                 break;
             case "request" :
                 generateTurtleFromRequest(args[1], args[2], args[3]);
@@ -61,11 +61,11 @@ public class Main {
     }
 
 
-    private static void generateTurtleFromCsv(String csvFilePath, String classFilePath, String target) throws IOException, ClassNotFoundException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    private static void generateTurtleFromCsv(String csvFilePath, String classFilePath, String target, String prefix, String prefixFullValue) throws IOException, ClassNotFoundException, NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         Class<?> clazz = loadClass(classFilePath);
         File file = new File(target);
         Writer writer = new FileWriter(file);
-        writeRdfsModel(clazz, readFile(csvFilePath, clazz),"", NameExtractors.NAME_FIELD, writer);
+        writeRdfsModel(clazz, readFile(csvFilePath, clazz),prefix, prefixFullValue, NameExtractors.NAME_FIELD, writer);
         writer.close();
     }
 }

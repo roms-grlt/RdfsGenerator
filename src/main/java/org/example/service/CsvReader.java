@@ -1,7 +1,9 @@
 package org.example.service;
 
+import org.example.model.csv.Column;
 import org.example.model.csv.Ignore;
 import org.example.model.csv.Remove;
+import org.example.model.rdfs.NameExtractors;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -11,12 +13,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.example.service.ClassLoader.loadClass;
+import static org.example.service.TtlWriter.writeRdfsModel;
 import static org.example.utils.ClassUtils.getItemType;
 
 public class CsvReader {
 
     public static <T> List<T> readFile(String fileName, Class<T> type) throws IOException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException, ClassNotFoundException {
-        System.out.println(new File(fileName).getAbsolutePath());
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
 
         String[] fields = reader.readLine().toLowerCase().split(",");
@@ -41,10 +44,9 @@ public class CsvReader {
     }
 
     private static String[] splitAndClean(String line) {
-        return Arrays.stream(line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"))
+        return Arrays.stream(line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1))
                 .map(str -> str.trim().replaceAll("^\"|\"$", ""))
                 .toArray(String[]::new);
-
     }
 
     private static void setValue(Field field, String value, Object instance) throws IllegalAccessException, ClassNotFoundException {
@@ -129,11 +131,22 @@ public class CsvReader {
     }
 
     private static Field getField(Class<?> type, String field) throws NoSuchFieldException {
-        return type.getDeclaredField(field);
+        Field result;
+        try {
+            result = type.getDeclaredField(field);
+        } catch (NoSuchFieldException e) {
+            result = Arrays.stream(type.getDeclaredFields())
+                    .filter(f -> f.isAnnotationPresent(Column.class) && f.getAnnotation(Column.class).name().equals(field))
+                    .findFirst()
+                    .orElseThrow(()-> {
+                        System.out.println(field);
+                        return e;
+                    });
+        }
+        return result;
     }
 
     private static boolean isNotBlank(String value) {
         return value != null && !value.isBlank();
     }
-
 }
