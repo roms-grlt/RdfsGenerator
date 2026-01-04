@@ -12,6 +12,7 @@ public class TtlImporter {
         Model model = QueryExecutionHTTP.create()
                 .endpoint(url)
                 .query(query)
+                .timeout(120000)
                 .construct();
 
         model.write(target, "TURTLE");
