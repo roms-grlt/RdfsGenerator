@@ -1,0 +1,51 @@
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+CONSTRUCT {
+  ?film a dbo:Film ;
+        rdfs:label ?title ;
+        dbo:director ?director ;
+        dbo:starring ?actor ;
+        dbo:abstract ?abstract ;
+        dbo:releaseDate ?releaseDate ;
+        dbo:runtime ?runtime ;
+        dbo:budget ?budget ;
+        dbo:gross ?gross ;
+        dbo:country ?country ;
+        dbo:language ?language ;
+        dbo:imdbId ?imdbId ;
+        dbo:thumbnail ?thumbnail ;
+        dbo:distributor ?distributor ;
+        dbo:musicComposer ?composer ;
+        dbo:writer ?writer ;
+        dbo:producer ?producer .
+}
+WHERE {
+  ?film a dbo:Film ;
+        rdfs:label ?title .
+  
+  FILTER (lang(?title) = "en")
+  
+  OPTIONAL { ?film dbo:director ?director }
+  OPTIONAL { ?film dbo:starring ?actor }
+  OPTIONAL { 
+    ?film dbo:abstract ?abstract .
+    FILTER (lang(?abstract) = "en")
+  }
+  OPTIONAL { ?film dbo:releaseDate ?releaseDate }
+  OPTIONAL { ?film dbo:runtime ?runtime }
+  OPTIONAL { ?film dbo:budget ?budget }
+  OPTIONAL { ?film dbo:gross ?gross }
+  OPTIONAL { ?film dbo:country ?country }
+  OPTIONAL { ?film dbo:language ?language }
+  OPTIONAL { ?film dbo:imdbId ?imdbId }
+  OPTIONAL { ?film dbo:thumbnail ?thumbnail }
+  OPTIONAL { ?film dbo:distributor ?distributor }
+  OPTIONAL { ?film dbo:musicComposer ?composer }
+  OPTIONAL { ?film dbo:writer ?writer }
+  OPTIONAL { ?film dbo:producer ?producer }
+  
+  FILTER (bound(?releaseDate) || bound(?director) || bound(?imdbId))
+}
+LIMIT 2000
