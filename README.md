@@ -87,6 +87,5 @@ java -jar target/rdfs-generator.jar query \
 - `minus-request.sparql` - Exclusion de films Netflix et contenu court
 - `complex-request.sparql` - Combinaison des 3 sources
 - `path-request.sparql` - Démonstration du raisonnement RDFS
-- `sources-request.sparql` - Analyse cross-platform
 - `federated-request.sparql` - Requête fédérée avec DBpedia
 - `not-exists-request.sparql` - FILTER NOT EXISTS

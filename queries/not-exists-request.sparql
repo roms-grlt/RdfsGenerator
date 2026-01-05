@@ -1,9 +1,6 @@
 # Requête FILTER NOT EXISTS : films familiaux sans contenu inapproprié
-# Trouve les films bien notés qui N'ont PAS de violence ou contenu adulte
-# Démontre la différence entre MINUS et FILTER NOT EXISTS
+# Films bien notés qui n'ont pas de violence ou contenu adulte
 PREFIX unified: <http://example.org/unified/>
-PREFIX amazon: <http://example.org/amazon/>
-PREFIX netflix: <http://example.org/netflix/>
 PREFIX imdb: <http://example.org/imdb/>
 
 SELECT ?title ?rating ?genre ?certificate

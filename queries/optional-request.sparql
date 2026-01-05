@@ -1,5 +1,4 @@
-# Requête OPTIONAL : récupère les informations des films avec données optionnelles multi-sources
-# Démontre l'intégration de données provenant de différentes sources (Amazon, Netflix, IMDB)
+# Requête OPTIONAL : récupère les informations de films avec des données optionnelles
 # Les champs optionnels peuvent être absents selon la source du film
 PREFIX unified: <http://example.org/unified/>
 PREFIX amazon: <http://example.org/amazon/>
@@ -11,13 +10,13 @@ WHERE {
   ?film a unified:film ;
         unified:title ?title .
 
-  # Langue (seulement disponible sur Netflix)
+  # Langue (disponible sur Netflix)
   OPTIONAL { ?film netflix:language ?language }
 
-  # Violence (seulement disponible sur IMDB)
+  # Violence (disponible sur IMDB)
   OPTIONAL { ?film imdb:violence ?violence }
 
-  # Certificat/Classification (disponible sur IMDB)
+  # Certificat (disponible sur IMDB)
   OPTIONAL { ?film imdb:certificate ?certificate }
 }
 ORDER BY ?title

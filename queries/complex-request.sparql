@@ -1,5 +1,4 @@
-# Requête complexe multi-sources : films Amazon abordables avec enrichissement IMDB et comparaison Netflix
-# Combine OPTIONAL, FILTER, agrégation et intégration de 3 sources de données
+# Requête complexe multi-sources : films Amazon abordables avec données IMDB et comparaison Netflix
 PREFIX unified: <http://example.org/unified/>
 PREFIX amazon: <http://example.org/amazon/>
 PREFIX netflix: <http://example.org/netflix/>
@@ -9,13 +8,13 @@ SELECT ?title ?amazonRating ?amazonPrice
        (GROUP_CONCAT(DISTINCT ?genre; separator=", ") as ?genres)
        ?netflixRating ?violence ?nudity
 WHERE {
-  # Films Amazon avec critères de prix et note
+  # Films Amazon avec prix et note
   ?amazonFilm a amazon:AmazonFilm ;
               unified:title ?title ;
               amazon:rating ?amazonRating ;
               amazon:price ?amazonPrice .
 
-  # Enrichissement avec données IMDB (genres et contenus sensibles)
+  # Données IMDB (genres et contenus sensibles)
   OPTIONAL {
     ?imdbFilm a imdb:ImdbFilm ;
               unified:title ?title .
@@ -24,14 +23,13 @@ WHERE {
     OPTIONAL { ?imdbFilm imdb:nudity ?nudity }
   }
 
-  # Comparaison avec Netflix si disponible
+  # Comparaison avec Netflix
   OPTIONAL {
     ?netflixFilm a netflix:NetflixFilm ;
                  unified:title ?title ;
                  netflix:rating ?netflixRating .
   }
 
-  # Filtres : bon rapport qualité/prix, pas de violence extrême
   FILTER(?amazonRating >= 4.0 && ?amazonPrice < 15)
   FILTER(!BOUND(?violence) || ?violence != "Severe")
 }

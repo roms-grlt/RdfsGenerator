@@ -23,7 +23,6 @@ queries=(
     "minus-request:Exclusion (MINUS)"
     "not-exists-request:Filter NOT EXISTS"
     "path-request:Expressions de chemin"
-    "sources-request:Intégration multi-sources"
     "complex-request:Requête complexe"
     "federated-request:Requête fédérée (SERVICE)"
 )
