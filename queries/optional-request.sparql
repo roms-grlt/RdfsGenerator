@@ -6,27 +6,10 @@ PREFIX amazon: <http://example.org/amazon/>
 PREFIX netflix: <http://example.org/netflix/>
 PREFIX imdb: <http://example.org/imdb/>
 
-SELECT ?title ?genre ?rating ?duration ?language ?violence ?certificate
+SELECT ?title ?language ?violence ?certificate
 WHERE {
   ?film a unified:film ;
         unified:title ?title .
-
-  # Genre (peut venir d'IMDB ou Netflix)
-  OPTIONAL {
-    { ?film imdb:genre ?genre }
-    UNION
-    { ?film netflix:genre ?genre }
-  }
-
-  # Rating (peut venir d'Amazon ou Netflix)
-  OPTIONAL {
-    { ?film amazon:rating ?rating }
-    UNION
-    { ?film netflix:rating ?rating }
-  }
-
-  # Durée (seulement disponible sur IMDB et Netflix)
-  OPTIONAL { ?film unified:duration ?duration }
 
   # Langue (seulement disponible sur Netflix)
   OPTIONAL { ?film netflix:language ?language }

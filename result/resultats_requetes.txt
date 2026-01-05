@@ -1,6 +1,6 @@
 ==========================================
    RÉSULTATS DES REQUÊTES SPARQL
-   Date: 2026-01-05 22:55:39
+   Date: 2026-01-05 23:58:14
 ==========================================
 
 
@@ -26,14 +26,10 @@ SELECT ?genre
        (MIN(?rating) as ?minRating)
        (MAX(?rating) as ?maxRating)
 WHERE {
-  # Récupérer les films avec genres (via raisonnement RDFS)
+  # Récupérer les films avec genres, rating et duration (via raisonnement RDFS)
   ?film a unified:film .
 
-  # Les genres depuis IMDB et Netflix (subPropertyOf unified:genre)
-  ?genreProp rdfs:subPropertyOf* unified:genre .
-  ?film ?genreProp ?genre .
-
-  # Les ratings depuis Amazon et Netflix (subPropertyOf unified:rating)
+  ?film unified:genre ?genre .
   ?film unified:rating ?rating .
   ?film unified:duration ?duration .
 }
@@ -44,17 +40,35 @@ ORDER BY DESC(?totalFilms)
                   |=============================|
                   |      Request Results        |
                   |=============================|
-|		genre : Documentary 	|	totalFilms : 159 	|	avgDuration : 79.0 	|	avgRating : 7.0 	|	minRating : 2.5 	|	maxRating : 9.0 	|
-|		genre : Drama 	|	totalFilms : 77 	|	avgDuration : 107.0 	|	avgRating : 6.0 	|	minRating : 4.1 	|	maxRating : 7.9 	|
-|		genre : Comedy 	|	totalFilms : 49 	|	avgDuration : 96.0 	|	avgRating : 6.0 	|	minRating : 3.7 	|	maxRating : 7.2 	|
+|		genre : Drama 	|	totalFilms : 3173 	|	avgDuration : 97.0 	|	avgRating : 7.0 	|	minRating : 2.0 	|	maxRating : 9.7 	|
+|		genre : Comedy 	|	totalFilms : 1937 	|	avgDuration : 85.0 	|	avgRating : 7.0 	|	minRating : 1.9 	|	maxRating : 9.2 	|
+|		genre : Action 	|	totalFilms : 1545 	|	avgDuration : 100.0 	|	avgRating : 7.0 	|	minRating : 1.2 	|	maxRating : 9.3 	|
+|		genre : Adventure 	|	totalFilms : 1194 	|	avgDuration : 100.0 	|	avgRating : 7.0 	|	minRating : 2.4 	|	maxRating : 9.3 	|
+|		genre : Crime 	|	totalFilms : 1143 	|	avgDuration : 95.0 	|	avgRating : 7.0 	|	minRating : 2.8 	|	maxRating : 9.5 	|
+|		genre : Thriller 	|	totalFilms : 1007 	|	avgDuration : 103.0 	|	avgRating : 6.0 	|	minRating : 2.3 	|	maxRating : 9.4 	|
+|		genre : Horror 	|	totalFilms : 853 	|	avgDuration : 95.0 	|	avgRating : 6.0 	|	minRating : 2.3 	|	maxRating : 9.0 	|
+|		genre : Romance 	|	totalFilms : 742 	|	avgDuration : 99.0 	|	avgRating : 7.0 	|	minRating : 3.1 	|	maxRating : 9.0 	|
+|		genre : Mystery 	|	totalFilms : 741 	|	avgDuration : 93.0 	|	avgRating : 7.0 	|	minRating : 3.2 	|	maxRating : 9.1 	|
+|		genre : Fantasy 	|	totalFilms : 545 	|	avgDuration : 98.0 	|	avgRating : 7.0 	|	minRating : 1.2 	|	maxRating : 9.2 	|
+|		genre : Sci-Fi 	|	totalFilms : 544 	|	avgDuration : 100.0 	|	avgRating : 7.0 	|	minRating : 1.2 	|	maxRating : 9.0 	|
+|		genre : Animation 	|	totalFilms : 371 	|	avgDuration : 67.0 	|	avgRating : 7.0 	|	minRating : 3.3 	|	maxRating : 9.6 	|
+|		genre : Family 	|	totalFilms : 334 	|	avgDuration : 82.0 	|	avgRating : 7.0 	|	minRating : 2.7 	|	maxRating : 9.6 	|
+|		genre : Biography 	|	totalFilms : 290 	|	avgDuration : 120.0 	|	avgRating : 7.0 	|	minRating : 4.6 	|	maxRating : 9.5 	|
+|		genre : Documentary 	|	totalFilms : 185 	|	avgDuration : 74.0 	|	avgRating : 7.0 	|	minRating : 2.5 	|	maxRating : 9.1 	|
+|		genre : History 	|	totalFilms : 182 	|	avgDuration : 119.0 	|	avgRating : 7.0 	|	minRating : 3.9 	|	maxRating : 9.6 	|
+|		genre : Music 	|	totalFilms : 110 	|	avgDuration : 95.0 	|	avgRating : 7.0 	|	minRating : 3.2 	|	maxRating : 9.3 	|
+|		genre : Sport 	|	totalFilms : 77 	|	avgDuration : 102.0 	|	avgRating : 7.0 	|	minRating : 5.5 	|	maxRating : 8.8 	|
+|		genre : War 	|	totalFilms : 75 	|	avgDuration : 125.0 	|	avgRating : 8.0 	|	minRating : 4.9 	|	maxRating : 8.6 	|
+|		genre : Western 	|	totalFilms : 66 	|	avgDuration : 111.0 	|	avgRating : 7.0 	|	minRating : 2.7 	|	maxRating : 8.8 	|
+|		genre : Musical 	|	totalFilms : 47 	|	avgDuration : 106.0 	|	avgRating : 7.0 	|	minRating : 4.2 	|	maxRating : 8.8 	|
 |		genre : Romantic comedy 	|	totalFilms : 39 	|	avgDuration : 101.0 	|	avgRating : 6.0 	|	minRating : 4.1 	|	maxRating : 7.2 	|
-|		genre : Thriller 	|	totalFilms : 33 	|	avgDuration : 105.0 	|	avgRating : 6.0 	|	minRating : 2.6 	|	maxRating : 7.3 	|
+|		genre : Reality-TV 	|	totalFilms : 34 	|	avgDuration : 46.0 	|	avgRating : 7.0 	|	minRating : 2.8 	|	maxRating : 9.1 	|
+|		genre : Short 	|	totalFilms : 26 	|	avgDuration : 15.0 	|	avgRating : 7.0 	|	minRating : 4.1 	|	maxRating : 8.5 	|
+|		genre : Game-Show 	|	totalFilms : 17 	|	avgDuration : 49.0 	|	avgRating : 7.0 	|	minRating : 4.6 	|	maxRating : 9.0 	|
 |		genre : Comedy-drama 	|	totalFilms : 14 	|	avgDuration : 105.0 	|	avgRating : 6.0 	|	minRating : 5.2 	|	maxRating : 7.3 	|
 |		genre : Crime drama 	|	totalFilms : 11 	|	avgDuration : 118.0 	|	avgRating : 7.0 	|	minRating : 5.5 	|	maxRating : 7.8 	|
 |		genre : Biopic 	|	totalFilms : 9 	|	avgDuration : 108.0 	|	avgRating : 6.0 	|	minRating : 5.8 	|	maxRating : 7.3 	|
-|		genre : Horror 	|	totalFilms : 9 	|	avgDuration : 99.0 	|	avgRating : 5.0 	|	minRating : 4.6 	|	maxRating : 6.6 	|
-|		genre : Action 	|	totalFilms : 7 	|	avgDuration : 108.0 	|	avgRating : 5.0 	|	minRating : 3.5 	|	maxRating : 6.7 	|
-|		genre : Romance 	|	totalFilms : 6 	|	avgDuration : 101.0 	|	avgRating : 7.0 	|	minRating : 5.6 	|	maxRating : 6.9 	|
+|		genre : Film-Noir 	|	totalFilms : 7 	|	avgDuration : 100.0 	|	avgRating : 8.0 	|	minRating : 6.9 	|	maxRating : 8.4 	|
 |		genre : Aftershow / Interview 	|	totalFilms : 6 	|	avgDuration : 24.0 	|	avgRating : 7.0 	|	minRating : 5.2 	|	maxRating : 7.4 	|
 |		genre : Concert Film 	|	totalFilms : 6 	|	avgDuration : 99.0 	|	avgRating : 8.0 	|	minRating : 6.4 	|	maxRating : 8.4 	|
 
@@ -75,28 +89,10 @@ PREFIX amazon: <http://example.org/amazon/>
 PREFIX netflix: <http://example.org/netflix/>
 PREFIX imdb: <http://example.org/imdb/>
 
-SELECT ?title ?genre ?rating ?duration ?language ?violence ?certificate
+SELECT ?title ?language ?violence ?certificate
 WHERE {
   ?film a unified:film ;
         unified:title ?title .
-
-  # Genre (peut venir d'IMDB ou Netflix)
-  OPTIONAL {
-    { ?film imdb:genre ?genre }
-    UNION
-    { ?film netflix:genre ?genre }
-  }
-
-  # Rating (peut venir d'Amazon ou Netflix)
-  OPTIONAL {
-    { ?film amazon:rating ?rating }
-    UNION
-    { ?film netflix:rating ?rating }
-  }
-
-  # Durée (seulement disponible sur IMDB et Netflix)
-  OPTIONAL { ?film imdb:duration ?duration }
-  OPTIONAL { ?film netflix:runtime ?duration }
 
   # Langue (seulement disponible sur Netflix)
   OPTIONAL { ?film netflix:language ?language }
@@ -108,62 +104,42 @@ WHERE {
   OPTIONAL { ?film imdb:certificate ?certificate }
 }
 ORDER BY ?title
-LIMIT 50
+LIMIT 30
 
 --- Résultats ---
                   |=============================|
                   |      Request Results        |
                   |=============================|
-|		title : #REALITYHIGH 	|	genre : Comedy 	|	rating : 5.2 	|	duration : N/A 	|	language : English 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : #Saraitda 	|	genre : Action 	|	rating : N/A 	|	duration : 98 	|	language : N/A 	|	violence : Moderate 	|	certificate : TV-MA 	|
-|		title : #Saraitda 	|	genre : Drama 	|	rating : N/A 	|	duration : 98 	|	language : N/A 	|	violence : Moderate 	|	certificate : TV-MA 	|
-|		title : #Saraitda 	|	genre : Horror 	|	rating : N/A 	|	duration : 98 	|	language : N/A 	|	violence : Moderate 	|	certificate : TV-MA 	|
-|		title : #Unfit: The Psychology of Donald Trump 	|	genre : N/A 	|	rating : 4.4 	|	duration : N/A 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 'Allo 'Allo! 	|	genre : Comedy 	|	rating : N/A 	|	duration : 45 	|	language : N/A 	|	violence : N/A 	|	certificate : None 	|
-|		title : 'Allo 'Allo! 	|	genre : History 	|	rating : N/A 	|	duration : 45 	|	language : N/A 	|	violence : N/A 	|	certificate : None 	|
-|		title : 'Allo 'Allo! 	|	genre : War 	|	rating : N/A 	|	duration : 45 	|	language : N/A 	|	violence : N/A 	|	certificate : None 	|
-|		title : 'Allo 'Allo! 	|	genre : Comedy 	|	rating : N/A 	|	duration : 45 	|	language : N/A 	|	violence : N/A 	|	certificate : None 	|
-|		title : 'Allo 'Allo! 	|	genre : History 	|	rating : N/A 	|	duration : 45 	|	language : N/A 	|	violence : N/A 	|	certificate : None 	|
-|		title : 'Allo 'Allo! 	|	genre : War 	|	rating : N/A 	|	duration : 45 	|	language : N/A 	|	violence : N/A 	|	certificate : None 	|
-|		title : (500) Days of Summer 	|	genre : Comedy 	|	rating : N/A 	|	duration : 95 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
-|		title : (500) Days of Summer 	|	genre : Drama 	|	rating : N/A 	|	duration : 95 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
-|		title : (500) Days of Summer 	|	genre : Romance 	|	rating : N/A 	|	duration : 95 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
-|		title : 10 	|	genre : Comedy 	|	rating : N/A 	|	duration : 122 	|	language : N/A 	|	violence : None 	|	certificate : R 	|
-|		title : 10 	|	genre : Romance 	|	rating : N/A 	|	duration : 122 	|	language : N/A 	|	violence : None 	|	certificate : R 	|
-|		title : 10 	|	genre : Comedy 	|	rating : N/A 	|	duration : 122 	|	language : N/A 	|	violence : None 	|	certificate : R 	|
-|		title : 10 	|	genre : Romance 	|	rating : N/A 	|	duration : 122 	|	language : N/A 	|	violence : None 	|	certificate : R 	|
-|		title : 10 Cloverfield Lane 	|	genre : N/A 	|	rating : 4.4 	|	duration : N/A 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 10 Cloverfield Lane 	|	genre : Action 	|	rating : N/A 	|	duration : 103 	|	language : N/A 	|	violence : Moderate 	|	certificate : PG-13 	|
-|		title : 10 Cloverfield Lane 	|	genre : Drama 	|	rating : N/A 	|	duration : 103 	|	language : N/A 	|	violence : Moderate 	|	certificate : PG-13 	|
-|		title : 10 Cloverfield Lane 	|	genre : Horror 	|	rating : N/A 	|	duration : 103 	|	language : N/A 	|	violence : Moderate 	|	certificate : PG-13 	|
-|		title : 10 Things I Hate About You 	|	genre : Comedy 	|	rating : N/A 	|	duration : 97 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
-|		title : 10 Things I Hate About You 	|	genre : Drama 	|	rating : N/A 	|	duration : 97 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
-|		title : 10 Things I Hate About You 	|	genre : Romance 	|	rating : N/A 	|	duration : 97 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
-|		title : 10 YEARS 	|	genre : N/A 	|	rating : 4.3 	|	duration : N/A 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 10 Years 	|	genre : Comedy 	|	rating : N/A 	|	duration : 110 	|	language : N/A 	|	violence : None 	|	certificate : PG-13 	|
-|		title : 10 Years 	|	genre : Drama 	|	rating : N/A 	|	duration : 110 	|	language : N/A 	|	violence : None 	|	certificate : PG-13 	|
-|		title : 10 Years 	|	genre : Romance 	|	rating : N/A 	|	duration : 110 	|	language : N/A 	|	violence : None 	|	certificate : PG-13 	|
-|		title : 10 Years 	|	genre : Comedy 	|	rating : N/A 	|	duration : 110 	|	language : N/A 	|	violence : None 	|	certificate : PG-13 	|
-|		title : 10 Years 	|	genre : Drama 	|	rating : N/A 	|	duration : 110 	|	language : N/A 	|	violence : None 	|	certificate : PG-13 	|
-|		title : 10 Years 	|	genre : Romance 	|	rating : N/A 	|	duration : 110 	|	language : N/A 	|	violence : None 	|	certificate : PG-13 	|
-|		title : 10 to Midnight 	|	genre : N/A 	|	rating : 4.5 	|	duration : N/A 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 101 Dalmatians 	|	genre : Adventure 	|	rating : N/A 	|	duration : 103 	|	language : N/A 	|	violence : Mild 	|	certificate : G 	|
-|		title : 101 Dalmatians 	|	genre : Comedy 	|	rating : N/A 	|	duration : 103 	|	language : N/A 	|	violence : Mild 	|	certificate : G 	|
-|		title : 101 Dalmatians 	|	genre : Crime 	|	rating : N/A 	|	duration : 103 	|	language : N/A 	|	violence : Mild 	|	certificate : G 	|
-|		title : 12 Angry Men 	|	genre : Crime 	|	rating : N/A 	|	duration : 96 	|	language : N/A 	|	violence : None 	|	certificate : Approved 	|
-|		title : 12 Angry Men 	|	genre : Drama 	|	rating : N/A 	|	duration : 96 	|	language : N/A 	|	violence : None 	|	certificate : Approved 	|
-|		title : 12 Feet Deep: Trapped Sisters 	|	genre : N/A 	|	rating : 4.0 	|	duration : N/A 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 12 Mighty Orphans 	|	genre : History 	|	rating : N/A 	|	duration : 118 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
-|		title : 12 Mighty Orphans 	|	genre : Sport 	|	rating : N/A 	|	duration : 118 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
-|		title : 12 Monkeys 	|	genre : Adventure 	|	rating : N/A 	|	duration : 42 	|	language : N/A 	|	violence : Moderate 	|	certificate : TV-14 	|
-|		title : 12 Monkeys 	|	genre : Drama 	|	rating : N/A 	|	duration : 42 	|	language : N/A 	|	violence : Moderate 	|	certificate : TV-14 	|
-|		title : 12 Monkeys 	|	genre : Mystery 	|	rating : N/A 	|	duration : 42 	|	language : N/A 	|	violence : Moderate 	|	certificate : TV-14 	|
-|		title : 12 Strong 	|	genre : Action 	|	rating : N/A 	|	duration : 130 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
-|		title : 12 Strong 	|	genre : Drama 	|	rating : N/A 	|	duration : 130 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
-|		title : 12 Strong 	|	genre : History 	|	rating : N/A 	|	duration : 130 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
-|		title : 12 Strong 	|	genre : Action 	|	rating : N/A 	|	duration : 130 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
-|		title : 12 Strong 	|	genre : Drama 	|	rating : N/A 	|	duration : 130 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
-|		title : 12 Strong 	|	genre : History 	|	rating : N/A 	|	duration : 130 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
+|		title : #REALITYHIGH 	|	language : English 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : #Saraitda 	|	language : N/A 	|	violence : Moderate 	|	certificate : TV-MA 	|
+|		title : #Unfit: The Psychology of Donald Trump 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 'Allo 'Allo! 	|	language : N/A 	|	violence : N/A 	|	certificate : None 	|
+|		title : 'Allo 'Allo! 	|	language : N/A 	|	violence : N/A 	|	certificate : None 	|
+|		title : (500) Days of Summer 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
+|		title : 10 	|	language : N/A 	|	violence : None 	|	certificate : R 	|
+|		title : 10 	|	language : N/A 	|	violence : None 	|	certificate : R 	|
+|		title : 10 Cloverfield Lane 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 10 Cloverfield Lane 	|	language : N/A 	|	violence : Moderate 	|	certificate : PG-13 	|
+|		title : 10 Things I Hate About You 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
+|		title : 10 YEARS 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 10 Years 	|	language : N/A 	|	violence : None 	|	certificate : PG-13 	|
+|		title : 10 Years 	|	language : N/A 	|	violence : None 	|	certificate : PG-13 	|
+|		title : 10 to Midnight 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 101 Dalmatians 	|	language : N/A 	|	violence : Mild 	|	certificate : G 	|
+|		title : 12 Angry Men 	|	language : N/A 	|	violence : None 	|	certificate : Approved 	|
+|		title : 12 Feet Deep: Trapped Sisters 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 12 Mighty Orphans 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
+|		title : 12 Monkeys 	|	language : N/A 	|	violence : Moderate 	|	certificate : TV-14 	|
+|		title : 12 Strong 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
+|		title : 12 Strong 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
+|		title : 12 Years a Slave 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
+|		title : 127 Hours 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
+|		title : 13 Ghosts 	|	language : N/A 	|	violence : Mild 	|	certificate : Not Rated 	|
+|		title : 13 Ghosts 	|	language : N/A 	|	violence : Mild 	|	certificate : Not Rated 	|
+|		title : 13 Going on 30 	|	language : N/A 	|	violence : None 	|	certificate : PG-13 	|
+|		title : 13 Hours 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 13 Hours 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
+|		title : 13 Minutes (II) 	|	language : N/A 	|	violence : N/A 	|	certificate : PG-13 	|
 
 ==========================================
 
@@ -174,76 +150,83 @@ Fichier: ../queries/minus-request.sparql
 ==========================================
 
 --- Code SPARQL ---
-# Requête avec double exclusion (MINUS) : films Amazon bien notés
-# Exclut : les films sur Netflix, les contenus courts IMDB (< 60 min)
-# Trouve du contenu long-format exclusif à Amazon
+# Requête MINUS : films Netflix sans contenu adulte
+# Trouve les films Netflix bien notés en EXCLUANT ceux avec classification adulte IMDB
+# Démontre MINUS pour filtrer basé sur l'absence de certaines caractéristiques
 PREFIX unified: <http://example.org/unified/>
 PREFIX amazon: <http://example.org/amazon/>
 PREFIX netflix: <http://example.org/netflix/>
 PREFIX imdb: <http://example.org/imdb/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-SELECT ?title ?amazonRating ?releaseYear ?format ?mpaaRating
-       (GROUP_CONCAT(DISTINCT ?imdbGenre; separator=", ") as ?genres)
+SELECT ?title ?rating ?runtime ?language ?genre
 WHERE {
-  # Films Amazon bien notés
-  ?amazonFilm a amazon:AmazonFilm ;
-              unified:title ?title ;
-              amazon:rating ?amazonRating .
+  # Films Netflix avec leurs informations
+  ?film a netflix:NetflixFilm ;
+        unified:title ?title ;
+        netflix:rating ?rating .
 
-  OPTIONAL { ?amazonFilm amazon:releaseYear ?releaseYear }
-  OPTIONAL { ?amazonFilm amazon:format ?format }
-  OPTIONAL { ?amazonFilm amazon:mpaaRating ?mpaaRating }
+  OPTIONAL { ?film netflix:runtime ?runtime }
+  OPTIONAL { ?film netflix:language ?language }
+  OPTIONAL { ?film netflix:genre ?genre }
 
-  # Enrichissement avec genres IMDB si disponibles
-  OPTIONAL {
-    ?imdbFilm a imdb:ImdbFilm ;
-              unified:title ?title ;
-              imdb:genre ?imdbGenre .
-  }
-
-  # Exclusion 1 : enlever les films qui existent aussi sur Netflix
+  # MINUS 1 : Exclure les films avec violence modérée/sévère
   MINUS {
-    ?netflixFilm a netflix:NetflixFilm ;
-                 unified:title ?title .
+    ?film imdb:violence ?violence .
+    FILTER(?violence IN ("Moderate", "Severe"))
   }
 
-  # Exclusion 2 : enlever les contenus courts (< 60 min) selon IMDB
+  # MINUS 2 : Exclure les films avec nudité modérée/sévère
   MINUS {
-    ?shortContent a imdb:ImdbFilm ;
-                  unified:title ?title ;
-                  imdb:duration ?duration .
-    FILTER(?duration < 60)
+    ?film imdb:nudity ?nudity .
+    FILTER(?nudity IN ("Moderate", "Severe"))
   }
 
-  FILTER(?amazonRating >= 4.7)
+  # MINUS 3 : Exclure les films avec profanité sévère
+  MINUS {
+    ?film imdb:profanity ?profanity .
+    FILTER(?profanity = "Severe")
+  }
+
+  FILTER(xsd:decimal(?rating) >= 7.0)
 }
-GROUP BY ?title ?amazonRating ?releaseYear ?format ?mpaaRating
-ORDER BY DESC(?amazonRating) ?title
-LIMIT 20
+ORDER BY DESC(?rating) ?title
+LIMIT 30
+
 --- Résultats ---
                   |=============================|
                   |      Request Results        |
                   |=============================|
-|		title : A Bold Affair 	|	amazonRating : 5.0 	|	releaseYear : 1998 	|	format : Prime Video 	|	mpaaRating : R 	|	genres : N/A 	|
-|		title : A Young Time Ago 	|	amazonRating : 5.0 	|	releaseYear : 2023 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
-|		title : Aachar & Co. 	|	amazonRating : 5.0 	|	releaseYear : 2023 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
-|		title : Alexandria 	|	amazonRating : 5.0 	|	releaseYear : 2010 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
-|		title : Beastly 	|	amazonRating : 5.0 	|	releaseYear : 2011 	|	format : Prime Video 	|	mpaaRating : PG-13 	|	genres : N/A 	|
-|		title : Black Girl Erupted 	|	amazonRating : 5.0 	|	releaseYear : N/A 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
-|		title : DIVINE INTERVENTION 	|	amazonRating : 5.0 	|	releaseYear : 2023 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
-|		title : Hide N Seek 	|	amazonRating : 5.0 	|	releaseYear : 2023 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
-|		title : Hoopties 	|	amazonRating : 5.0 	|	releaseYear : 2023 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
-|		title : Impact Winter: An Audible Original Audio Series 	|	amazonRating : 5.0 	|	releaseYear : 2022 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
-|		title : Kelce 	|	amazonRating : 5.0 	|	releaseYear : 2023 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
-|		title : Killer Design 	|	amazonRating : 5.0 	|	releaseYear : 2022 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
-|		title : Lethal Legacy 	|	amazonRating : 5.0 	|	releaseYear : 2023 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
-|		title : Madea Gets A Job ( Stage Play) 	|	amazonRating : 5.0 	|	releaseYear : 2013 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
-|		title : Nazi Death Marches 	|	amazonRating : 5.0 	|	releaseYear : 2023 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
-|		title : Nurses on the Line: The Crash of Flight 7 	|	amazonRating : 5.0 	|	releaseYear : 1993 	|	format : Prime Video 	|	mpaaRating : PG 	|	genres : N/A 	|
-|		title : Once Upon A Time in the District 	|	amazonRating : 5.0 	|	releaseYear : N/A 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
-|		title : PAW Patrol: Moto Pups 	|	amazonRating : 5.0 	|	releaseYear : N/A 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
-|		title : Pigs 	|	amazonRating : 5.0 	|	releaseYear : 1973 	|	format : Prime Video 	|	mpaaRating : R 	|	genres : N/A 	|
-|		title : Primal Doubt 	|	amazonRating : 5.0 	|	releaseYear : 2007 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
+|		title : David Attenborough: A Life on Our Planet 	|	rating : 9.0 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
+|		title : Emicida: AmarElo - It's All For Yesterday 	|	rating : 8.6 	|	runtime : N/A 	|	language : Portuguese 	|	genre : Documentary 	|
+|		title : Springsteen on Broadway 	|	rating : 8.5 	|	runtime : N/A 	|	language : English 	|	genre : One-man show 	|
+|		title : Ben Platt: Live from Radio City Music Hall 	|	rating : 8.4 	|	runtime : N/A 	|	language : English 	|	genre : Concert Film 	|
+|		title : Taylor Swift: Reputation Stadium Tour 	|	rating : 8.4 	|	runtime : N/A 	|	language : English 	|	genre : Concert Film 	|
+|		title : Winter on Fire: Ukraine's Fight for Freedom 	|	rating : 8.4 	|	runtime : N/A 	|	language : English/Ukranian/Russian 	|	genre : Documentary 	|
+|		title : Cuba and the Cameraman 	|	rating : 8.3 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
+|		title : Dancing with the Birds 	|	rating : 8.3 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
+|		title : 13th 	|	rating : 8.2 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
+|		title : Disclosure: Trans Lives on Screen 	|	rating : 8.2 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
+|		title : Klaus 	|	rating : 8.2 	|	runtime : N/A 	|	language : English 	|	genre : Animation/Christmas/Comedy/Adventure 	|
+|		title : Seaspiracy 	|	rating : 8.2 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
+|		title : The Three Deaths of Marisela Escobedo 	|	rating : 8.2 	|	runtime : N/A 	|	language : Spanish 	|	genre : Documentary 	|
+|		title : Chasing Coral 	|	rating : 8.1 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
+|		title : My Octopus Teacher 	|	rating : 8.1 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
+|		title : Rising Phoenix 	|	rating : 8.1 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
+|		title : Struggle: The Life and Lost Art of Szukaiski 	|	rating : 8.0 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
+|		title : A Secret Love 	|	rating : 7.9 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
+|		title : Icarus 	|	rating : 7.9 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
+|		title : Marriage Story 	|	rating : 7.9 	|	runtime : N/A 	|	language : English 	|	genre : Drama 	|
+|		title : The Ivory Game 	|	rating : 7.9 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
+|		title : If Anything Happens I Love You 	|	rating : 7.8 	|	runtime : N/A 	|	language : English 	|	genre : Animation / Short 	|
+|		title : The Irishman 	|	rating : 7.8 	|	runtime : N/A 	|	language : English 	|	genre : Crime drama 	|
+|		title : The Trial of the Chicago 7 	|	rating : 7.8 	|	runtime : N/A 	|	language : English 	|	genre : Drama 	|
+|		title : Anima 	|	rating : 7.7 	|	runtime : N/A 	|	language : English 	|	genre : Musical / Short 	|
+|		title : Beasts of No Nation 	|	rating : 7.7 	|	runtime : N/A 	|	language : English/Akan 	|	genre : War drama 	|
+|		title : Brene Brown: The Call to Courage 	|	rating : 7.7 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
+|		title : Crip Camp: A Disability Revolution 	|	rating : 7.7 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
+|		title : Jim & Andy: The Great Beyond - Featuring a Very Special, Contractually Obligated Mention of Tony Cliffton  	|	rating : 7.7 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
+|		title : Justin Timberlake + The Tennessee Kids 	|	rating : 7.7 	|	runtime : N/A 	|	language : English 	|	genre : Concert Film 	|
 
 ==========================================
 
@@ -254,78 +237,80 @@ Fichier: ../queries/not-exists-request.sparql
 ==========================================
 
 --- Code SPARQL ---
-# Requête avec FILTER NOT EXISTS : récupère les films Netflix
-# en excluant ceux qui ont une certification "R" (Restricted)
+# Requête FILTER NOT EXISTS : films familiaux sans contenu inapproprié
+# Trouve les films bien notés qui N'ont PAS de violence ou contenu adulte
+# Démontre la différence entre MINUS et FILTER NOT EXISTS
 PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
 PREFIX netflix: <http://example.org/netflix/>
 PREFIX imdb: <http://example.org/imdb/>
 
-SELECT ?film ?title ?netflixRating
+SELECT ?title ?rating ?genre ?certificate
 WHERE {
-  ?film a netflix:NetflixFilm ;
+  ?film a unified:film ;
         unified:title ?title ;
-        netflix:rating ?netflixRating .
+        unified:rating ?rating .
 
+  OPTIONAL { ?film unified:genre ?genre }
+  OPTIONAL { ?film imdb:certificate ?certificate }
+
+  # Exclure les films avec violence modérée ou sévère
   FILTER NOT EXISTS {
-    ?film imdb:certificate "R" .
+    ?film imdb:violence ?violence .
+    FILTER(?violence IN ("Moderate", "Severe"))
   }
+
+  # Exclure les films avec classification adulte
+  FILTER NOT EXISTS {
+    ?film imdb:certificate ?cert .
+    FILTER(?cert IN ("R", "NC-17", "TV-MA"))
+  }
+
+  # Exclure les films avec nudité
+  FILTER NOT EXISTS {
+    ?film imdb:nudity ?nudity .
+    FILTER(?nudity IN ("Moderate", "Severe"))
+  }
+
+  FILTER(?rating >= 4.0)
 }
-ORDER BY DESC(?netflixRating)
-LIMIT 50
+ORDER BY DESC(?rating)
+LIMIT 30
+
 --- Résultats ---
                   |=============================|
                   |      Request Results        |
                   |=============================|
-|		film : http://example.org/netflix/584 	|	title : David Attenborough: A Life on Our Planet 	|	netflixRating : 9.0 	|
-|		film : http://example.org/netflix/583 	|	title : Emicida: AmarElo - It's All For Yesterday 	|	netflixRating : 8.6 	|
-|		film : http://example.org/netflix/582 	|	title : Springsteen on Broadway 	|	netflixRating : 8.5 	|
-|		film : http://example.org/netflix/579 	|	title : Ben Platt: Live from Radio City Music Hall 	|	netflixRating : 8.4 	|
-|		film : http://example.org/netflix/580 	|	title : Taylor Swift: Reputation Stadium Tour 	|	netflixRating : 8.4 	|
-|		film : http://example.org/netflix/581 	|	title : Winter on Fire: Ukraine's Fight for Freedom 	|	netflixRating : 8.4 	|
-|		film : http://example.org/netflix/577 	|	title : Cuba and the Cameraman 	|	netflixRating : 8.3 	|
-|		film : http://example.org/netflix/578 	|	title : Dancing with the Birds 	|	netflixRating : 8.3 	|
-|		film : http://example.org/netflix/572 	|	title : 13th 	|	netflixRating : 8.2 	|
-|		film : http://example.org/netflix/573 	|	title : Disclosure: Trans Lives on Screen 	|	netflixRating : 8.2 	|
-|		film : http://example.org/netflix/574 	|	title : Klaus 	|	netflixRating : 8.2 	|
-|		film : http://example.org/netflix/575 	|	title : Seaspiracy 	|	netflixRating : 8.2 	|
-|		film : http://example.org/netflix/576 	|	title : The Three Deaths of Marisela Escobedo 	|	netflixRating : 8.2 	|
-|		film : http://example.org/netflix/569 	|	title : Chasing Coral 	|	netflixRating : 8.1 	|
-|		film : http://example.org/netflix/570 	|	title : My Octopus Teacher 	|	netflixRating : 8.1 	|
-|		film : http://example.org/netflix/571 	|	title : Rising Phoenix 	|	netflixRating : 8.1 	|
-|		film : http://example.org/netflix/568 	|	title : Struggle: The Life and Lost Art of Szukaiski 	|	netflixRating : 8.0 	|
-|		film : http://example.org/netflix/564 	|	title : A Secret Love 	|	netflixRating : 7.9 	|
-|		film : http://example.org/netflix/565 	|	title : Icarus 	|	netflixRating : 7.9 	|
-|		film : http://example.org/netflix/566 	|	title : Marriage Story 	|	netflixRating : 7.9 	|
-|		film : http://example.org/netflix/567 	|	title : The Ivory Game 	|	netflixRating : 7.9 	|
-|		film : http://example.org/netflix/561 	|	title : If Anything Happens I Love You 	|	netflixRating : 7.8 	|
-|		film : http://example.org/netflix/562 	|	title : The Irishman 	|	netflixRating : 7.8 	|
-|		film : http://example.org/netflix/563 	|	title : The Trial of the Chicago 7 	|	netflixRating : 7.8 	|
-|		film : http://example.org/netflix/553 	|	title : Anima 	|	netflixRating : 7.7 	|
-|		film : http://example.org/netflix/554 	|	title : Beasts of No Nation 	|	netflixRating : 7.7 	|
-|		film : http://example.org/netflix/555 	|	title : Brene Brown: The Call to Courage 	|	netflixRating : 7.7 	|
-|		film : http://example.org/netflix/556 	|	title : Crip Camp: A Disability Revolution 	|	netflixRating : 7.7 	|
-|		film : http://example.org/netflix/557 	|	title : Jim & Andy: The Great Beyond - Featuring a Very Special, Contractually Obligated Mention of Tony Cliffton  	|	netflixRating : 7.7 	|
-|		film : http://example.org/netflix/558 	|	title : Justin Timberlake + The Tennessee Kids 	|	netflixRating : 7.7 	|
-|		film : http://example.org/netflix/559 	|	title : Road to Roma 	|	netflixRating : 7.7 	|
-|		film : http://example.org/netflix/560 	|	title : Roma 	|	netflixRating : 7.7 	|
-|		film : http://example.org/netflix/543 	|	title : Athlete A 	|	netflixRating : 7.6 	|
-|		film : http://example.org/netflix/544 	|	title : Ludo 	|	netflixRating : 7.6 	|
-|		film : http://example.org/netflix/545 	|	title : Quincy 	|	netflixRating : 7.6 	|
-|		film : http://example.org/netflix/546 	|	title : Rolling Thunder Revue: A bob Dylan Story by Martin Scorsere 	|	netflixRating : 7.6 	|
-|		film : http://example.org/netflix/547 	|	title : Tell Me Who I Am 	|	netflixRating : 7.6 	|
-|		film : http://example.org/netflix/548 	|	title : The Bleeding Edge 	|	netflixRating : 7.6 	|
-|		film : http://example.org/netflix/549 	|	title : The Social Dilemma 	|	netflixRating : 7.6 	|
-|		film : http://example.org/netflix/550 	|	title : The Two Popes 	|	netflixRating : 7.6 	|
-|		film : http://example.org/netflix/551 	|	title : What Happened, Miss Simone? 	|	netflixRating : 7.6 	|
-|		film : http://example.org/netflix/552 	|	title : Yeh Ballet 	|	netflixRating : 7.6 	|
-|		film : http://example.org/netflix/533 	|	title : Barbra: The Music, The Mem'ries, The Magic! 	|	netflixRating : 7.5 	|
-|		film : http://example.org/netflix/534 	|	title : Blackpink: Light Up the Sky 	|	netflixRating : 7.5 	|
-|		film : http://example.org/netflix/535 	|	title : City of Joy 	|	netflixRating : 7.5 	|
-|		film : http://example.org/netflix/536 	|	title : Dick Johnson Is Dead 	|	netflixRating : 7.5 	|
-|		film : http://example.org/netflix/537 	|	title : Homecoming: A Film by Beyonce 	|	netflixRating : 7.5 	|
-|		film : http://example.org/netflix/538 	|	title : Invader Zim: Enter the Florpus 	|	netflixRating : 7.5 	|
-|		film : http://example.org/netflix/539 	|	title : Joan Didion: The Center Will Not Hold 	|	netflixRating : 7.5 	|
-|		film : http://example.org/netflix/540 	|	title : John Mulaney & the Sack Lunch Bunch 	|	netflixRating : 7.5 	|
+|		title : Aspirants 	|	rating : 9.7 	|	genre : Drama 	|	certificate : None 	|
+|		title : The Chosen 	|	rating : 9.6 	|	genre : Drama 	|	certificate : TV-PG 	|
+|		title : The Chosen 	|	rating : 9.6 	|	genre : History 	|	certificate : TV-PG 	|
+|		title : Bluey 	|	rating : 9.6 	|	genre : Animation 	|	certificate : TV-Y 	|
+|		title : Bluey 	|	rating : 9.6 	|	genre : Family 	|	certificate : TV-Y 	|
+|		title : Scam 1992: The Harshad Mehta Story 	|	rating : 9.5 	|	genre : Biography 	|	certificate : TV-14 	|
+|		title : Scam 1992: The Harshad Mehta Story 	|	rating : 9.5 	|	genre : Crime 	|	certificate : TV-14 	|
+|		title : Scam 1992: The Harshad Mehta Story 	|	rating : 9.5 	|	genre : Drama 	|	certificate : TV-14 	|
+|		title : Toma 	|	rating : 9.3 	|	genre : Biography 	|	certificate : None 	|
+|		title : Toma 	|	rating : 9.3 	|	genre : Drama 	|	certificate : None 	|
+|		title : Toma 	|	rating : 9.3 	|	genre : Music 	|	certificate : None 	|
+|		title : Avatar: The Last Airbender 	|	rating : 9.3 	|	genre : Action 	|	certificate : TV-Y7-FV 	|
+|		title : Avatar: The Last Airbender 	|	rating : 9.3 	|	genre : Adventure 	|	certificate : TV-Y7-FV 	|
+|		title : Avatar: The Last Airbender 	|	rating : 9.3 	|	genre : Animation 	|	certificate : TV-Y7-FV 	|
+|		title : Sardar Udham 	|	rating : 9.2 	|	genre : Biography 	|	certificate : None 	|
+|		title : Sardar Udham 	|	rating : 9.2 	|	genre : Crime 	|	certificate : None 	|
+|		title : Sardar Udham 	|	rating : 9.2 	|	genre : Drama 	|	certificate : None 	|
+|		title : Kota Factory 	|	rating : 9.2 	|	genre : Comedy 	|	certificate : TV-14 	|
+|		title : Kota Factory 	|	rating : 9.2 	|	genre : Drama 	|	certificate : TV-14 	|
+|		title : Critical Role 	|	rating : 9.2 	|	genre : Adventure 	|	certificate : TV-14 	|
+|		title : Critical Role 	|	rating : 9.2 	|	genre : Fantasy 	|	certificate : TV-14 	|
+|		title : Critical Role 	|	rating : 9.2 	|	genre : Adventure 	|	certificate : TV-14 	|
+|		title : Critical Role 	|	rating : 9.2 	|	genre : Fantasy 	|	certificate : TV-14 	|
+|		title : Clarkson's Farm 	|	rating : 9.1 	|	genre : Documentary 	|	certificate : TV-PG 	|
+|		title : Clarkson's Farm 	|	rating : 9.1 	|	genre : Reality-TV 	|	certificate : TV-PG 	|
+|		title : Leyla ile Mecnun 	|	rating : 9.1 	|	genre : Adventure 	|	certificate : TV-PG 	|
+|		title : Leyla ile Mecnun 	|	rating : 9.1 	|	genre : Comedy 	|	certificate : TV-PG 	|
+|		title : Leyla ile Mecnun 	|	rating : 9.1 	|	genre : Drama 	|	certificate : TV-PG 	|
+|		title : David Attenborough: A Life on Our Planet 	|	rating : 9.0 	|	genre : Documentary 	|	certificate : N/A 	|
+|		title : 12 Angry Men 	|	rating : 9.0 	|	genre : Crime 	|	certificate : Approved 	|
 
 ==========================================
 
@@ -367,31 +352,31 @@ LIMIT 25
                   |=============================|
                   |      Request Results        |
                   |=============================|
-|		film : http://example.org/netflix/584 	|	title : David Attenborough: A Life on Our Planet 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 9.0 	|	genre : Documentary 	|
-|		film : http://example.org/netflix/584 	|	title : David Attenborough: A Life on Our Planet 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 9.0 	|	genre : Documentary 	|
-|		film : http://example.org/netflix/584 	|	title : David Attenborough: A Life on Our Planet 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 9.0 	|	genre : Documentary 	|
-|		film : http://example.org/netflix/584 	|	title : David Attenborough: A Life on Our Planet 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 9.0 	|	genre : Documentary 	|
-|		film : http://example.org/netflix/583 	|	title : Emicida: AmarElo - It's All For Yesterday 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.6 	|	genre : Documentary 	|
-|		film : http://example.org/netflix/583 	|	title : Emicida: AmarElo - It's All For Yesterday 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.6 	|	genre : Documentary 	|
-|		film : http://example.org/netflix/583 	|	title : Emicida: AmarElo - It's All For Yesterday 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.6 	|	genre : Documentary 	|
-|		film : http://example.org/netflix/583 	|	title : Emicida: AmarElo - It's All For Yesterday 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.6 	|	genre : Documentary 	|
-|		film : http://example.org/netflix/582 	|	title : Springsteen on Broadway 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.5 	|	genre : One-man show 	|
-|		film : http://example.org/netflix/582 	|	title : Springsteen on Broadway 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.5 	|	genre : One-man show 	|
-|		film : http://example.org/netflix/582 	|	title : Springsteen on Broadway 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.5 	|	genre : One-man show 	|
-|		film : http://example.org/netflix/582 	|	title : Springsteen on Broadway 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.5 	|	genre : One-man show 	|
-|		film : http://example.org/netflix/579 	|	title : Ben Platt: Live from Radio City Music Hall 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.4 	|	genre : Concert Film 	|
-|		film : http://example.org/netflix/580 	|	title : Taylor Swift: Reputation Stadium Tour 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.4 	|	genre : Concert Film 	|
-|		film : http://example.org/netflix/581 	|	title : Winter on Fire: Ukraine's Fight for Freedom 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.4 	|	genre : Documentary 	|
-|		film : http://example.org/netflix/579 	|	title : Ben Platt: Live from Radio City Music Hall 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.4 	|	genre : Concert Film 	|
-|		film : http://example.org/netflix/580 	|	title : Taylor Swift: Reputation Stadium Tour 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.4 	|	genre : Concert Film 	|
-|		film : http://example.org/netflix/581 	|	title : Winter on Fire: Ukraine's Fight for Freedom 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.4 	|	genre : Documentary 	|
-|		film : http://example.org/netflix/579 	|	title : Ben Platt: Live from Radio City Music Hall 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.4 	|	genre : Concert Film 	|
-|		film : http://example.org/netflix/580 	|	title : Taylor Swift: Reputation Stadium Tour 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.4 	|	genre : Concert Film 	|
-|		film : http://example.org/netflix/581 	|	title : Winter on Fire: Ukraine's Fight for Freedom 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.4 	|	genre : Documentary 	|
-|		film : http://example.org/netflix/579 	|	title : Ben Platt: Live from Radio City Music Hall 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.4 	|	genre : Concert Film 	|
-|		film : http://example.org/netflix/580 	|	title : Taylor Swift: Reputation Stadium Tour 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.4 	|	genre : Concert Film 	|
-|		film : http://example.org/netflix/581 	|	title : Winter on Fire: Ukraine's Fight for Freedom 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.4 	|	genre : Documentary 	|
-|		film : http://example.org/netflix/577 	|	title : Cuba and the Cameraman 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.3 	|	genre : Documentary 	|
+|		film : http://example.org/imdb/1947 	|	title : Aspirants 	|	specificType : http://example.org/imdb/ImdbFilm 	|	rating : 9.7 	|	genre : Drama 	|
+|		film : http://example.org/imdb/1947 	|	title : Aspirants 	|	specificType : http://example.org/imdb/ImdbFilm 	|	rating : 9.7 	|	genre : Drama 	|
+|		film : http://example.org/imdb/1947 	|	title : Aspirants 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 9.7 	|	genre : Drama 	|
+|		film : http://example.org/imdb/1947 	|	title : Aspirants 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 9.7 	|	genre : Drama 	|
+|		film : http://example.org/imdb/1755 	|	title : Bluey 	|	specificType : http://example.org/imdb/ImdbFilm 	|	rating : 9.6 	|	genre : Animation 	|
+|		film : http://example.org/imdb/1755 	|	title : Bluey 	|	specificType : http://example.org/imdb/ImdbFilm 	|	rating : 9.6 	|	genre : Family 	|
+|		film : http://example.org/imdb/910 	|	title : The Chosen 	|	specificType : http://example.org/imdb/ImdbFilm 	|	rating : 9.6 	|	genre : Drama 	|
+|		film : http://example.org/imdb/910 	|	title : The Chosen 	|	specificType : http://example.org/imdb/ImdbFilm 	|	rating : 9.6 	|	genre : History 	|
+|		film : http://example.org/imdb/1755 	|	title : Bluey 	|	specificType : http://example.org/imdb/ImdbFilm 	|	rating : 9.6 	|	genre : Animation 	|
+|		film : http://example.org/imdb/1755 	|	title : Bluey 	|	specificType : http://example.org/imdb/ImdbFilm 	|	rating : 9.6 	|	genre : Family 	|
+|		film : http://example.org/imdb/910 	|	title : The Chosen 	|	specificType : http://example.org/imdb/ImdbFilm 	|	rating : 9.6 	|	genre : Drama 	|
+|		film : http://example.org/imdb/910 	|	title : The Chosen 	|	specificType : http://example.org/imdb/ImdbFilm 	|	rating : 9.6 	|	genre : History 	|
+|		film : http://example.org/imdb/1755 	|	title : Bluey 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 9.6 	|	genre : Animation 	|
+|		film : http://example.org/imdb/1755 	|	title : Bluey 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 9.6 	|	genre : Family 	|
+|		film : http://example.org/imdb/910 	|	title : The Chosen 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 9.6 	|	genre : Drama 	|
+|		film : http://example.org/imdb/910 	|	title : The Chosen 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 9.6 	|	genre : History 	|
+|		film : http://example.org/imdb/1755 	|	title : Bluey 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 9.6 	|	genre : Animation 	|
+|		film : http://example.org/imdb/1755 	|	title : Bluey 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 9.6 	|	genre : Family 	|
+|		film : http://example.org/imdb/910 	|	title : The Chosen 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 9.6 	|	genre : Drama 	|
+|		film : http://example.org/imdb/910 	|	title : The Chosen 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 9.6 	|	genre : History 	|
+|		film : http://example.org/imdb/2781 	|	title : Scam 1992: The Harshad Mehta Story 	|	specificType : http://example.org/imdb/ImdbFilm 	|	rating : 9.5 	|	genre : Biography 	|
+|		film : http://example.org/imdb/2781 	|	title : Scam 1992: The Harshad Mehta Story 	|	specificType : http://example.org/imdb/ImdbFilm 	|	rating : 9.5 	|	genre : Crime 	|
+|		film : http://example.org/imdb/2781 	|	title : Scam 1992: The Harshad Mehta Story 	|	specificType : http://example.org/imdb/ImdbFilm 	|	rating : 9.5 	|	genre : Drama 	|
+|		film : http://example.org/imdb/2781 	|	title : Scam 1992: The Harshad Mehta Story 	|	specificType : http://example.org/imdb/ImdbFilm 	|	rating : 9.5 	|	genre : Biography 	|
+|		film : http://example.org/imdb/2781 	|	title : Scam 1992: The Harshad Mehta Story 	|	specificType : http://example.org/imdb/ImdbFilm 	|	rating : 9.5 	|	genre : Crime 	|
 
 ==========================================
 
@@ -494,7 +479,7 @@ WHERE {
 }
 GROUP BY ?title ?amazonRating ?amazonPrice ?netflixRating ?violence ?nudity
 ORDER BY DESC(?amazonRating) ?amazonPrice
-LIMIT 20
+LIMIT 30
 --- Résultats ---
                   |=============================|
                   |      Request Results        |
@@ -519,155 +504,16 @@ LIMIT 20
 |		title : Old MacDonald Had a Farm & More Kids Songs - Super Simple Songs 	|	amazonRating : 4.8 	|	amazonPrice : 0.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
 |		title : Pumpkin Pie Wars 	|	amazonRating : 4.8 	|	amazonPrice : 0.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
 |		title : Daniel Visits a New Neighborhood 	|	amazonRating : 4.8 	|	amazonPrice : 1.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
-
-==========================================
-
-
-==========================================
-REQUÊTE: Sous-requête
-Fichier: ../queries/sub-request-request.sparql
-==========================================
-
---- Code SPARQL ---
-# Requête avec sous-requête : calcule des statistiques agrégées par genre
-# Utilise une sous-requête pour filtrer d'abord les films valides (rating > 0)
-PREFIX unified: <http://example.org/unified/>
-PREFIX amazon: <http://example.org/amazon/>
-PREFIX netflix: <http://example.org/netflix/>
-
-SELECT ?genre (AVG(?rating) as ?avgRating) (MIN(?rating) as ?minRating)
-       (MAX(?rating) as ?maxRating) (COUNT(*) as ?filmCount)
-WHERE {
-  {
-    SELECT ?film ?genre ?rating
-    WHERE {
-      ?film unified:genre ?genre ;
-            unified:rating ?rating .
-      FILTER(?rating > 0)
-    }
-  }
-}
-GROUP BY ?genre
-ORDER BY DESC(?avgRating)
---- Résultats ---
-                  |=============================|
-                  |      Request Results        |
-                  |=============================|
-|		genre : Animation/Christmas/Comedy/Adventure 	|	avgRating : 8.2 	|	minRating : 8.2 	|	maxRating : 8.2 	|	filmCount : 1 	|
-|		genre : Musical / Short 	|	avgRating : 7.7 	|	minRating : 7.7 	|	maxRating : 7.7 	|	filmCount : 1 	|
-|		genre : Concert Film 	|	avgRating : 7.633333333333333333333333 	|	minRating : 6.4 	|	maxRating : 8.4 	|	filmCount : 6 	|
-|		genre : Anthology/Dark comedy 	|	avgRating : 7.6 	|	minRating : 7.6 	|	maxRating : 7.6 	|	filmCount : 1 	|
-|		genre : Animation / Science Fiction 	|	avgRating : 7.5 	|	minRating : 7.5 	|	maxRating : 7.5 	|	filmCount : 1 	|
-|		genre : Making-of 	|	avgRating : 7.45 	|	minRating : 7.2 	|	maxRating : 7.7 	|	filmCount : 2 	|
-|		genre : Action-adventure 	|	avgRating : 7.3 	|	minRating : 7.3 	|	maxRating : 7.3 	|	filmCount : 1 	|
-|		genre : Coming-of-age comedy-drama 	|	avgRating : 7.2 	|	minRating : 7.2 	|	maxRating : 7.2 	|	filmCount : 1 	|
-|		genre : Drama-Comedy 	|	avgRating : 7.2 	|	minRating : 7.2 	|	maxRating : 7.2 	|	filmCount : 1 	|
-|		genre : Historical drama 	|	avgRating : 7.2 	|	minRating : 7.2 	|	maxRating : 7.2 	|	filmCount : 1 	|
-|		genre : One-man show 	|	avgRating : 7.133333333333333333333333 	|	minRating : 5.8 	|	maxRating : 8.5 	|	filmCount : 3 	|
-|		genre : Animation / Short 	|	avgRating : 7.125 	|	minRating : 6.5 	|	maxRating : 7.8 	|	filmCount : 4 	|
-|		genre : War drama 	|	avgRating : 7.1 	|	minRating : 6.5 	|	maxRating : 7.7 	|	filmCount : 2 	|
-|		genre : Mentalism special 	|	avgRating : 7.1 	|	minRating : 7.1 	|	maxRating : 7.1 	|	filmCount : 1 	|
-|		genre : Animation / Comedy 	|	avgRating : 7.0 	|	minRating : 7.0 	|	maxRating : 7.0 	|	filmCount : 1 	|
-|		genre : Christmas/Fantasy/Adventure/Comedy 	|	avgRating : 7.0 	|	minRating : 7.0 	|	maxRating : 7.0 	|	filmCount : 1 	|
-|		genre : Documentary 	|	avgRating : 6.936477987421383647798742 	|	minRating : 2.5 	|	maxRating : 9.0 	|	filmCount : 159 	|
-|		genre : Historical-epic 	|	avgRating : 6.9 	|	minRating : 6.9 	|	maxRating : 6.9 	|	filmCount : 1 	|
-|		genre : Biographical/Comedy 	|	avgRating : 6.8 	|	minRating : 6.8 	|	maxRating : 6.8 	|	filmCount : 1 	|
-|		genre : Aftershow / Interview 	|	avgRating : 6.75 	|	minRating : 5.2 	|	maxRating : 7.4 	|	filmCount : 6 	|
-|		genre : War 	|	avgRating : 6.75 	|	minRating : 6.3 	|	maxRating : 7.2 	|	filmCount : 2 	|
-|		genre : Crime drama 	|	avgRating : 6.745454545454545454545455 	|	minRating : 5.5 	|	maxRating : 7.8 	|	filmCount : 11 	|
-|		genre : Animated musical comedy 	|	avgRating : 6.7 	|	minRating : 6.7 	|	maxRating : 6.7 	|	filmCount : 1 	|
-|		genre : Anime/Fantasy 	|	avgRating : 6.7 	|	minRating : 6.7 	|	maxRating : 6.7 	|	filmCount : 1 	|
-|		genre : Superhero/Action 	|	avgRating : 6.7 	|	minRating : 6.7 	|	maxRating : 6.7 	|	filmCount : 1 	|
-|		genre : Variety Show 	|	avgRating : 6.7 	|	minRating : 6.7 	|	maxRating : 6.7 	|	filmCount : 1 	|
-|		genre : Anime/Science fiction 	|	avgRating : 6.6 	|	minRating : 6.5 	|	maxRating : 6.7 	|	filmCount : 2 	|
-|		genre : Hidden-camera prank comedy 	|	avgRating : 6.6 	|	minRating : 6.6 	|	maxRating : 6.6 	|	filmCount : 1 	|
-|		genre : Spy thriller 	|	avgRating : 6.6 	|	minRating : 6.6 	|	maxRating : 6.6 	|	filmCount : 2 	|
-|		genre : Animation 	|	avgRating : 6.56 	|	minRating : 5.1 	|	maxRating : 7.3 	|	filmCount : 5 	|
-|		genre : Romance 	|	avgRating : 6.5 	|	minRating : 5.6 	|	maxRating : 6.9 	|	filmCount : 6 	|
-|		genre : Psychological thriller 	|	avgRating : 6.5 	|	minRating : 5.7 	|	maxRating : 7.1 	|	filmCount : 4 	|
-|		genre : Drama / Short 	|	avgRating : 6.5 	|	minRating : 6.5 	|	maxRating : 6.5 	|	filmCount : 1 	|
-|		genre : Family/Christmas musical 	|	avgRating : 6.5 	|	minRating : 6.5 	|	maxRating : 6.5 	|	filmCount : 1 	|
-|		genre : Science fiction thriller 	|	avgRating : 6.5 	|	minRating : 6.5 	|	maxRating : 6.5 	|	filmCount : 1 	|
-|		genre : Musical comedy 	|	avgRating : 6.45 	|	minRating : 6.4 	|	maxRating : 6.5 	|	filmCount : 2 	|
-|		genre : Biopic 	|	avgRating : 6.4 	|	minRating : 5.8 	|	maxRating : 7.3 	|	filmCount : 9 	|
-|		genre : Action thriller 	|	avgRating : 6.4 	|	minRating : 6.4 	|	maxRating : 6.4 	|	filmCount : 1 	|
-|		genre : Animation / Musicial 	|	avgRating : 6.4 	|	minRating : 6.4 	|	maxRating : 6.4 	|	filmCount : 1 	|
-|		genre : Animation/Comedy/Adventure 	|	avgRating : 6.4 	|	minRating : 6.4 	|	maxRating : 6.4 	|	filmCount : 1 	|
-|		genre : Animation/Musical/Adventure 	|	avgRating : 6.4 	|	minRating : 6.4 	|	maxRating : 6.4 	|	filmCount : 1 	|
-|		genre : Drama 	|	avgRating : 6.342857142857142857142857 	|	minRating : 4.1 	|	maxRating : 7.9 	|	filmCount : 77 	|
-|		genre : Adventure 	|	avgRating : 6.3 	|	minRating : 6.1 	|	maxRating : 6.5 	|	filmCount : 2 	|
-|		genre : Crime thriller 	|	avgRating : 6.3 	|	minRating : 6.3 	|	maxRating : 6.3 	|	filmCount : 1 	|
-|		genre : Drama/Horror 	|	avgRating : 6.3 	|	minRating : 6.3 	|	maxRating : 6.3 	|	filmCount : 1 	|
-|		genre : Family/Comedy-drama 	|	avgRating : 6.3 	|	minRating : 6.3 	|	maxRating : 6.3 	|	filmCount : 1 	|
-|		genre : Horror/Crime drama 	|	avgRating : 6.3 	|	minRating : 6.3 	|	maxRating : 6.3 	|	filmCount : 1 	|
-|		genre : Science fiction/Action 	|	avgRating : 6.3 	|	minRating : 6.3 	|	maxRating : 6.3 	|	filmCount : 1 	|
-|		genre : Teen comedy horror 	|	avgRating : 6.3 	|	minRating : 6.3 	|	maxRating : 6.3 	|	filmCount : 1 	|
-|		genre : Urban fantasy 	|	avgRating : 6.3 	|	minRating : 6.3 	|	maxRating : 6.3 	|	filmCount : 1 	|
-|		genre : Comedy-drama 	|	avgRating : 6.214285714285714285714286 	|	minRating : 5.2 	|	maxRating : 7.3 	|	filmCount : 14 	|
-|		genre : Comedy / Musical 	|	avgRating : 6.2 	|	minRating : 5.5 	|	maxRating : 6.9 	|	filmCount : 2 	|
-|		genre : Horror-thriller 	|	avgRating : 6.2 	|	minRating : 6.1 	|	maxRating : 6.3 	|	filmCount : 2 	|
-|		genre : Stop Motion 	|	avgRating : 6.2 	|	minRating : 6.2 	|	maxRating : 6.2 	|	filmCount : 1 	|
-|		genre : Sports-drama 	|	avgRating : 6.166666666666666666666667 	|	minRating : 5.9 	|	maxRating : 6.4 	|	filmCount : 3 	|
-|		genre : Action-thriller 	|	avgRating : 6.133333333333333333333333 	|	minRating : 5.0 	|	maxRating : 7.0 	|	filmCount : 3 	|
-|		genre : Adventure-romance 	|	avgRating : 6.1 	|	minRating : 6.1 	|	maxRating : 6.1 	|	filmCount : 1 	|
-|		genre : Dance comedy 	|	avgRating : 6.1 	|	minRating : 6.1 	|	maxRating : 6.1 	|	filmCount : 1 	|
-|		genre : Romantic comedy/Holiday 	|	avgRating : 6.1 	|	minRating : 6.1 	|	maxRating : 6.1 	|	filmCount : 1 	|
-|		genre : Western 	|	avgRating : 6.066666666666666666666667 	|	minRating : 4.8 	|	maxRating : 7.3 	|	filmCount : 3 	|
-|		genre : Science fiction/Thriller 	|	avgRating : 6.0 	|	minRating : 5.8 	|	maxRating : 6.4 	|	filmCount : 4 	|
-|		genre : Christmas comedy 	|	avgRating : 6.0 	|	minRating : 6.0 	|	maxRating : 6.0 	|	filmCount : 1 	|
-|		genre : Comedy mystery 	|	avgRating : 6.0 	|	minRating : 6.0 	|	maxRating : 6.0 	|	filmCount : 1 	|
-|		genre : Romantic thriller 	|	avgRating : 6.0 	|	minRating : 6.0 	|	maxRating : 6.0 	|	filmCount : 1 	|
-|		genre : War-Comedy 	|	avgRating : 6.0 	|	minRating : 6.0 	|	maxRating : 6.0 	|	filmCount : 1 	|
-|		genre : Variety show 	|	avgRating : 5.95 	|	minRating : 5.2 	|	maxRating : 7.5 	|	filmCount : 4 	|
-|		genre : Romantic drama 	|	avgRating : 5.9 	|	minRating : 5.1 	|	maxRating : 6.7 	|	filmCount : 5 	|
-|		genre : Family 	|	avgRating : 5.9 	|	minRating : 5.7 	|	maxRating : 6.1 	|	filmCount : 2 	|
-|		genre : Psychological horror 	|	avgRating : 5.9 	|	minRating : 5.9 	|	maxRating : 5.9 	|	filmCount : 1 	|
-|		genre : Sports film 	|	avgRating : 5.9 	|	minRating : 5.9 	|	maxRating : 5.9 	|	filmCount : 1 	|
-|		genre : Zombie/Heist 	|	avgRating : 5.9 	|	minRating : 5.9 	|	maxRating : 5.9 	|	filmCount : 1 	|
-|		genre : Mockumentary 	|	avgRating : 5.85 	|	minRating : 5.8 	|	maxRating : 5.9 	|	filmCount : 2 	|
-|		genre : Romantic comedy 	|	avgRating : 5.848717948717948717948718 	|	minRating : 4.1 	|	maxRating : 7.2 	|	filmCount : 39 	|
-|		genre : Comedy/Horror 	|	avgRating : 5.8 	|	minRating : 5.8 	|	maxRating : 5.8 	|	filmCount : 1 	|
-|		genre : Fantasy 	|	avgRating : 5.8 	|	minRating : 5.8 	|	maxRating : 5.8 	|	filmCount : 1 	|
-|		genre : Romantic comedy-drama 	|	avgRating : 5.8 	|	minRating : 5.8 	|	maxRating : 5.8 	|	filmCount : 1 	|
-|		genre : Satire 	|	avgRating : 5.8 	|	minRating : 5.8 	|	maxRating : 5.8 	|	filmCount : 2 	|
-|		genre : Dark comedy 	|	avgRating : 5.75 	|	minRating : 5.7 	|	maxRating : 5.8 	|	filmCount : 2 	|
-|		genre : Science fiction 	|	avgRating : 5.725 	|	minRating : 5.2 	|	maxRating : 6.6 	|	filmCount : 4 	|
-|		genre : Musical 	|	avgRating : 5.7 	|	minRating : 5.5 	|	maxRating : 5.9 	|	filmCount : 2 	|
-|		genre : Christian musical 	|	avgRating : 5.7 	|	minRating : 5.7 	|	maxRating : 5.7 	|	filmCount : 1 	|
-|		genre : Comedy horror 	|	avgRating : 5.7 	|	minRating : 5.7 	|	maxRating : 5.7 	|	filmCount : 1 	|
-|		genre : Romantic teen drama 	|	avgRating : 5.7 	|	minRating : 5.7 	|	maxRating : 5.7 	|	filmCount : 1 	|
-|		genre : Family film 	|	avgRating : 5.6 	|	minRating : 4.9 	|	maxRating : 6.3 	|	filmCount : 2 	|
-|		genre : Horror comedy 	|	avgRating : 5.6 	|	minRating : 5.6 	|	maxRating : 5.6 	|	filmCount : 1 	|
-|		genre : Thriller 	|	avgRating : 5.563636363636363636363636 	|	minRating : 2.6 	|	maxRating : 7.3 	|	filmCount : 33 	|
-|		genre : Black comedy 	|	avgRating : 5.55 	|	minRating : 5.5 	|	maxRating : 5.6 	|	filmCount : 2 	|
-|		genre : Comedy 	|	avgRating : 5.506122448979591836734694 	|	minRating : 3.7 	|	maxRating : 7.2 	|	filmCount : 49 	|
-|		genre : Adventure/Comedy 	|	avgRating : 5.5 	|	minRating : 5.5 	|	maxRating : 5.5 	|	filmCount : 1 	|
-|		genre : Psychological thriller drama 	|	avgRating : 5.5 	|	minRating : 5.5 	|	maxRating : 5.5 	|	filmCount : 1 	|
-|		genre : Science fiction/Mystery 	|	avgRating : 5.5 	|	minRating : 5.5 	|	maxRating : 5.5 	|	filmCount : 1 	|
-|		genre : Action comedy 	|	avgRating : 5.42 	|	minRating : 4.2 	|	maxRating : 6.2 	|	filmCount : 5 	|
-|		genre : Action 	|	avgRating : 5.414285714285714285714286 	|	minRating : 3.5 	|	maxRating : 6.7 	|	filmCount : 7 	|
-|		genre : Action/Comedy 	|	avgRating : 5.4 	|	minRating : 5.4 	|	maxRating : 5.4 	|	filmCount : 1 	|
-|		genre : Action/Science fiction 	|	avgRating : 5.4 	|	minRating : 5.4 	|	maxRating : 5.4 	|	filmCount : 1 	|
-|		genre : Comedy/Fantasy/Family 	|	avgRating : 5.4 	|	minRating : 5.4 	|	maxRating : 5.4 	|	filmCount : 1 	|
-|		genre : Romantic teenage drama 	|	avgRating : 5.4 	|	minRating : 5.4 	|	maxRating : 5.4 	|	filmCount : 1 	|
-|		genre : Supernatural drama 	|	avgRating : 5.4 	|	minRating : 5.4 	|	maxRating : 5.4 	|	filmCount : 1 	|
-|		genre : Superhero 	|	avgRating : 5.35 	|	minRating : 4.7 	|	maxRating : 6.0 	|	filmCount : 2 	|
-|		genre : Horror 	|	avgRating : 5.255555555555555555555556 	|	minRating : 4.6 	|	maxRating : 6.6 	|	filmCount : 9 	|
-|		genre : Christmas musical 	|	avgRating : 5.2 	|	minRating : 5.2 	|	maxRating : 5.2 	|	filmCount : 1 	|
-|		genre : Science fiction adventure 	|	avgRating : 5.2 	|	minRating : 5.2 	|	maxRating : 5.2 	|	filmCount : 1 	|
-|		genre : Teen comedy-drama 	|	avgRating : 5.1 	|	minRating : 5.1 	|	maxRating : 5.1 	|	filmCount : 1 	|
-|		genre : Animation/Superhero 	|	avgRating : 4.9 	|	minRating : 4.9 	|	maxRating : 4.9 	|	filmCount : 1 	|
-|		genre : Heist 	|	avgRating : 4.8 	|	minRating : 4.8 	|	maxRating : 4.8 	|	filmCount : 1 	|
-|		genre : Horror thriller 	|	avgRating : 4.7 	|	minRating : 3.2 	|	maxRating : 6.5 	|	filmCount : 3 	|
-|		genre : Anime / Short 	|	avgRating : 4.7 	|	minRating : 4.7 	|	maxRating : 4.7 	|	filmCount : 1 	|
-|		genre : Mystery 	|	avgRating : 4.65 	|	minRating : 3.4 	|	maxRating : 5.9 	|	filmCount : 2 	|
-|		genre : Romance drama 	|	avgRating : 4.6 	|	minRating : 4.6 	|	maxRating : 4.6 	|	filmCount : 1 	|
-|		genre : Science fiction/Drama 	|	avgRating : 4.533333333333333333333333 	|	minRating : 2.6 	|	maxRating : 6.3 	|	filmCount : 3 	|
-|		genre : Superhero-Comedy 	|	avgRating : 4.4 	|	minRating : 4.4 	|	maxRating : 4.4 	|	filmCount : 1 	|
-|		genre : Horror anthology 	|	avgRating : 4.3 	|	minRating : 4.3 	|	maxRating : 4.3 	|	filmCount : 1 	|
-|		genre : Political thriller 	|	avgRating : 4.3 	|	minRating : 4.3 	|	maxRating : 4.3 	|	filmCount : 1 	|
-|		genre : Musical/Western/Fantasy 	|	avgRating : 3.9 	|	minRating : 3.9 	|	maxRating : 3.9 	|	filmCount : 1 	|
-|		genre : Heist film/Thriller 	|	avgRating : 3.7 	|	minRating : 3.7 	|	maxRating : 3.7 	|	filmCount : 1 	|
+|		title : Mem Famous 	|	amazonRating : 4.8 	|	amazonPrice : 1.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Where the Red Fern Grows 	|	amazonRating : 4.8 	|	amazonPrice : 1.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Driving Miss Daisy 	|	amazonRating : 4.8 	|	amazonPrice : 2.89 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Tucker & Dale vs Evil 	|	amazonRating : 4.8 	|	amazonPrice : 2.89 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : The Hunt for Red October 	|	amazonRating : 4.8 	|	amazonPrice : 2.89 	|	genres : Action, Adventure, Thriller 	|	netflixRating : N/A 	|	violence : Mild 	|	nudity : None 	|
+|		title : Addams Family Values 	|	amazonRating : 4.8 	|	amazonPrice : 2.89 	|	genres : Comedy, Fantasy 	|	netflixRating : N/A 	|	violence : Moderate 	|	nudity : Mild 	|
+|		title : Freedom Writers 	|	amazonRating : 4.8 	|	amazonPrice : 2.89 	|	genres : Drama, Crime, Biography 	|	netflixRating : N/A 	|	violence : Moderate 	|	nudity : None 	|
+|		title : All About the Benjamins 	|	amazonRating : 4.8 	|	amazonPrice : 2.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Girls Just Want to Have Fun 	|	amazonRating : 4.8 	|	amazonPrice : 2.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Lucy Shimmers and the Prince of Peace 	|	amazonRating : 4.8 	|	amazonPrice : 2.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
 
 ==========================================
 
@@ -678,28 +524,37 @@ Fichier: ../queries/federated-request.sparql
 ==========================================
 
 --- Code SPARQL ---
-# Requête fédérée (SERVICE) : récupère les films Amazon avec leurs réalisateurs
-# et enrichit les données avec des biographies depuis DBpedia
 PREFIX unified: <http://example.org/unified/>
 PREFIX amazon: <http://example.org/amazon/>
 PREFIX dbo: <http://dbpedia.org/ontology/>
-PREFIX dbr: <http://dbpedia.org/resource/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT ?film ?title ?director ?directorBio
 WHERE {
-  ?film a amazon:AmazonFilm ;
-        unified:title ?title ;
-        amazon:directedBy ?director .
-
+  # 1. Limiter d'abord les films locaux (plus efficace avant SERVICE)
+  {
+    SELECT ?film ?title ?director
+    WHERE {
+      ?film a amazon:AmazonFilm ;
+            unified:title ?title ;
+            amazon:directedBy ?director .
+    }
+    LIMIT 20
+  }
+  
+  # 2. SERVICE optimisé avec FILTER sur label
   SERVICE <https://dbpedia.org/sparql> {
-    ?directorUri rdfs:label ?director .
-    ?directorUri dbo:abstract ?directorBio .
-    FILTER(LANG(?directorBio) = "en")
+    ?directorUri rdfs:label ?director ;
+                 dbo:abstract ?directorBio .
+    
+    # Filtres groupés pour réduire les résultats intermédiaires
+    FILTER(LANG(?director) = "en" && LANG(?directorBio) = "en")
   }
 }
-LIMIT 10
 --- Résultats ---
                   |=============================|
                   |      Request Results        |
                   |=============================|
+
+==========================================
+
