@@ -1,6 +1,6 @@
 ==========================================
    RÉSULTATS DES REQUÊTES SPARQL
-   Date: 2026-01-05 21:53:14
+   Date: 2026-01-05 22:47:20
 ==========================================
 
 
@@ -21,7 +21,8 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT ?genre
        (COUNT(DISTINCT ?film) as ?totalFilms)
-       (AVG(?rating) as ?avgRating)
+       (ROUND(AVG(?duration)) as ?avgDuration)
+       (ROUND(AVG(?rating)) as ?avgRating)
        (MIN(?rating) as ?minRating)
        (MAX(?rating) as ?maxRating)
 WHERE {
@@ -33,10 +34,8 @@ WHERE {
   ?film ?genreProp ?genre .
 
   # Les ratings depuis Amazon et Netflix (subPropertyOf unified:rating)
-  OPTIONAL {
-    ?ratingProp rdfs:subPropertyOf* unified:rating .
-    ?film ?ratingProp ?rating .
-  }
+  ?film unified:rating ?rating .
+  ?film unified:duration ?duration .
 }
 GROUP BY ?genre
 HAVING (COUNT(DISTINCT ?film) > 5)
@@ -45,37 +44,19 @@ ORDER BY DESC(?totalFilms)
                   |=============================|
                   |      Request Results        |
                   |=============================|
-|		genre : Drama 	|	totalFilms : 3342 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Comedy 	|	totalFilms : 2037 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Action 	|	totalFilms : 1666 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Adventure 	|	totalFilms : 1294 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Crime 	|	totalFilms : 1206 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Thriller 	|	totalFilms : 1038 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Horror 	|	totalFilms : 877 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Mystery 	|	totalFilms : 768 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Romance 	|	totalFilms : 762 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Fantasy 	|	totalFilms : 575 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Sci-Fi 	|	totalFilms : 572 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Animation 	|	totalFilms : 407 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Family 	|	totalFilms : 350 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Biography 	|	totalFilms : 299 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : History 	|	totalFilms : 193 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Documentary 	|	totalFilms : 188 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Music 	|	totalFilms : 112 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Sport 	|	totalFilms : 82 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : War 	|	totalFilms : 78 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Western 	|	totalFilms : 68 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Musical 	|	totalFilms : 51 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Reality-TV 	|	totalFilms : 41 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Romantic comedy 	|	totalFilms : 39 	|	avgRating : N/A 	|	minRating : 4.1 	|	maxRating : 7.2 	|
-|		genre : Short 	|	totalFilms : 29 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Game-Show 	|	totalFilms : 18 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Comedy-drama 	|	totalFilms : 14 	|	avgRating : N/A 	|	minRating : 5.2 	|	maxRating : 7.3 	|
-|		genre : Crime drama 	|	totalFilms : 11 	|	avgRating : N/A 	|	minRating : 5.5 	|	maxRating : 7.8 	|
-|		genre : Biopic 	|	totalFilms : 9 	|	avgRating : N/A 	|	minRating : 5.8 	|	maxRating : 7.3 	|
-|		genre : Film-Noir 	|	totalFilms : 7 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
-|		genre : Aftershow / Interview 	|	totalFilms : 6 	|	avgRating : N/A 	|	minRating : 5.2 	|	maxRating : 7.4 	|
-|		genre : Concert Film 	|	totalFilms : 6 	|	avgRating : N/A 	|	minRating : 6.4 	|	maxRating : 8.4 	|
+|		genre : Documentary 	|	totalFilms : 159 	|	avgDuration : 79.0 	|	avgRating : 7.0 	|	minRating : 2.5 	|	maxRating : 9.0 	|
+|		genre : Drama 	|	totalFilms : 77 	|	avgDuration : 107.0 	|	avgRating : 6.0 	|	minRating : 4.1 	|	maxRating : 7.9 	|
+|		genre : Comedy 	|	totalFilms : 49 	|	avgDuration : 96.0 	|	avgRating : 6.0 	|	minRating : 3.7 	|	maxRating : 7.2 	|
+|		genre : Romantic comedy 	|	totalFilms : 39 	|	avgDuration : 101.0 	|	avgRating : 6.0 	|	minRating : 4.1 	|	maxRating : 7.2 	|
+|		genre : Thriller 	|	totalFilms : 33 	|	avgDuration : 105.0 	|	avgRating : 6.0 	|	minRating : 2.6 	|	maxRating : 7.3 	|
+|		genre : Comedy-drama 	|	totalFilms : 14 	|	avgDuration : 105.0 	|	avgRating : 6.0 	|	minRating : 5.2 	|	maxRating : 7.3 	|
+|		genre : Crime drama 	|	totalFilms : 11 	|	avgDuration : 118.0 	|	avgRating : 7.0 	|	minRating : 5.5 	|	maxRating : 7.8 	|
+|		genre : Biopic 	|	totalFilms : 9 	|	avgDuration : 108.0 	|	avgRating : 6.0 	|	minRating : 5.8 	|	maxRating : 7.3 	|
+|		genre : Horror 	|	totalFilms : 9 	|	avgDuration : 99.0 	|	avgRating : 5.0 	|	minRating : 4.6 	|	maxRating : 6.6 	|
+|		genre : Action 	|	totalFilms : 7 	|	avgDuration : 108.0 	|	avgRating : 5.0 	|	minRating : 3.5 	|	maxRating : 6.7 	|
+|		genre : Romance 	|	totalFilms : 6 	|	avgDuration : 101.0 	|	avgRating : 7.0 	|	minRating : 5.6 	|	maxRating : 6.9 	|
+|		genre : Aftershow / Interview 	|	totalFilms : 6 	|	avgDuration : 24.0 	|	avgRating : 7.0 	|	minRating : 5.2 	|	maxRating : 7.4 	|
+|		genre : Concert Film 	|	totalFilms : 6 	|	avgDuration : 99.0 	|	avgRating : 8.0 	|	minRating : 6.4 	|	maxRating : 8.4 	|
 
 ==========================================
 
@@ -264,7 +245,7 @@ LIMIT 50
                   |=============================|
                   |      Request Results        |
                   |=============================|
-|		film : http://example.org/netflix/584 	|	title : David Attenborough: A Life on Our Planet 	|	netflixRating : 9 	|
+|		film : http://example.org/netflix/584 	|	title : David Attenborough: A Life on Our Planet 	|	netflixRating : 9.0 	|
 |		film : http://example.org/netflix/583 	|	title : Emicida: AmarElo - It's All For Yesterday 	|	netflixRating : 8.6 	|
 |		film : http://example.org/netflix/582 	|	title : Springsteen on Broadway 	|	netflixRating : 8.5 	|
 |		film : http://example.org/netflix/579 	|	title : Ben Platt: Live from Radio City Music Hall 	|	netflixRating : 8.4 	|
@@ -280,7 +261,7 @@ LIMIT 50
 |		film : http://example.org/netflix/569 	|	title : Chasing Coral 	|	netflixRating : 8.1 	|
 |		film : http://example.org/netflix/570 	|	title : My Octopus Teacher 	|	netflixRating : 8.1 	|
 |		film : http://example.org/netflix/571 	|	title : Rising Phoenix 	|	netflixRating : 8.1 	|
-|		film : http://example.org/netflix/568 	|	title : Struggle: The Life and Lost Art of Szukaiski 	|	netflixRating : 8 	|
+|		film : http://example.org/netflix/568 	|	title : Struggle: The Life and Lost Art of Szukaiski 	|	netflixRating : 8.0 	|
 |		film : http://example.org/netflix/564 	|	title : A Secret Love 	|	netflixRating : 7.9 	|
 |		film : http://example.org/netflix/565 	|	title : Icarus 	|	netflixRating : 7.9 	|
 |		film : http://example.org/netflix/566 	|	title : Marriage Story 	|	netflixRating : 7.9 	|
@@ -355,6 +336,31 @@ LIMIT 25
                   |=============================|
                   |      Request Results        |
                   |=============================|
+|		film : http://example.org/netflix/584 	|	title : David Attenborough: A Life on Our Planet 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 9.0 	|	genre : Documentary 	|
+|		film : http://example.org/netflix/584 	|	title : David Attenborough: A Life on Our Planet 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 9.0 	|	genre : Documentary 	|
+|		film : http://example.org/netflix/584 	|	title : David Attenborough: A Life on Our Planet 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 9.0 	|	genre : Documentary 	|
+|		film : http://example.org/netflix/584 	|	title : David Attenborough: A Life on Our Planet 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 9.0 	|	genre : Documentary 	|
+|		film : http://example.org/netflix/583 	|	title : Emicida: AmarElo - It's All For Yesterday 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.6 	|	genre : Documentary 	|
+|		film : http://example.org/netflix/583 	|	title : Emicida: AmarElo - It's All For Yesterday 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.6 	|	genre : Documentary 	|
+|		film : http://example.org/netflix/583 	|	title : Emicida: AmarElo - It's All For Yesterday 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.6 	|	genre : Documentary 	|
+|		film : http://example.org/netflix/583 	|	title : Emicida: AmarElo - It's All For Yesterday 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.6 	|	genre : Documentary 	|
+|		film : http://example.org/netflix/582 	|	title : Springsteen on Broadway 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.5 	|	genre : One-man show 	|
+|		film : http://example.org/netflix/582 	|	title : Springsteen on Broadway 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.5 	|	genre : One-man show 	|
+|		film : http://example.org/netflix/582 	|	title : Springsteen on Broadway 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.5 	|	genre : One-man show 	|
+|		film : http://example.org/netflix/582 	|	title : Springsteen on Broadway 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.5 	|	genre : One-man show 	|
+|		film : http://example.org/netflix/579 	|	title : Ben Platt: Live from Radio City Music Hall 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.4 	|	genre : Concert Film 	|
+|		film : http://example.org/netflix/580 	|	title : Taylor Swift: Reputation Stadium Tour 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.4 	|	genre : Concert Film 	|
+|		film : http://example.org/netflix/581 	|	title : Winter on Fire: Ukraine's Fight for Freedom 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.4 	|	genre : Documentary 	|
+|		film : http://example.org/netflix/579 	|	title : Ben Platt: Live from Radio City Music Hall 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.4 	|	genre : Concert Film 	|
+|		film : http://example.org/netflix/580 	|	title : Taylor Swift: Reputation Stadium Tour 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.4 	|	genre : Concert Film 	|
+|		film : http://example.org/netflix/581 	|	title : Winter on Fire: Ukraine's Fight for Freedom 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.4 	|	genre : Documentary 	|
+|		film : http://example.org/netflix/579 	|	title : Ben Platt: Live from Radio City Music Hall 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.4 	|	genre : Concert Film 	|
+|		film : http://example.org/netflix/580 	|	title : Taylor Swift: Reputation Stadium Tour 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.4 	|	genre : Concert Film 	|
+|		film : http://example.org/netflix/581 	|	title : Winter on Fire: Ukraine's Fight for Freedom 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.4 	|	genre : Documentary 	|
+|		film : http://example.org/netflix/579 	|	title : Ben Platt: Live from Radio City Music Hall 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.4 	|	genre : Concert Film 	|
+|		film : http://example.org/netflix/580 	|	title : Taylor Swift: Reputation Stadium Tour 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.4 	|	genre : Concert Film 	|
+|		film : http://example.org/netflix/581 	|	title : Winter on Fire: Ukraine's Fight for Freedom 	|	specificType : http://www.w3.org/2000/01/rdf-schema#Resource 	|	rating : 8.4 	|	genre : Documentary 	|
+|		film : http://example.org/netflix/577 	|	title : Cuba and the Cameraman 	|	specificType : http://example.org/netflix/NetflixFilm 	|	rating : 8.3 	|	genre : Documentary 	|
 
 ==========================================
 
@@ -406,6 +412,8 @@ LIMIT 15
                   |=============================|
                   |      Request Results        |
                   |=============================|
+|		title : The Outsider 	|	amazonRating : 4.6 	|	netflixRating : 6.3 	|	genres : Fantasy, Drama, Crime 	|	certificate : TV-MA 	|	avgCrossRating : 5.45 	|
+|		title : Extraction 	|	amazonRating : 4.2 	|	netflixRating : 6.7 	|	genres : Thriller, Action 	|	certificate : R 	|	avgCrossRating : 5.45 	|
 
 ==========================================
 
@@ -514,6 +522,121 @@ ORDER BY DESC(?avgRating)
                   |=============================|
                   |      Request Results        |
                   |=============================|
+|		genre : Animation/Christmas/Comedy/Adventure 	|	avgRating : 8.2 	|	minRating : 8.2 	|	maxRating : 8.2 	|	filmCount : 1 	|
+|		genre : Musical / Short 	|	avgRating : 7.7 	|	minRating : 7.7 	|	maxRating : 7.7 	|	filmCount : 1 	|
+|		genre : Concert Film 	|	avgRating : 7.633333333333333333333333 	|	minRating : 6.4 	|	maxRating : 8.4 	|	filmCount : 6 	|
+|		genre : Anthology/Dark comedy 	|	avgRating : 7.6 	|	minRating : 7.6 	|	maxRating : 7.6 	|	filmCount : 1 	|
+|		genre : Animation / Science Fiction 	|	avgRating : 7.5 	|	minRating : 7.5 	|	maxRating : 7.5 	|	filmCount : 1 	|
+|		genre : Making-of 	|	avgRating : 7.45 	|	minRating : 7.2 	|	maxRating : 7.7 	|	filmCount : 2 	|
+|		genre : Action-adventure 	|	avgRating : 7.3 	|	minRating : 7.3 	|	maxRating : 7.3 	|	filmCount : 1 	|
+|		genre : Coming-of-age comedy-drama 	|	avgRating : 7.2 	|	minRating : 7.2 	|	maxRating : 7.2 	|	filmCount : 1 	|
+|		genre : Drama-Comedy 	|	avgRating : 7.2 	|	minRating : 7.2 	|	maxRating : 7.2 	|	filmCount : 1 	|
+|		genre : Historical drama 	|	avgRating : 7.2 	|	minRating : 7.2 	|	maxRating : 7.2 	|	filmCount : 1 	|
+|		genre : One-man show 	|	avgRating : 7.133333333333333333333333 	|	minRating : 5.8 	|	maxRating : 8.5 	|	filmCount : 3 	|
+|		genre : Animation / Short 	|	avgRating : 7.125 	|	minRating : 6.5 	|	maxRating : 7.8 	|	filmCount : 4 	|
+|		genre : War drama 	|	avgRating : 7.1 	|	minRating : 6.5 	|	maxRating : 7.7 	|	filmCount : 2 	|
+|		genre : Mentalism special 	|	avgRating : 7.1 	|	minRating : 7.1 	|	maxRating : 7.1 	|	filmCount : 1 	|
+|		genre : Animation / Comedy 	|	avgRating : 7.0 	|	minRating : 7.0 	|	maxRating : 7.0 	|	filmCount : 1 	|
+|		genre : Christmas/Fantasy/Adventure/Comedy 	|	avgRating : 7.0 	|	minRating : 7.0 	|	maxRating : 7.0 	|	filmCount : 1 	|
+|		genre : Documentary 	|	avgRating : 6.936477987421383647798742 	|	minRating : 2.5 	|	maxRating : 9.0 	|	filmCount : 159 	|
+|		genre : Historical-epic 	|	avgRating : 6.9 	|	minRating : 6.9 	|	maxRating : 6.9 	|	filmCount : 1 	|
+|		genre : Biographical/Comedy 	|	avgRating : 6.8 	|	minRating : 6.8 	|	maxRating : 6.8 	|	filmCount : 1 	|
+|		genre : Aftershow / Interview 	|	avgRating : 6.75 	|	minRating : 5.2 	|	maxRating : 7.4 	|	filmCount : 6 	|
+|		genre : War 	|	avgRating : 6.75 	|	minRating : 6.3 	|	maxRating : 7.2 	|	filmCount : 2 	|
+|		genre : Crime drama 	|	avgRating : 6.745454545454545454545455 	|	minRating : 5.5 	|	maxRating : 7.8 	|	filmCount : 11 	|
+|		genre : Animated musical comedy 	|	avgRating : 6.7 	|	minRating : 6.7 	|	maxRating : 6.7 	|	filmCount : 1 	|
+|		genre : Anime/Fantasy 	|	avgRating : 6.7 	|	minRating : 6.7 	|	maxRating : 6.7 	|	filmCount : 1 	|
+|		genre : Superhero/Action 	|	avgRating : 6.7 	|	minRating : 6.7 	|	maxRating : 6.7 	|	filmCount : 1 	|
+|		genre : Variety Show 	|	avgRating : 6.7 	|	minRating : 6.7 	|	maxRating : 6.7 	|	filmCount : 1 	|
+|		genre : Anime/Science fiction 	|	avgRating : 6.6 	|	minRating : 6.5 	|	maxRating : 6.7 	|	filmCount : 2 	|
+|		genre : Hidden-camera prank comedy 	|	avgRating : 6.6 	|	minRating : 6.6 	|	maxRating : 6.6 	|	filmCount : 1 	|
+|		genre : Spy thriller 	|	avgRating : 6.6 	|	minRating : 6.6 	|	maxRating : 6.6 	|	filmCount : 2 	|
+|		genre : Animation 	|	avgRating : 6.56 	|	minRating : 5.1 	|	maxRating : 7.3 	|	filmCount : 5 	|
+|		genre : Romance 	|	avgRating : 6.5 	|	minRating : 5.6 	|	maxRating : 6.9 	|	filmCount : 6 	|
+|		genre : Psychological thriller 	|	avgRating : 6.5 	|	minRating : 5.7 	|	maxRating : 7.1 	|	filmCount : 4 	|
+|		genre : Drama / Short 	|	avgRating : 6.5 	|	minRating : 6.5 	|	maxRating : 6.5 	|	filmCount : 1 	|
+|		genre : Family/Christmas musical 	|	avgRating : 6.5 	|	minRating : 6.5 	|	maxRating : 6.5 	|	filmCount : 1 	|
+|		genre : Science fiction thriller 	|	avgRating : 6.5 	|	minRating : 6.5 	|	maxRating : 6.5 	|	filmCount : 1 	|
+|		genre : Musical comedy 	|	avgRating : 6.45 	|	minRating : 6.4 	|	maxRating : 6.5 	|	filmCount : 2 	|
+|		genre : Biopic 	|	avgRating : 6.4 	|	minRating : 5.8 	|	maxRating : 7.3 	|	filmCount : 9 	|
+|		genre : Action thriller 	|	avgRating : 6.4 	|	minRating : 6.4 	|	maxRating : 6.4 	|	filmCount : 1 	|
+|		genre : Animation / Musicial 	|	avgRating : 6.4 	|	minRating : 6.4 	|	maxRating : 6.4 	|	filmCount : 1 	|
+|		genre : Animation/Comedy/Adventure 	|	avgRating : 6.4 	|	minRating : 6.4 	|	maxRating : 6.4 	|	filmCount : 1 	|
+|		genre : Animation/Musical/Adventure 	|	avgRating : 6.4 	|	minRating : 6.4 	|	maxRating : 6.4 	|	filmCount : 1 	|
+|		genre : Drama 	|	avgRating : 6.342857142857142857142857 	|	minRating : 4.1 	|	maxRating : 7.9 	|	filmCount : 77 	|
+|		genre : Adventure 	|	avgRating : 6.3 	|	minRating : 6.1 	|	maxRating : 6.5 	|	filmCount : 2 	|
+|		genre : Crime thriller 	|	avgRating : 6.3 	|	minRating : 6.3 	|	maxRating : 6.3 	|	filmCount : 1 	|
+|		genre : Drama/Horror 	|	avgRating : 6.3 	|	minRating : 6.3 	|	maxRating : 6.3 	|	filmCount : 1 	|
+|		genre : Family/Comedy-drama 	|	avgRating : 6.3 	|	minRating : 6.3 	|	maxRating : 6.3 	|	filmCount : 1 	|
+|		genre : Horror/Crime drama 	|	avgRating : 6.3 	|	minRating : 6.3 	|	maxRating : 6.3 	|	filmCount : 1 	|
+|		genre : Science fiction/Action 	|	avgRating : 6.3 	|	minRating : 6.3 	|	maxRating : 6.3 	|	filmCount : 1 	|
+|		genre : Teen comedy horror 	|	avgRating : 6.3 	|	minRating : 6.3 	|	maxRating : 6.3 	|	filmCount : 1 	|
+|		genre : Urban fantasy 	|	avgRating : 6.3 	|	minRating : 6.3 	|	maxRating : 6.3 	|	filmCount : 1 	|
+|		genre : Comedy-drama 	|	avgRating : 6.214285714285714285714286 	|	minRating : 5.2 	|	maxRating : 7.3 	|	filmCount : 14 	|
+|		genre : Comedy / Musical 	|	avgRating : 6.2 	|	minRating : 5.5 	|	maxRating : 6.9 	|	filmCount : 2 	|
+|		genre : Horror-thriller 	|	avgRating : 6.2 	|	minRating : 6.1 	|	maxRating : 6.3 	|	filmCount : 2 	|
+|		genre : Stop Motion 	|	avgRating : 6.2 	|	minRating : 6.2 	|	maxRating : 6.2 	|	filmCount : 1 	|
+|		genre : Sports-drama 	|	avgRating : 6.166666666666666666666667 	|	minRating : 5.9 	|	maxRating : 6.4 	|	filmCount : 3 	|
+|		genre : Action-thriller 	|	avgRating : 6.133333333333333333333333 	|	minRating : 5.0 	|	maxRating : 7.0 	|	filmCount : 3 	|
+|		genre : Adventure-romance 	|	avgRating : 6.1 	|	minRating : 6.1 	|	maxRating : 6.1 	|	filmCount : 1 	|
+|		genre : Dance comedy 	|	avgRating : 6.1 	|	minRating : 6.1 	|	maxRating : 6.1 	|	filmCount : 1 	|
+|		genre : Romantic comedy/Holiday 	|	avgRating : 6.1 	|	minRating : 6.1 	|	maxRating : 6.1 	|	filmCount : 1 	|
+|		genre : Western 	|	avgRating : 6.066666666666666666666667 	|	minRating : 4.8 	|	maxRating : 7.3 	|	filmCount : 3 	|
+|		genre : Science fiction/Thriller 	|	avgRating : 6.0 	|	minRating : 5.8 	|	maxRating : 6.4 	|	filmCount : 4 	|
+|		genre : Christmas comedy 	|	avgRating : 6.0 	|	minRating : 6.0 	|	maxRating : 6.0 	|	filmCount : 1 	|
+|		genre : Comedy mystery 	|	avgRating : 6.0 	|	minRating : 6.0 	|	maxRating : 6.0 	|	filmCount : 1 	|
+|		genre : Romantic thriller 	|	avgRating : 6.0 	|	minRating : 6.0 	|	maxRating : 6.0 	|	filmCount : 1 	|
+|		genre : War-Comedy 	|	avgRating : 6.0 	|	minRating : 6.0 	|	maxRating : 6.0 	|	filmCount : 1 	|
+|		genre : Variety show 	|	avgRating : 5.95 	|	minRating : 5.2 	|	maxRating : 7.5 	|	filmCount : 4 	|
+|		genre : Romantic drama 	|	avgRating : 5.9 	|	minRating : 5.1 	|	maxRating : 6.7 	|	filmCount : 5 	|
+|		genre : Family 	|	avgRating : 5.9 	|	minRating : 5.7 	|	maxRating : 6.1 	|	filmCount : 2 	|
+|		genre : Psychological horror 	|	avgRating : 5.9 	|	minRating : 5.9 	|	maxRating : 5.9 	|	filmCount : 1 	|
+|		genre : Sports film 	|	avgRating : 5.9 	|	minRating : 5.9 	|	maxRating : 5.9 	|	filmCount : 1 	|
+|		genre : Zombie/Heist 	|	avgRating : 5.9 	|	minRating : 5.9 	|	maxRating : 5.9 	|	filmCount : 1 	|
+|		genre : Mockumentary 	|	avgRating : 5.85 	|	minRating : 5.8 	|	maxRating : 5.9 	|	filmCount : 2 	|
+|		genre : Romantic comedy 	|	avgRating : 5.848717948717948717948718 	|	minRating : 4.1 	|	maxRating : 7.2 	|	filmCount : 39 	|
+|		genre : Comedy/Horror 	|	avgRating : 5.8 	|	minRating : 5.8 	|	maxRating : 5.8 	|	filmCount : 1 	|
+|		genre : Fantasy 	|	avgRating : 5.8 	|	minRating : 5.8 	|	maxRating : 5.8 	|	filmCount : 1 	|
+|		genre : Romantic comedy-drama 	|	avgRating : 5.8 	|	minRating : 5.8 	|	maxRating : 5.8 	|	filmCount : 1 	|
+|		genre : Satire 	|	avgRating : 5.8 	|	minRating : 5.8 	|	maxRating : 5.8 	|	filmCount : 2 	|
+|		genre : Dark comedy 	|	avgRating : 5.75 	|	minRating : 5.7 	|	maxRating : 5.8 	|	filmCount : 2 	|
+|		genre : Science fiction 	|	avgRating : 5.725 	|	minRating : 5.2 	|	maxRating : 6.6 	|	filmCount : 4 	|
+|		genre : Musical 	|	avgRating : 5.7 	|	minRating : 5.5 	|	maxRating : 5.9 	|	filmCount : 2 	|
+|		genre : Christian musical 	|	avgRating : 5.7 	|	minRating : 5.7 	|	maxRating : 5.7 	|	filmCount : 1 	|
+|		genre : Comedy horror 	|	avgRating : 5.7 	|	minRating : 5.7 	|	maxRating : 5.7 	|	filmCount : 1 	|
+|		genre : Romantic teen drama 	|	avgRating : 5.7 	|	minRating : 5.7 	|	maxRating : 5.7 	|	filmCount : 1 	|
+|		genre : Family film 	|	avgRating : 5.6 	|	minRating : 4.9 	|	maxRating : 6.3 	|	filmCount : 2 	|
+|		genre : Horror comedy 	|	avgRating : 5.6 	|	minRating : 5.6 	|	maxRating : 5.6 	|	filmCount : 1 	|
+|		genre : Thriller 	|	avgRating : 5.563636363636363636363636 	|	minRating : 2.6 	|	maxRating : 7.3 	|	filmCount : 33 	|
+|		genre : Black comedy 	|	avgRating : 5.55 	|	minRating : 5.5 	|	maxRating : 5.6 	|	filmCount : 2 	|
+|		genre : Comedy 	|	avgRating : 5.506122448979591836734694 	|	minRating : 3.7 	|	maxRating : 7.2 	|	filmCount : 49 	|
+|		genre : Adventure/Comedy 	|	avgRating : 5.5 	|	minRating : 5.5 	|	maxRating : 5.5 	|	filmCount : 1 	|
+|		genre : Psychological thriller drama 	|	avgRating : 5.5 	|	minRating : 5.5 	|	maxRating : 5.5 	|	filmCount : 1 	|
+|		genre : Science fiction/Mystery 	|	avgRating : 5.5 	|	minRating : 5.5 	|	maxRating : 5.5 	|	filmCount : 1 	|
+|		genre : Action comedy 	|	avgRating : 5.42 	|	minRating : 4.2 	|	maxRating : 6.2 	|	filmCount : 5 	|
+|		genre : Action 	|	avgRating : 5.414285714285714285714286 	|	minRating : 3.5 	|	maxRating : 6.7 	|	filmCount : 7 	|
+|		genre : Action/Comedy 	|	avgRating : 5.4 	|	minRating : 5.4 	|	maxRating : 5.4 	|	filmCount : 1 	|
+|		genre : Action/Science fiction 	|	avgRating : 5.4 	|	minRating : 5.4 	|	maxRating : 5.4 	|	filmCount : 1 	|
+|		genre : Comedy/Fantasy/Family 	|	avgRating : 5.4 	|	minRating : 5.4 	|	maxRating : 5.4 	|	filmCount : 1 	|
+|		genre : Romantic teenage drama 	|	avgRating : 5.4 	|	minRating : 5.4 	|	maxRating : 5.4 	|	filmCount : 1 	|
+|		genre : Supernatural drama 	|	avgRating : 5.4 	|	minRating : 5.4 	|	maxRating : 5.4 	|	filmCount : 1 	|
+|		genre : Superhero 	|	avgRating : 5.35 	|	minRating : 4.7 	|	maxRating : 6.0 	|	filmCount : 2 	|
+|		genre : Horror 	|	avgRating : 5.255555555555555555555556 	|	minRating : 4.6 	|	maxRating : 6.6 	|	filmCount : 9 	|
+|		genre : Christmas musical 	|	avgRating : 5.2 	|	minRating : 5.2 	|	maxRating : 5.2 	|	filmCount : 1 	|
+|		genre : Science fiction adventure 	|	avgRating : 5.2 	|	minRating : 5.2 	|	maxRating : 5.2 	|	filmCount : 1 	|
+|		genre : Teen comedy-drama 	|	avgRating : 5.1 	|	minRating : 5.1 	|	maxRating : 5.1 	|	filmCount : 1 	|
+|		genre : Animation/Superhero 	|	avgRating : 4.9 	|	minRating : 4.9 	|	maxRating : 4.9 	|	filmCount : 1 	|
+|		genre : Heist 	|	avgRating : 4.8 	|	minRating : 4.8 	|	maxRating : 4.8 	|	filmCount : 1 	|
+|		genre : Horror thriller 	|	avgRating : 4.7 	|	minRating : 3.2 	|	maxRating : 6.5 	|	filmCount : 3 	|
+|		genre : Anime / Short 	|	avgRating : 4.7 	|	minRating : 4.7 	|	maxRating : 4.7 	|	filmCount : 1 	|
+|		genre : Mystery 	|	avgRating : 4.65 	|	minRating : 3.4 	|	maxRating : 5.9 	|	filmCount : 2 	|
+|		genre : Romance drama 	|	avgRating : 4.6 	|	minRating : 4.6 	|	maxRating : 4.6 	|	filmCount : 1 	|
+|		genre : Science fiction/Drama 	|	avgRating : 4.533333333333333333333333 	|	minRating : 2.6 	|	maxRating : 6.3 	|	filmCount : 3 	|
+|		genre : Superhero-Comedy 	|	avgRating : 4.4 	|	minRating : 4.4 	|	maxRating : 4.4 	|	filmCount : 1 	|
+|		genre : Horror anthology 	|	avgRating : 4.3 	|	minRating : 4.3 	|	maxRating : 4.3 	|	filmCount : 1 	|
+|		genre : Political thriller 	|	avgRating : 4.3 	|	minRating : 4.3 	|	maxRating : 4.3 	|	filmCount : 1 	|
+|		genre : Musical/Western/Fantasy 	|	avgRating : 3.9 	|	minRating : 3.9 	|	maxRating : 3.9 	|	filmCount : 1 	|
+|		genre : Heist film/Thriller 	|	avgRating : 3.7 	|	minRating : 3.7 	|	maxRating : 3.7 	|	filmCount : 1 	|
 
 ==========================================
 
@@ -549,6 +672,3 @@ LIMIT 10
                   |=============================|
                   |      Request Results        |
                   |=============================|
-
-==========================================
-

@@ -9,8 +9,8 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT ?genre
        (COUNT(DISTINCT ?film) as ?totalFilms)
-       (AVG(?duration) as ?avgDuration)
-       (AVG(?rating) as ?avgRating)
+       (ROUND(AVG(?duration)) as ?avgDuration)
+       (ROUND(AVG(?rating)) as ?avgRating)
        (MIN(?rating) as ?minRating)
        (MAX(?rating) as ?maxRating)
 WHERE {
