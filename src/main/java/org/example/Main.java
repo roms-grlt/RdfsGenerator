@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.model.rdfs.NameExtractors;
+import org.example.service.QueryExecutor;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
@@ -32,7 +33,14 @@ public class Main {
             case "integrate" :
                 integrateData(args);
                 break;
+            case "query" :
+                executeQuery(args[1], args[2]);
         }
+    }
+
+    private static void executeQuery(String requestFilePath, String turtleFilePath) throws IOException {
+        String request = new String(Files.readAllBytes(Paths.get(requestFilePath)));
+        QueryExecutor.executeQuery(request, turtleFilePath);
     }
 
     private static void convertToTurtle(String format, String source, String prefixesPath, String target) throws IOException {
@@ -71,11 +79,6 @@ public class Main {
         writer.close();
     }
 
-    /**
-     * Integrates multiple RDF datasets.
-     * Usage: integrate <output_file> <dataset1_name> <dataset1_file> <dataset2_name> <dataset2_file> ...
-     * Add --no-ontology flag to skip unified ontology creation
-     */
     private static void integrateData(String[] args) throws IOException {
         if (args.length < 4) {
             System.err.println("Usage: integrate <output_file> <dataset1_name> <dataset1_file> <dataset2_name> <dataset2_file> ... [--no-ontology]");

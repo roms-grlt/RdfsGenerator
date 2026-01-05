@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class DataIntegrator {
     private static final String OWL_NS = "http://www.w3.org/2002/07/owl#";
-    private static final String UNIFIED_NS = "http://www.filmdata.org/";
+    private static final String UNIFIED_NS = "http://example.org/unified/";
 
     public static void integrateDatasets(Map<String, String> inputFiles, String propertyIdentifier, List<String> classNames, String unifiedClassName, String outputFile)
             throws IOException {
