@@ -9,6 +9,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT ?genre
        (COUNT(DISTINCT ?film) as ?totalFilms)
+       (AVG(?duration) as ?avgDuration)
        (AVG(?rating) as ?avgRating)
        (MIN(?rating) as ?minRating)
        (MAX(?rating) as ?maxRating)
@@ -21,7 +22,8 @@ WHERE {
   ?film ?genreProp ?genre .
 
   # Les ratings depuis Amazon et Netflix (subPropertyOf unified:rating)
-    ?film unified:rating ?rating .
+  ?film unified:rating ?rating .
+  ?film unified:duration ?duration .
 }
 GROUP BY ?genre
 HAVING (COUNT(DISTINCT ?film) > 5)
