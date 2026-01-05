@@ -14,7 +14,8 @@ public class ImdbFilm {
     @Ignore("No Rate")
     private Integer date;
     @Ignore("No Rate")
-    private Double rate;
+    @Column(name="rate")
+    private Double rating;
     @Remove(regex = ",")
     @Ignore("No Votes")
     private Integer votes;
