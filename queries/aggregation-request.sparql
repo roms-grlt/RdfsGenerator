@@ -14,14 +14,10 @@ SELECT ?genre
        (MIN(?rating) as ?minRating)
        (MAX(?rating) as ?maxRating)
 WHERE {
-  # Récupérer les films avec genres (via raisonnement RDFS)
+  # Récupérer les films avec genres, rating et duration (via raisonnement RDFS)
   ?film a unified:film .
 
-  # Les genres depuis IMDB et Netflix (subPropertyOf unified:genre)
-  ?genreProp rdfs:subPropertyOf* unified:genre .
-  ?film ?genreProp ?genre .
-
-  # Les ratings depuis Amazon et Netflix (subPropertyOf unified:rating)
+  ?film unified:genre ?genre .
   ?film unified:rating ?rating .
   ?film unified:duration ?duration .
 }
