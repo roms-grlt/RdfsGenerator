@@ -57,7 +57,7 @@ public class QueryExecutor {
 
     public static void main(String[] args) throws IOException {
         String request = new String(Files.readAllBytes(Paths.get("./queries/sub-request-request.sparql")));
-        QueryExecutor.executeQuery(request, "./result/integrated.ttl");
+        QueryExecutor.executeQuery(request, "./data/integrated.ttl");
 
     }
 }
