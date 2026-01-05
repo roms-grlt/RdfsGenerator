@@ -80,8 +80,8 @@ public class Main {
     }
 
     private static void integrateData(String[] args) throws IOException {
-        if (args.length < 4) {
-            System.err.println("Usage: integrate <output_file> <dataset1_name> <dataset1_file> <dataset2_name> <dataset2_file> ... [--no-ontology]");
+        if (args.length < 9) {
+            System.err.println("Usage: integrate <output_file> <number_of_datasets(>=1)> <dataset1_name> <dataset1_file> ... <name_of_property_identifier> <name_of_unified_class> <name_of_class_to_unify1> <name_of_class_to_unify2> ...");
             return;
         }
 
