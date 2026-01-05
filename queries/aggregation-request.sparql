@@ -1,0 +1,31 @@
+# Requête d'agrégation multi-sources : statistiques par genre avec raisonnement RDFS
+# Utilise subPropertyOf : imdb:genre/netflix:genre -> unified:genre
+# Agrège les ratings depuis Amazon et Netflix via unified:rating
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?genre
+       (COUNT(DISTINCT ?film) as ?totalFilms)
+       (AVG(?rating) as ?avgRating)
+       (MIN(?rating) as ?minRating)
+       (MAX(?rating) as ?maxRating)
+WHERE {
+  # Récupérer les films avec genres (via raisonnement RDFS)
+  ?film a unified:film .
+
+  # Les genres depuis IMDB et Netflix (subPropertyOf unified:genre)
+  ?genreProp rdfs:subPropertyOf* unified:genre .
+  ?film ?genreProp ?genre .
+
+  # Les ratings depuis Amazon et Netflix (subPropertyOf unified:rating)
+  OPTIONAL {
+    ?ratingProp rdfs:subPropertyOf* unified:rating .
+    ?film ?ratingProp ?rating .
+  }
+}
+GROUP BY ?genre
+HAVING (COUNT(DISTINCT ?film) > 5)
+ORDER BY DESC(?totalFilms)

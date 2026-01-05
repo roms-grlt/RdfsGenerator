@@ -1,0 +1,20 @@
+# Requête avec sous-requête : calcule des statistiques agrégées par genre
+# Utilise une sous-requête pour filtrer d'abord les films valides (rating > 0)
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+
+SELECT ?genre (AVG(?rating) as ?avgRating) (MIN(?rating) as ?minRating)
+       (MAX(?rating) as ?maxRating) (COUNT(*) as ?filmCount)
+WHERE {
+  {
+    SELECT ?film ?genre ?rating
+    WHERE {
+      ?film unified:genre ?genre ;
+            unified:rating ?rating .
+      FILTER(?rating > 0)
+    }
+  }
+}
+GROUP BY ?genre
+ORDER BY DESC(?avgRating)

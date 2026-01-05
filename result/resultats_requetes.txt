@@ -1,0 +1,554 @@
+==========================================
+   RÉSULTATS DES REQUÊTES SPARQL
+   Date: 2026-01-05 21:53:14
+==========================================
+
+
+==========================================
+REQUÊTE: Agrégation (GROUP BY, HAVING)
+Fichier: ../queries/aggregation-request.sparql
+==========================================
+
+--- Code SPARQL ---
+# Requête d'agrégation multi-sources : statistiques par genre avec raisonnement RDFS
+# Utilise subPropertyOf : imdb:genre/netflix:genre -> unified:genre
+# Agrège les ratings depuis Amazon et Netflix via unified:rating
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?genre
+       (COUNT(DISTINCT ?film) as ?totalFilms)
+       (AVG(?rating) as ?avgRating)
+       (MIN(?rating) as ?minRating)
+       (MAX(?rating) as ?maxRating)
+WHERE {
+  # Récupérer les films avec genres (via raisonnement RDFS)
+  ?film a unified:film .
+
+  # Les genres depuis IMDB et Netflix (subPropertyOf unified:genre)
+  ?genreProp rdfs:subPropertyOf* unified:genre .
+  ?film ?genreProp ?genre .
+
+  # Les ratings depuis Amazon et Netflix (subPropertyOf unified:rating)
+  OPTIONAL {
+    ?ratingProp rdfs:subPropertyOf* unified:rating .
+    ?film ?ratingProp ?rating .
+  }
+}
+GROUP BY ?genre
+HAVING (COUNT(DISTINCT ?film) > 5)
+ORDER BY DESC(?totalFilms)
+--- Résultats ---
+                  |=============================|
+                  |      Request Results        |
+                  |=============================|
+|		genre : Drama 	|	totalFilms : 3342 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Comedy 	|	totalFilms : 2037 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Action 	|	totalFilms : 1666 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Adventure 	|	totalFilms : 1294 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Crime 	|	totalFilms : 1206 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Thriller 	|	totalFilms : 1038 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Horror 	|	totalFilms : 877 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Mystery 	|	totalFilms : 768 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Romance 	|	totalFilms : 762 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Fantasy 	|	totalFilms : 575 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Sci-Fi 	|	totalFilms : 572 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Animation 	|	totalFilms : 407 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Family 	|	totalFilms : 350 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Biography 	|	totalFilms : 299 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : History 	|	totalFilms : 193 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Documentary 	|	totalFilms : 188 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Music 	|	totalFilms : 112 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Sport 	|	totalFilms : 82 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : War 	|	totalFilms : 78 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Western 	|	totalFilms : 68 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Musical 	|	totalFilms : 51 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Reality-TV 	|	totalFilms : 41 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Romantic comedy 	|	totalFilms : 39 	|	avgRating : N/A 	|	minRating : 4.1 	|	maxRating : 7.2 	|
+|		genre : Short 	|	totalFilms : 29 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Game-Show 	|	totalFilms : 18 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Comedy-drama 	|	totalFilms : 14 	|	avgRating : N/A 	|	minRating : 5.2 	|	maxRating : 7.3 	|
+|		genre : Crime drama 	|	totalFilms : 11 	|	avgRating : N/A 	|	minRating : 5.5 	|	maxRating : 7.8 	|
+|		genre : Biopic 	|	totalFilms : 9 	|	avgRating : N/A 	|	minRating : 5.8 	|	maxRating : 7.3 	|
+|		genre : Film-Noir 	|	totalFilms : 7 	|	avgRating : N/A 	|	minRating : N/A 	|	maxRating : N/A 	|
+|		genre : Aftershow / Interview 	|	totalFilms : 6 	|	avgRating : N/A 	|	minRating : 5.2 	|	maxRating : 7.4 	|
+|		genre : Concert Film 	|	totalFilms : 6 	|	avgRating : N/A 	|	minRating : 6.4 	|	maxRating : 8.4 	|
+
+==========================================
+
+
+==========================================
+REQUÊTE: Données optionnelles (OPTIONAL)
+Fichier: ../queries/optional-request.sparql
+==========================================
+
+--- Code SPARQL ---
+# Requête avec données optionnelles : récupère les films avec données variables selon les sources
+# Démontre OPTIONAL : genre, ratings (Amazon/Netflix), et métadonnées IMDB (violence/certificate)
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+
+SELECT ?title
+       (GROUP_CONCAT(DISTINCT ?genre; separator=", ") as ?genres)
+       ?amazonRating ?netflixRating
+       ?violence ?certificate
+WHERE {
+  ?film a unified:film ;
+        unified:title ?title .
+
+  # Genres optionnels (présents sur certaines sources)
+  OPTIONAL { ?film unified:genre ?genre }
+
+  # Ratings par plateforme (optionnels selon la source du film)
+  OPTIONAL { ?film amazon:rating ?amazonRating }
+  OPTIONAL { ?film netflix:rating ?netflixRating }
+
+  # Métadonnées IMDB optionnelles
+  OPTIONAL { ?film imdb:violence ?violence }
+  OPTIONAL { ?film imdb:certificate ?certificate }
+
+  # Garder seulement les films avec au moins un rating
+  FILTER (BOUND(?amazonRating) || BOUND(?netflixRating))
+}
+GROUP BY ?title ?amazonRating ?netflixRating ?violence ?certificate
+ORDER BY ?title
+LIMIT 30
+--- Résultats ---
+                  |=============================|
+                  |      Request Results        |
+                  |=============================|
+|		title : #REALITYHIGH 	|	genres : Comedy 	|	amazonRating : N/A 	|	netflixRating : 5.2 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : #Unfit: The Psychology of Donald Trump 	|	genres : N/A 	|	amazonRating : 4.4 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 10 Cloverfield Lane 	|	genres : N/A 	|	amazonRating : 4.4 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 10 YEARS 	|	genres : N/A 	|	amazonRating : 4.3 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 10 to Midnight 	|	genres : N/A 	|	amazonRating : 4.5 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 12 Feet Deep: Trapped Sisters 	|	genres : N/A 	|	amazonRating : 4.0 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 13 Hours 	|	genres : N/A 	|	amazonRating : 4.8 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 13th 	|	genres : Documentary 	|	amazonRating : N/A 	|	netflixRating : 8.2 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 13th: A Conversation with Oprah Winfrey & Ava DuVernay 	|	genres : Aftershow / Interview 	|	amazonRating : N/A 	|	netflixRating : 7.1 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 15 August 	|	genres : Comedy-drama 	|	amazonRating : N/A 	|	netflixRating : 5.8 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 16 and Missing 	|	genres : N/A 	|	amazonRating : 4.5 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 1917 	|	genres : N/A 	|	amazonRating : 4.4 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 1922 	|	genres : Horror/Crime drama 	|	amazonRating : N/A 	|	netflixRating : 6.3 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 1984 	|	genres : N/A 	|	amazonRating : 4.2 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 2 Guns 	|	genres : N/A 	|	amazonRating : 4.6 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 20000 Leagues Under the Sea 	|	genres : N/A 	|	amazonRating : 4.0 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 2001: A Space Odyssey 	|	genres : N/A 	|	amazonRating : 4.6 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 21 Grams 	|	genres : N/A 	|	amazonRating : 4.3 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 22 July 	|	genres : Drama 	|	amazonRating : N/A 	|	netflixRating : 6.8 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 22 Jump Street 	|	genres : N/A 	|	amazonRating : 4.6 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 3 Days to Kill 	|	genres : N/A 	|	amazonRating : 4.4 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 5 Star Christmas 	|	genres : Comedy 	|	amazonRating : N/A 	|	netflixRating : 4.6 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 50/50 	|	genres : N/A 	|	amazonRating : 4.6 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 6 Balloons 	|	genres : Drama 	|	amazonRating : N/A 	|	netflixRating : 5.9 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 6 Underground 	|	genres : Action 	|	amazonRating : N/A 	|	netflixRating : 6.1 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 7 Signs of Christ's Return 	|	genres : N/A 	|	amazonRating : 4.1 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 7 a�os 	|	genres : Drama 	|	amazonRating : N/A 	|	netflixRating : 6.8 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 7th & Union 	|	genres : N/A 	|	amazonRating : 4.0 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 80 for Brady 	|	genres : N/A 	|	amazonRating : 4.3 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 9 Hour Rainstorm for Sleep black screen 	|	genres : N/A 	|	amazonRating : 4.5 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+
+==========================================
+
+
+==========================================
+REQUÊTE: Exclusion (MINUS)
+Fichier: ../queries/minus-request.sparql
+==========================================
+
+--- Code SPARQL ---
+# Requête avec double exclusion (MINUS) : films Amazon bien notés
+# Exclut : les films sur Netflix, les contenus courts IMDB (< 60 min)
+# Trouve du contenu long-format exclusif à Amazon
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+
+SELECT ?title ?amazonRating ?releaseYear ?format ?mpaaRating
+       (GROUP_CONCAT(DISTINCT ?imdbGenre; separator=", ") as ?genres)
+WHERE {
+  # Films Amazon bien notés
+  ?amazonFilm a amazon:AmazonFilm ;
+              unified:title ?title ;
+              amazon:rating ?amazonRating .
+
+  OPTIONAL { ?amazonFilm amazon:releaseYear ?releaseYear }
+  OPTIONAL { ?amazonFilm amazon:format ?format }
+  OPTIONAL { ?amazonFilm amazon:mpaaRating ?mpaaRating }
+
+  # Enrichissement avec genres IMDB si disponibles
+  OPTIONAL {
+    ?imdbFilm a imdb:ImdbFilm ;
+              unified:title ?title ;
+              imdb:genre ?imdbGenre .
+  }
+
+  # Exclusion 1 : enlever les films qui existent aussi sur Netflix
+  MINUS {
+    ?netflixFilm a netflix:NetflixFilm ;
+                 unified:title ?title .
+  }
+
+  # Exclusion 2 : enlever les contenus courts (< 60 min) selon IMDB
+  MINUS {
+    ?shortContent a imdb:ImdbFilm ;
+                  unified:title ?title ;
+                  imdb:duration ?duration .
+    FILTER(?duration < 60)
+  }
+
+  FILTER(?amazonRating >= 4.7)
+}
+GROUP BY ?title ?amazonRating ?releaseYear ?format ?mpaaRating
+ORDER BY DESC(?amazonRating) ?title
+LIMIT 20
+--- Résultats ---
+                  |=============================|
+                  |      Request Results        |
+                  |=============================|
+|		title : A Bold Affair 	|	amazonRating : 5.0 	|	releaseYear : 1998 	|	format : Prime Video 	|	mpaaRating : R 	|	genres : N/A 	|
+|		title : A Young Time Ago 	|	amazonRating : 5.0 	|	releaseYear : 2023 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
+|		title : Aachar & Co. 	|	amazonRating : 5.0 	|	releaseYear : 2023 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
+|		title : Alexandria 	|	amazonRating : 5.0 	|	releaseYear : 2010 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
+|		title : Beastly 	|	amazonRating : 5.0 	|	releaseYear : 2011 	|	format : Prime Video 	|	mpaaRating : PG-13 	|	genres : N/A 	|
+|		title : Black Girl Erupted 	|	amazonRating : 5.0 	|	releaseYear : N/A 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
+|		title : DIVINE INTERVENTION 	|	amazonRating : 5.0 	|	releaseYear : 2023 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
+|		title : Hide N Seek 	|	amazonRating : 5.0 	|	releaseYear : 2023 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
+|		title : Hoopties 	|	amazonRating : 5.0 	|	releaseYear : 2023 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
+|		title : Impact Winter: An Audible Original Audio Series 	|	amazonRating : 5.0 	|	releaseYear : 2022 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
+|		title : Kelce 	|	amazonRating : 5.0 	|	releaseYear : 2023 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
+|		title : Killer Design 	|	amazonRating : 5.0 	|	releaseYear : 2022 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
+|		title : Lethal Legacy 	|	amazonRating : 5.0 	|	releaseYear : 2023 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
+|		title : Madea Gets A Job ( Stage Play) 	|	amazonRating : 5.0 	|	releaseYear : 2013 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
+|		title : Nazi Death Marches 	|	amazonRating : 5.0 	|	releaseYear : 2023 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
+|		title : Nurses on the Line: The Crash of Flight 7 	|	amazonRating : 5.0 	|	releaseYear : 1993 	|	format : Prime Video 	|	mpaaRating : PG 	|	genres : N/A 	|
+|		title : Once Upon A Time in the District 	|	amazonRating : 5.0 	|	releaseYear : N/A 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
+|		title : PAW Patrol: Moto Pups 	|	amazonRating : 5.0 	|	releaseYear : N/A 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
+|		title : Pigs 	|	amazonRating : 5.0 	|	releaseYear : 1973 	|	format : Prime Video 	|	mpaaRating : R 	|	genres : N/A 	|
+|		title : Primal Doubt 	|	amazonRating : 5.0 	|	releaseYear : 2007 	|	format : Prime Video 	|	mpaaRating : N/A 	|	genres : N/A 	|
+
+==========================================
+
+
+==========================================
+REQUÊTE: Filter NOT EXISTS
+Fichier: ../queries/not-exists-request.sparql
+==========================================
+
+--- Code SPARQL ---
+# Requête avec FILTER NOT EXISTS : récupère les films Netflix
+# en excluant ceux qui ont une certification "R" (Restricted)
+PREFIX unified: <http://example.org/unified/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+
+SELECT ?film ?title ?netflixRating
+WHERE {
+  ?film a netflix:NetflixFilm ;
+        unified:title ?title ;
+        netflix:rating ?netflixRating .
+
+  FILTER NOT EXISTS {
+    ?film imdb:certificate "R" .
+  }
+}
+ORDER BY DESC(?netflixRating)
+LIMIT 50
+--- Résultats ---
+                  |=============================|
+                  |      Request Results        |
+                  |=============================|
+|		film : http://example.org/netflix/584 	|	title : David Attenborough: A Life on Our Planet 	|	netflixRating : 9 	|
+|		film : http://example.org/netflix/583 	|	title : Emicida: AmarElo - It's All For Yesterday 	|	netflixRating : 8.6 	|
+|		film : http://example.org/netflix/582 	|	title : Springsteen on Broadway 	|	netflixRating : 8.5 	|
+|		film : http://example.org/netflix/579 	|	title : Ben Platt: Live from Radio City Music Hall 	|	netflixRating : 8.4 	|
+|		film : http://example.org/netflix/580 	|	title : Taylor Swift: Reputation Stadium Tour 	|	netflixRating : 8.4 	|
+|		film : http://example.org/netflix/581 	|	title : Winter on Fire: Ukraine's Fight for Freedom 	|	netflixRating : 8.4 	|
+|		film : http://example.org/netflix/577 	|	title : Cuba and the Cameraman 	|	netflixRating : 8.3 	|
+|		film : http://example.org/netflix/578 	|	title : Dancing with the Birds 	|	netflixRating : 8.3 	|
+|		film : http://example.org/netflix/572 	|	title : 13th 	|	netflixRating : 8.2 	|
+|		film : http://example.org/netflix/573 	|	title : Disclosure: Trans Lives on Screen 	|	netflixRating : 8.2 	|
+|		film : http://example.org/netflix/574 	|	title : Klaus 	|	netflixRating : 8.2 	|
+|		film : http://example.org/netflix/575 	|	title : Seaspiracy 	|	netflixRating : 8.2 	|
+|		film : http://example.org/netflix/576 	|	title : The Three Deaths of Marisela Escobedo 	|	netflixRating : 8.2 	|
+|		film : http://example.org/netflix/569 	|	title : Chasing Coral 	|	netflixRating : 8.1 	|
+|		film : http://example.org/netflix/570 	|	title : My Octopus Teacher 	|	netflixRating : 8.1 	|
+|		film : http://example.org/netflix/571 	|	title : Rising Phoenix 	|	netflixRating : 8.1 	|
+|		film : http://example.org/netflix/568 	|	title : Struggle: The Life and Lost Art of Szukaiski 	|	netflixRating : 8 	|
+|		film : http://example.org/netflix/564 	|	title : A Secret Love 	|	netflixRating : 7.9 	|
+|		film : http://example.org/netflix/565 	|	title : Icarus 	|	netflixRating : 7.9 	|
+|		film : http://example.org/netflix/566 	|	title : Marriage Story 	|	netflixRating : 7.9 	|
+|		film : http://example.org/netflix/567 	|	title : The Ivory Game 	|	netflixRating : 7.9 	|
+|		film : http://example.org/netflix/561 	|	title : If Anything Happens I Love You 	|	netflixRating : 7.8 	|
+|		film : http://example.org/netflix/562 	|	title : The Irishman 	|	netflixRating : 7.8 	|
+|		film : http://example.org/netflix/563 	|	title : The Trial of the Chicago 7 	|	netflixRating : 7.8 	|
+|		film : http://example.org/netflix/553 	|	title : Anima 	|	netflixRating : 7.7 	|
+|		film : http://example.org/netflix/554 	|	title : Beasts of No Nation 	|	netflixRating : 7.7 	|
+|		film : http://example.org/netflix/555 	|	title : Brene Brown: The Call to Courage 	|	netflixRating : 7.7 	|
+|		film : http://example.org/netflix/556 	|	title : Crip Camp: A Disability Revolution 	|	netflixRating : 7.7 	|
+|		film : http://example.org/netflix/557 	|	title : Jim & Andy: The Great Beyond - Featuring a Very Special, Contractually Obligated Mention of Tony Cliffton  	|	netflixRating : 7.7 	|
+|		film : http://example.org/netflix/558 	|	title : Justin Timberlake + The Tennessee Kids 	|	netflixRating : 7.7 	|
+|		film : http://example.org/netflix/559 	|	title : Road to Roma 	|	netflixRating : 7.7 	|
+|		film : http://example.org/netflix/560 	|	title : Roma 	|	netflixRating : 7.7 	|
+|		film : http://example.org/netflix/543 	|	title : Athlete A 	|	netflixRating : 7.6 	|
+|		film : http://example.org/netflix/544 	|	title : Ludo 	|	netflixRating : 7.6 	|
+|		film : http://example.org/netflix/545 	|	title : Quincy 	|	netflixRating : 7.6 	|
+|		film : http://example.org/netflix/546 	|	title : Rolling Thunder Revue: A bob Dylan Story by Martin Scorsere 	|	netflixRating : 7.6 	|
+|		film : http://example.org/netflix/547 	|	title : Tell Me Who I Am 	|	netflixRating : 7.6 	|
+|		film : http://example.org/netflix/548 	|	title : The Bleeding Edge 	|	netflixRating : 7.6 	|
+|		film : http://example.org/netflix/549 	|	title : The Social Dilemma 	|	netflixRating : 7.6 	|
+|		film : http://example.org/netflix/550 	|	title : The Two Popes 	|	netflixRating : 7.6 	|
+|		film : http://example.org/netflix/551 	|	title : What Happened, Miss Simone? 	|	netflixRating : 7.6 	|
+|		film : http://example.org/netflix/552 	|	title : Yeh Ballet 	|	netflixRating : 7.6 	|
+|		film : http://example.org/netflix/533 	|	title : Barbra: The Music, The Mem'ries, The Magic! 	|	netflixRating : 7.5 	|
+|		film : http://example.org/netflix/534 	|	title : Blackpink: Light Up the Sky 	|	netflixRating : 7.5 	|
+|		film : http://example.org/netflix/535 	|	title : City of Joy 	|	netflixRating : 7.5 	|
+|		film : http://example.org/netflix/536 	|	title : Dick Johnson Is Dead 	|	netflixRating : 7.5 	|
+|		film : http://example.org/netflix/537 	|	title : Homecoming: A Film by Beyonce 	|	netflixRating : 7.5 	|
+|		film : http://example.org/netflix/538 	|	title : Invader Zim: Enter the Florpus 	|	netflixRating : 7.5 	|
+|		film : http://example.org/netflix/539 	|	title : Joan Didion: The Center Will Not Hold 	|	netflixRating : 7.5 	|
+|		film : http://example.org/netflix/540 	|	title : John Mulaney & the Sack Lunch Bunch 	|	netflixRating : 7.5 	|
+
+==========================================
+
+
+==========================================
+REQUÊTE: Expressions de chemin
+Fichier: ../queries/path-request.sparql
+==========================================
+
+--- Code SPARQL ---
+# Requête avec expressions de chemin : démontre le raisonnement RDFS via subClassOf*
+# Navigue dans la hiérarchie des classes (film -> AmazonFilm/NetflixFilm/ImdbFilm)
+# Utilise également subPropertyOf+ pour les propriétés héritées
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?film ?title ?specificType ?rating ?genre
+WHERE {
+  # Utilise le chemin RDFS pour trouver tous les films via la hiérarchie de classes
+  ?film rdf:type/rdfs:subClassOf* unified:film ;
+        unified:title ?title ;
+        rdf:type ?specificType .
+
+  # Propriétés enrichies par le raisonnement
+  OPTIONAL { ?film unified:rating ?rating }
+  OPTIONAL { ?film unified:genre ?genre }
+
+  # Filtrer pour ne garder que les types spécifiques (pas la classe générique)
+  FILTER(?specificType != unified:film)
+  FILTER(?rating > 7.0)
+}
+ORDER BY DESC(?rating) ?specificType
+LIMIT 25
+--- Résultats ---
+                  |=============================|
+                  |      Request Results        |
+                  |=============================|
+
+==========================================
+
+
+==========================================
+REQUÊTE: Intégration multi-sources
+Fichier: ../queries/sources-request.sparql
+==========================================
+
+--- Code SPARQL ---
+# Requête d'intégration multi-sources : trouve les films présents dans les 3 sources
+# Compare les notes entre plateformes et enrichit avec genres/certifications IMDB
+# Démontre l'intégration complète des données via le schéma unifié
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+
+SELECT ?title
+       ?amazonRating ?netflixRating
+       (GROUP_CONCAT(DISTINCT ?genre; separator=", ") as ?genres)
+       ?certificate
+       ((?amazonRating + ?netflixRating) / 2 as ?avgCrossRating)
+WHERE {
+  # Films présents sur Amazon
+  ?amazonFilm a amazon:AmazonFilm ;
+              unified:title ?title ;
+              amazon:rating ?amazonRating .
+
+  # Films présents sur Netflix avec le même titre
+  ?netflixFilm a netflix:NetflixFilm ;
+               unified:title ?title ;
+               netflix:rating ?netflixRating .
+
+  # Films présents sur IMDB avec métadonnées additionnelles
+  ?imdbFilm a imdb:ImdbFilm ;
+            unified:title ?title .
+
+  OPTIONAL { ?imdbFilm imdb:genre ?genre }
+  OPTIONAL { ?imdbFilm imdb:certificate ?certificate }
+
+  # Filtrer uniquement les films bien notés sur les deux plateformes
+  FILTER(?amazonRating >= 4.0 && ?netflixRating >= 6.0)
+}
+GROUP BY ?title ?amazonRating ?netflixRating ?certificate
+ORDER BY DESC(?avgCrossRating)
+LIMIT 15
+--- Résultats ---
+                  |=============================|
+                  |      Request Results        |
+                  |=============================|
+
+==========================================
+
+
+==========================================
+REQUÊTE: Requête complexe
+Fichier: ../queries/complex-request.sparql
+==========================================
+
+--- Code SPARQL ---
+# Requête complexe multi-sources : films Amazon abordables avec enrichissement IMDB et comparaison Netflix
+# Combine OPTIONAL, FILTER, agrégation et intégration de 3 sources de données
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+
+SELECT ?title ?amazonRating ?amazonPrice
+       (GROUP_CONCAT(DISTINCT ?genre; separator=", ") as ?genres)
+       ?netflixRating ?violence ?nudity
+WHERE {
+  # Films Amazon avec critères de prix et note
+  ?amazonFilm a amazon:AmazonFilm ;
+              unified:title ?title ;
+              amazon:rating ?amazonRating ;
+              amazon:price ?amazonPrice .
+
+  # Enrichissement avec données IMDB (genres et contenus sensibles)
+  OPTIONAL {
+    ?imdbFilm a imdb:ImdbFilm ;
+              unified:title ?title .
+    OPTIONAL { ?imdbFilm imdb:genre ?genre }
+    OPTIONAL { ?imdbFilm imdb:violence ?violence }
+    OPTIONAL { ?imdbFilm imdb:nudity ?nudity }
+  }
+
+  # Comparaison avec Netflix si disponible
+  OPTIONAL {
+    ?netflixFilm a netflix:NetflixFilm ;
+                 unified:title ?title ;
+                 netflix:rating ?netflixRating .
+  }
+
+  # Filtres : bon rapport qualité/prix, pas de violence extrême
+  FILTER(?amazonRating >= 4.0 && ?amazonPrice < 15)
+  FILTER(!BOUND(?violence) || ?violence != "Severe")
+}
+GROUP BY ?title ?amazonRating ?amazonPrice ?netflixRating ?violence ?nudity
+ORDER BY DESC(?amazonRating) ?amazonPrice
+LIMIT 20
+--- Résultats ---
+                  |=============================|
+                  |      Request Results        |
+                  |=============================|
+|		title : Renfroe's White Christmas 	|	amazonRating : 5.0 	|	amazonPrice : 2.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : The Bumble Nums - Season 4 	|	amazonRating : 4.9 	|	amazonPrice : 0.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : The Prince of Egypt 	|	amazonRating : 4.9 	|	amazonPrice : 2.99 	|	genres : Drama, Animation, Adventure 	|	netflixRating : N/A 	|	violence : Moderate 	|	nudity : Mild 	|
+|		title : Harry Potter And The Prisoner Of Azkaban 	|	amazonRating : 4.9 	|	amazonPrice : 3.79 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Harry Potter and the Deathly Hallows - Part 2 	|	amazonRating : 4.9 	|	amazonPrice : 3.79 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Pride and Prejudice 	|	amazonRating : 4.9 	|	amazonPrice : 3.79 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Shrek 	|	amazonRating : 4.9 	|	amazonPrice : 3.79 	|	genres : Animation, Comedy, Adventure 	|	netflixRating : N/A 	|	violence : Mild 	|	nudity : Mild 	|
+|		title : The Sandlot 	|	amazonRating : 4.9 	|	amazonPrice : 3.79 	|	genres : Comedy, Family, Drama 	|	netflixRating : N/A 	|	violence : Mild 	|	nudity : Mild 	|
+|		title : Harry Potter and the Goblet of Fire 	|	amazonRating : 4.9 	|	amazonPrice : 3.79 	|	genres : Fantasy, Family, Adventure 	|	netflixRating : N/A 	|	violence : Moderate 	|	nudity : None 	|
+|		title : Forrest Gump 	|	amazonRating : 4.9 	|	amazonPrice : 3.79 	|	genres : Romance, Drama 	|	netflixRating : N/A 	|	violence : Moderate 	|	nudity : Moderate 	|
+|		title : I Can Only Imagine 	|	amazonRating : 4.9 	|	amazonPrice : 3.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Harry Potter and the Order of the Phoenix 	|	amazonRating : 4.9 	|	amazonPrice : 3.99 	|	genres : Adventure, Action, Family 	|	netflixRating : N/A 	|	violence : Moderate 	|	nudity : None 	|
+|		title : The Help 	|	amazonRating : 4.9 	|	amazonPrice : 3.99 	|	genres : Drama 	|	netflixRating : N/A 	|	violence : Mild 	|	nudity : None 	|
+|		title : Curious George: A Halloween Boo Fest 	|	amazonRating : 4.9 	|	amazonPrice : 7.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : The Lord of the Rings: Return of the King: Extended Edition 	|	amazonRating : 4.9 	|	amazonPrice : 14.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Falling for Vermont 	|	amazonRating : 4.8 	|	amazonPrice : 0.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Harvest Moon 	|	amazonRating : 4.8 	|	amazonPrice : 0.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Old MacDonald Had a Farm & More Kids Songs - Super Simple Songs 	|	amazonRating : 4.8 	|	amazonPrice : 0.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Pumpkin Pie Wars 	|	amazonRating : 4.8 	|	amazonPrice : 0.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Daniel Visits a New Neighborhood 	|	amazonRating : 4.8 	|	amazonPrice : 1.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+
+==========================================
+
+
+==========================================
+REQUÊTE: Sous-requête
+Fichier: ../queries/sub-request-request.sparql
+==========================================
+
+--- Code SPARQL ---
+# Requête avec sous-requête : calcule des statistiques agrégées par genre
+# Utilise une sous-requête pour filtrer d'abord les films valides (rating > 0)
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+
+SELECT ?genre (AVG(?rating) as ?avgRating) (MIN(?rating) as ?minRating)
+       (MAX(?rating) as ?maxRating) (COUNT(*) as ?filmCount)
+WHERE {
+  {
+    SELECT ?film ?genre ?rating
+    WHERE {
+      ?film unified:genre ?genre ;
+            unified:rating ?rating .
+      FILTER(?rating > 0)
+    }
+  }
+}
+GROUP BY ?genre
+ORDER BY DESC(?avgRating)
+--- Résultats ---
+                  |=============================|
+                  |      Request Results        |
+                  |=============================|
+
+==========================================
+
+
+==========================================
+REQUÊTE: Requête fédérée (SERVICE)
+Fichier: ../queries/federated-request.sparql
+==========================================
+
+--- Code SPARQL ---
+# Requête fédérée (SERVICE) : récupère les films Amazon avec leurs réalisateurs
+# et enrichit les données avec des biographies depuis DBpedia
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?film ?title ?director ?directorBio
+WHERE {
+  ?film a amazon:AmazonFilm ;
+        unified:title ?title ;
+        amazon:directedBy ?director .
+
+  SERVICE <https://dbpedia.org/sparql> {
+    ?directorUri rdfs:label ?director .
+    ?directorUri dbo:abstract ?directorBio .
+    FILTER(LANG(?directorBio) = "en")
+  }
+}
+LIMIT 10
+--- Résultats ---
+                  |=============================|
+                  |      Request Results        |
+                  |=============================|
+
+==========================================
+

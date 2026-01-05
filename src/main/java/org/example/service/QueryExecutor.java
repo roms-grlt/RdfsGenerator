@@ -37,7 +37,18 @@ public class QueryExecutor {
                 System.out.print("|\t");
                 for (String param : queryParams) {
                     Object result = solution.get(param);
-                    System.out.print("\t" + param + " : " + (result == null ? "N/A" : result.toString()) + " \t|");
+                    String displayValue;
+
+                    if (result == null) {
+                        displayValue = "N/A";
+                    } else if (result instanceof org.apache.jena.rdf.model.Literal) {
+                        // Pour les littéraux, extraire uniquement la valeur sans le type
+                        displayValue = ((org.apache.jena.rdf.model.Literal) result).getLexicalForm();
+                    } else {
+                        displayValue = result.toString();
+                    }
+
+                    System.out.print("\t" + param + " : " + displayValue + " \t|");
                 }
                 System.out.print("\n");
             }
@@ -45,7 +56,7 @@ public class QueryExecutor {
     }
 
     public static void main(String[] args) throws IOException {
-        String request = new String(Files.readAllBytes(Paths.get("./result/requests/sub-request-request.txt")));
+        String request = new String(Files.readAllBytes(Paths.get("./queries/sub-request-request.sparql")));
         QueryExecutor.executeQuery(request, "./result/integrated.ttl");
 
     }
