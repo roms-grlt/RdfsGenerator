@@ -1,6 +1,6 @@
 ==========================================
    RÉSULTATS DES REQUÊTES SPARQL
-   Date: 2026-01-05 22:47:20
+   Date: 2026-01-05 22:55:39
 ==========================================
 
 
@@ -67,72 +67,103 @@ Fichier: ../queries/optional-request.sparql
 ==========================================
 
 --- Code SPARQL ---
-# Requête avec données optionnelles : récupère les films avec données variables selon les sources
-# Démontre OPTIONAL : genre, ratings (Amazon/Netflix), et métadonnées IMDB (violence/certificate)
+# Requête OPTIONAL : récupère les informations des films avec données optionnelles multi-sources
+# Démontre l'intégration de données provenant de différentes sources (Amazon, Netflix, IMDB)
+# Les champs optionnels peuvent être absents selon la source du film
 PREFIX unified: <http://example.org/unified/>
 PREFIX amazon: <http://example.org/amazon/>
 PREFIX netflix: <http://example.org/netflix/>
 PREFIX imdb: <http://example.org/imdb/>
 
-SELECT ?title
-       (GROUP_CONCAT(DISTINCT ?genre; separator=", ") as ?genres)
-       ?amazonRating ?netflixRating
-       ?violence ?certificate
+SELECT ?title ?genre ?rating ?duration ?language ?violence ?certificate
 WHERE {
   ?film a unified:film ;
         unified:title ?title .
 
-  # Genres optionnels (présents sur certaines sources)
-  OPTIONAL { ?film unified:genre ?genre }
+  # Genre (peut venir d'IMDB ou Netflix)
+  OPTIONAL {
+    { ?film imdb:genre ?genre }
+    UNION
+    { ?film netflix:genre ?genre }
+  }
 
-  # Ratings par plateforme (optionnels selon la source du film)
-  OPTIONAL { ?film amazon:rating ?amazonRating }
-  OPTIONAL { ?film netflix:rating ?netflixRating }
+  # Rating (peut venir d'Amazon ou Netflix)
+  OPTIONAL {
+    { ?film amazon:rating ?rating }
+    UNION
+    { ?film netflix:rating ?rating }
+  }
 
-  # Métadonnées IMDB optionnelles
+  # Durée (seulement disponible sur IMDB et Netflix)
+  OPTIONAL { ?film imdb:duration ?duration }
+  OPTIONAL { ?film netflix:runtime ?duration }
+
+  # Langue (seulement disponible sur Netflix)
+  OPTIONAL { ?film netflix:language ?language }
+
+  # Violence (seulement disponible sur IMDB)
   OPTIONAL { ?film imdb:violence ?violence }
-  OPTIONAL { ?film imdb:certificate ?certificate }
 
-  # Garder seulement les films avec au moins un rating
-  FILTER (BOUND(?amazonRating) || BOUND(?netflixRating))
+  # Certificat/Classification (disponible sur IMDB)
+  OPTIONAL { ?film imdb:certificate ?certificate }
 }
-GROUP BY ?title ?amazonRating ?netflixRating ?violence ?certificate
 ORDER BY ?title
-LIMIT 30
+LIMIT 50
+
 --- Résultats ---
                   |=============================|
                   |      Request Results        |
                   |=============================|
-|		title : #REALITYHIGH 	|	genres : Comedy 	|	amazonRating : N/A 	|	netflixRating : 5.2 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : #Unfit: The Psychology of Donald Trump 	|	genres : N/A 	|	amazonRating : 4.4 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 10 Cloverfield Lane 	|	genres : N/A 	|	amazonRating : 4.4 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 10 YEARS 	|	genres : N/A 	|	amazonRating : 4.3 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 10 to Midnight 	|	genres : N/A 	|	amazonRating : 4.5 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 12 Feet Deep: Trapped Sisters 	|	genres : N/A 	|	amazonRating : 4.0 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 13 Hours 	|	genres : N/A 	|	amazonRating : 4.8 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 13th 	|	genres : Documentary 	|	amazonRating : N/A 	|	netflixRating : 8.2 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 13th: A Conversation with Oprah Winfrey & Ava DuVernay 	|	genres : Aftershow / Interview 	|	amazonRating : N/A 	|	netflixRating : 7.1 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 15 August 	|	genres : Comedy-drama 	|	amazonRating : N/A 	|	netflixRating : 5.8 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 16 and Missing 	|	genres : N/A 	|	amazonRating : 4.5 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 1917 	|	genres : N/A 	|	amazonRating : 4.4 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 1922 	|	genres : Horror/Crime drama 	|	amazonRating : N/A 	|	netflixRating : 6.3 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 1984 	|	genres : N/A 	|	amazonRating : 4.2 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 2 Guns 	|	genres : N/A 	|	amazonRating : 4.6 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 20000 Leagues Under the Sea 	|	genres : N/A 	|	amazonRating : 4.0 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 2001: A Space Odyssey 	|	genres : N/A 	|	amazonRating : 4.6 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 21 Grams 	|	genres : N/A 	|	amazonRating : 4.3 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 22 July 	|	genres : Drama 	|	amazonRating : N/A 	|	netflixRating : 6.8 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 22 Jump Street 	|	genres : N/A 	|	amazonRating : 4.6 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 3 Days to Kill 	|	genres : N/A 	|	amazonRating : 4.4 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 5 Star Christmas 	|	genres : Comedy 	|	amazonRating : N/A 	|	netflixRating : 4.6 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 50/50 	|	genres : N/A 	|	amazonRating : 4.6 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 6 Balloons 	|	genres : Drama 	|	amazonRating : N/A 	|	netflixRating : 5.9 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 6 Underground 	|	genres : Action 	|	amazonRating : N/A 	|	netflixRating : 6.1 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 7 Signs of Christ's Return 	|	genres : N/A 	|	amazonRating : 4.1 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 7 a�os 	|	genres : Drama 	|	amazonRating : N/A 	|	netflixRating : 6.8 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 7th & Union 	|	genres : N/A 	|	amazonRating : 4.0 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 80 for Brady 	|	genres : N/A 	|	amazonRating : 4.3 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
-|		title : 9 Hour Rainstorm for Sleep black screen 	|	genres : N/A 	|	amazonRating : 4.5 	|	netflixRating : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : #REALITYHIGH 	|	genre : Comedy 	|	rating : 5.2 	|	duration : N/A 	|	language : English 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : #Saraitda 	|	genre : Action 	|	rating : N/A 	|	duration : 98 	|	language : N/A 	|	violence : Moderate 	|	certificate : TV-MA 	|
+|		title : #Saraitda 	|	genre : Drama 	|	rating : N/A 	|	duration : 98 	|	language : N/A 	|	violence : Moderate 	|	certificate : TV-MA 	|
+|		title : #Saraitda 	|	genre : Horror 	|	rating : N/A 	|	duration : 98 	|	language : N/A 	|	violence : Moderate 	|	certificate : TV-MA 	|
+|		title : #Unfit: The Psychology of Donald Trump 	|	genre : N/A 	|	rating : 4.4 	|	duration : N/A 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 'Allo 'Allo! 	|	genre : Comedy 	|	rating : N/A 	|	duration : 45 	|	language : N/A 	|	violence : N/A 	|	certificate : None 	|
+|		title : 'Allo 'Allo! 	|	genre : History 	|	rating : N/A 	|	duration : 45 	|	language : N/A 	|	violence : N/A 	|	certificate : None 	|
+|		title : 'Allo 'Allo! 	|	genre : War 	|	rating : N/A 	|	duration : 45 	|	language : N/A 	|	violence : N/A 	|	certificate : None 	|
+|		title : 'Allo 'Allo! 	|	genre : Comedy 	|	rating : N/A 	|	duration : 45 	|	language : N/A 	|	violence : N/A 	|	certificate : None 	|
+|		title : 'Allo 'Allo! 	|	genre : History 	|	rating : N/A 	|	duration : 45 	|	language : N/A 	|	violence : N/A 	|	certificate : None 	|
+|		title : 'Allo 'Allo! 	|	genre : War 	|	rating : N/A 	|	duration : 45 	|	language : N/A 	|	violence : N/A 	|	certificate : None 	|
+|		title : (500) Days of Summer 	|	genre : Comedy 	|	rating : N/A 	|	duration : 95 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
+|		title : (500) Days of Summer 	|	genre : Drama 	|	rating : N/A 	|	duration : 95 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
+|		title : (500) Days of Summer 	|	genre : Romance 	|	rating : N/A 	|	duration : 95 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
+|		title : 10 	|	genre : Comedy 	|	rating : N/A 	|	duration : 122 	|	language : N/A 	|	violence : None 	|	certificate : R 	|
+|		title : 10 	|	genre : Romance 	|	rating : N/A 	|	duration : 122 	|	language : N/A 	|	violence : None 	|	certificate : R 	|
+|		title : 10 	|	genre : Comedy 	|	rating : N/A 	|	duration : 122 	|	language : N/A 	|	violence : None 	|	certificate : R 	|
+|		title : 10 	|	genre : Romance 	|	rating : N/A 	|	duration : 122 	|	language : N/A 	|	violence : None 	|	certificate : R 	|
+|		title : 10 Cloverfield Lane 	|	genre : N/A 	|	rating : 4.4 	|	duration : N/A 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 10 Cloverfield Lane 	|	genre : Action 	|	rating : N/A 	|	duration : 103 	|	language : N/A 	|	violence : Moderate 	|	certificate : PG-13 	|
+|		title : 10 Cloverfield Lane 	|	genre : Drama 	|	rating : N/A 	|	duration : 103 	|	language : N/A 	|	violence : Moderate 	|	certificate : PG-13 	|
+|		title : 10 Cloverfield Lane 	|	genre : Horror 	|	rating : N/A 	|	duration : 103 	|	language : N/A 	|	violence : Moderate 	|	certificate : PG-13 	|
+|		title : 10 Things I Hate About You 	|	genre : Comedy 	|	rating : N/A 	|	duration : 97 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
+|		title : 10 Things I Hate About You 	|	genre : Drama 	|	rating : N/A 	|	duration : 97 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
+|		title : 10 Things I Hate About You 	|	genre : Romance 	|	rating : N/A 	|	duration : 97 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
+|		title : 10 YEARS 	|	genre : N/A 	|	rating : 4.3 	|	duration : N/A 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 10 Years 	|	genre : Comedy 	|	rating : N/A 	|	duration : 110 	|	language : N/A 	|	violence : None 	|	certificate : PG-13 	|
+|		title : 10 Years 	|	genre : Drama 	|	rating : N/A 	|	duration : 110 	|	language : N/A 	|	violence : None 	|	certificate : PG-13 	|
+|		title : 10 Years 	|	genre : Romance 	|	rating : N/A 	|	duration : 110 	|	language : N/A 	|	violence : None 	|	certificate : PG-13 	|
+|		title : 10 Years 	|	genre : Comedy 	|	rating : N/A 	|	duration : 110 	|	language : N/A 	|	violence : None 	|	certificate : PG-13 	|
+|		title : 10 Years 	|	genre : Drama 	|	rating : N/A 	|	duration : 110 	|	language : N/A 	|	violence : None 	|	certificate : PG-13 	|
+|		title : 10 Years 	|	genre : Romance 	|	rating : N/A 	|	duration : 110 	|	language : N/A 	|	violence : None 	|	certificate : PG-13 	|
+|		title : 10 to Midnight 	|	genre : N/A 	|	rating : 4.5 	|	duration : N/A 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 101 Dalmatians 	|	genre : Adventure 	|	rating : N/A 	|	duration : 103 	|	language : N/A 	|	violence : Mild 	|	certificate : G 	|
+|		title : 101 Dalmatians 	|	genre : Comedy 	|	rating : N/A 	|	duration : 103 	|	language : N/A 	|	violence : Mild 	|	certificate : G 	|
+|		title : 101 Dalmatians 	|	genre : Crime 	|	rating : N/A 	|	duration : 103 	|	language : N/A 	|	violence : Mild 	|	certificate : G 	|
+|		title : 12 Angry Men 	|	genre : Crime 	|	rating : N/A 	|	duration : 96 	|	language : N/A 	|	violence : None 	|	certificate : Approved 	|
+|		title : 12 Angry Men 	|	genre : Drama 	|	rating : N/A 	|	duration : 96 	|	language : N/A 	|	violence : None 	|	certificate : Approved 	|
+|		title : 12 Feet Deep: Trapped Sisters 	|	genre : N/A 	|	rating : 4.0 	|	duration : N/A 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 12 Mighty Orphans 	|	genre : History 	|	rating : N/A 	|	duration : 118 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
+|		title : 12 Mighty Orphans 	|	genre : Sport 	|	rating : N/A 	|	duration : 118 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
+|		title : 12 Monkeys 	|	genre : Adventure 	|	rating : N/A 	|	duration : 42 	|	language : N/A 	|	violence : Moderate 	|	certificate : TV-14 	|
+|		title : 12 Monkeys 	|	genre : Drama 	|	rating : N/A 	|	duration : 42 	|	language : N/A 	|	violence : Moderate 	|	certificate : TV-14 	|
+|		title : 12 Monkeys 	|	genre : Mystery 	|	rating : N/A 	|	duration : 42 	|	language : N/A 	|	violence : Moderate 	|	certificate : TV-14 	|
+|		title : 12 Strong 	|	genre : Action 	|	rating : N/A 	|	duration : 130 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
+|		title : 12 Strong 	|	genre : Drama 	|	rating : N/A 	|	duration : 130 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
+|		title : 12 Strong 	|	genre : History 	|	rating : N/A 	|	duration : 130 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
+|		title : 12 Strong 	|	genre : Action 	|	rating : N/A 	|	duration : 130 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
+|		title : 12 Strong 	|	genre : Drama 	|	rating : N/A 	|	duration : 130 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
+|		title : 12 Strong 	|	genre : History 	|	rating : N/A 	|	duration : 130 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
 
 ==========================================
 

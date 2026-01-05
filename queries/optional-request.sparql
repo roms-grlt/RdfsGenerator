@@ -1,32 +1,42 @@
-# Requête avec données optionnelles : récupère les films avec données variables selon les sources
-# Démontre OPTIONAL : genre, ratings (Amazon/Netflix), et métadonnées IMDB (violence/certificate)
+# Requête OPTIONAL : récupère les informations des films avec données optionnelles multi-sources
+# Démontre l'intégration de données provenant de différentes sources (Amazon, Netflix, IMDB)
+# Les champs optionnels peuvent être absents selon la source du film
 PREFIX unified: <http://example.org/unified/>
 PREFIX amazon: <http://example.org/amazon/>
 PREFIX netflix: <http://example.org/netflix/>
 PREFIX imdb: <http://example.org/imdb/>
 
-SELECT ?title
-       (GROUP_CONCAT(DISTINCT ?genre; separator=", ") as ?genres)
-       ?amazonRating ?netflixRating
-       ?violence ?certificate
+SELECT ?title ?genre ?rating ?duration ?language ?violence ?certificate
 WHERE {
   ?film a unified:film ;
         unified:title ?title .
 
-  # Genres optionnels (présents sur certaines sources)
-  OPTIONAL { ?film unified:genre ?genre }
+  # Genre (peut venir d'IMDB ou Netflix)
+  OPTIONAL {
+    { ?film imdb:genre ?genre }
+    UNION
+    { ?film netflix:genre ?genre }
+  }
 
-  # Ratings par plateforme (optionnels selon la source du film)
-  OPTIONAL { ?film amazon:rating ?amazonRating }
-  OPTIONAL { ?film netflix:rating ?netflixRating }
+  # Rating (peut venir d'Amazon ou Netflix)
+  OPTIONAL {
+    { ?film amazon:rating ?rating }
+    UNION
+    { ?film netflix:rating ?rating }
+  }
 
-  # Métadonnées IMDB optionnelles
+  # Durée (seulement disponible sur IMDB et Netflix)
+  OPTIONAL { ?film imdb:duration ?duration }
+  OPTIONAL { ?film netflix:runtime ?duration }
+
+  # Langue (seulement disponible sur Netflix)
+  OPTIONAL { ?film netflix:language ?language }
+
+  # Violence (seulement disponible sur IMDB)
   OPTIONAL { ?film imdb:violence ?violence }
-  OPTIONAL { ?film imdb:certificate ?certificate }
 
-  # Garder seulement les films avec au moins un rating
-  FILTER (BOUND(?amazonRating) || BOUND(?netflixRating))
+  # Certificat/Classification (disponible sur IMDB)
+  OPTIONAL { ?film imdb:certificate ?certificate }
 }
-GROUP BY ?title ?amazonRating ?netflixRating ?violence ?certificate
 ORDER BY ?title
-LIMIT 30
+LIMIT 50
