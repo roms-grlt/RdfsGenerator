@@ -6,8 +6,9 @@ public class NetflixFilm {
     private String title;
     private String genre;
     private String premiere;
-    private String runtime;
+    @Column(name="runtime")
+    private Integer duration;
     @Column(name = "imdb score")
-    private String rating;
+    private Double rating;
     private String language;
 }

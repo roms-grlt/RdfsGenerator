@@ -21,10 +21,7 @@ WHERE {
   ?film ?genreProp ?genre .
 
   # Les ratings depuis Amazon et Netflix (subPropertyOf unified:rating)
-  OPTIONAL {
-    ?ratingProp rdfs:subPropertyOf* unified:rating .
-    ?film ?ratingProp ?rating .
-  }
+    ?film unified:rating ?rating .
 }
 GROUP BY ?genre
 HAVING (COUNT(DISTINCT ?film) > 5)
