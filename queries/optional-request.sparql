@@ -26,8 +26,7 @@ WHERE {
   }
 
   # Durée (seulement disponible sur IMDB et Netflix)
-  OPTIONAL { ?film imdb:duration ?duration }
-  OPTIONAL { ?film netflix:runtime ?duration }
+  OPTIONAL { ?film unified:duration ?duration }
 
   # Langue (seulement disponible sur Netflix)
   OPTIONAL { ?film netflix:language ?language }
@@ -39,4 +38,4 @@ WHERE {
   OPTIONAL { ?film imdb:certificate ?certificate }
 }
 ORDER BY ?title
-LIMIT 50
+LIMIT 30
