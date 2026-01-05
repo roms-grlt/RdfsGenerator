@@ -29,7 +29,6 @@ queries=(
     "path-request:Expressions de chemin"
     "sources-request:Intégration multi-sources"
     "complex-request:Requête complexe"
-    "sub-request-request:Sous-requête"
     "federated-request:Requête fédérée (SERVICE)"
 )
 

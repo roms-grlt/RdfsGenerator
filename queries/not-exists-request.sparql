@@ -15,4 +15,4 @@ WHERE {
   }
 }
 ORDER BY DESC(?netflixRating)
-LIMIT 50
+LIMIT 30

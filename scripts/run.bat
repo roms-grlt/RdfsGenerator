@@ -6,5 +6,4 @@ java -jar ../result/rdfs-generator.jar query ../queries/not-exists-request.sparq
 java -jar ../result/rdfs-generator.jar query ../queries/optional-request.sparql ../result/integrated.ttl
 java -jar ../result/rdfs-generator.jar query ../queries/path-request.sparql ../result/integrated.ttl
 java -jar ../result/rdfs-generator.jar query ../queries/sources-request.sparql ../result/integrated.ttl
-java -jar ../result/rdfs-generator.jar query ../queries/sub-request-request.sparql ../result/integrated.ttl
 pause

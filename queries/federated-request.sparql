@@ -18,4 +18,4 @@ WHERE {
     FILTER(LANG(?directorBio) = "en")
   }
 }
-LIMIT 10
+LIMIT 30

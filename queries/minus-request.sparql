@@ -7,7 +7,6 @@ PREFIX netflix: <http://example.org/netflix/>
 PREFIX imdb: <http://example.org/imdb/>
 
 SELECT ?title ?amazonRating ?releaseYear ?format ?mpaaRating
-       (GROUP_CONCAT(DISTINCT ?imdbGenre; separator=", ") as ?genres)
 WHERE {
   # Films Amazon bien notés
   ?amazonFilm a amazon:AmazonFilm ;
@@ -18,17 +17,10 @@ WHERE {
   OPTIONAL { ?amazonFilm amazon:format ?format }
   OPTIONAL { ?amazonFilm amazon:mpaaRating ?mpaaRating }
 
-  # Enrichissement avec genres IMDB si disponibles
-  OPTIONAL {
-    ?imdbFilm a imdb:ImdbFilm ;
-              unified:title ?title ;
-              imdb:genre ?imdbGenre .
-  }
-
   # Exclusion 1 : enlever les films qui existent aussi sur Netflix
   MINUS {
     ?netflixFilm a netflix:NetflixFilm ;
-                 unified:title ?title .
+                unified:title ?title .
   }
 
   # Exclusion 2 : enlever les contenus courts (< 60 min) selon IMDB
@@ -43,4 +35,4 @@ WHERE {
 }
 GROUP BY ?title ?amazonRating ?releaseYear ?format ?mpaaRating
 ORDER BY DESC(?amazonRating) ?title
-LIMIT 20
+LIMIT 30

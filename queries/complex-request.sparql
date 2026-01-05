@@ -37,4 +37,4 @@ WHERE {
 }
 GROUP BY ?title ?amazonRating ?amazonPrice ?netflixRating ?violence ?nudity
 ORDER BY DESC(?amazonRating) ?amazonPrice
-LIMIT 20
+LIMIT 30
