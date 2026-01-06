@@ -147,14 +147,14 @@ PREFIX amazon: <http://example.org/amazon/>
 PREFIX netflix: <http://example.org/netflix/>
 PREFIX imdb: <http://example.org/imdb/>
 
-SELECT ?title ?rating ?runtime ?language ?genre
+SELECT ?title ?rating ?duration ?language ?genre
 WHERE {
   # Films Netflix avec leurs informations
   ?film a netflix:NetflixFilm ;
         unified:title ?title ;
         netflix:rating ?rating .
 
-  OPTIONAL { ?film netflix:runtime ?runtime }
+  OPTIONAL { ?film unified:duration ?duration }
   OPTIONAL { ?film netflix:language ?language }
   OPTIONAL { ?film netflix:genre ?genre }
 
@@ -182,36 +182,36 @@ LIMIT 30
 |=============================|
 |      Request Results        |
 |=============================|
-|		title : David Attenborough: A Life on Our Planet 	|	rating : 9.0 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
-|		title : Emicida: AmarElo - It's All For Yesterday 	|	rating : 8.6 	|	runtime : N/A 	|	language : Portuguese 	|	genre : Documentary 	|
-|		title : Springsteen on Broadway 	|	rating : 8.5 	|	runtime : N/A 	|	language : English 	|	genre : One-man show 	|
-|		title : Ben Platt: Live from Radio City Music Hall 	|	rating : 8.4 	|	runtime : N/A 	|	language : English 	|	genre : Concert Film 	|
-|		title : Taylor Swift: Reputation Stadium Tour 	|	rating : 8.4 	|	runtime : N/A 	|	language : English 	|	genre : Concert Film 	|
-|		title : Winter on Fire: Ukraine's Fight for Freedom 	|	rating : 8.4 	|	runtime : N/A 	|	language : English/Ukranian/Russian 	|	genre : Documentary 	|
-|		title : Cuba and the Cameraman 	|	rating : 8.3 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
-|		title : Dancing with the Birds 	|	rating : 8.3 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
-|		title : 13th 	|	rating : 8.2 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
-|		title : Disclosure: Trans Lives on Screen 	|	rating : 8.2 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
-|		title : Klaus 	|	rating : 8.2 	|	runtime : N/A 	|	language : English 	|	genre : Animation/Christmas/Comedy/Adventure 	|
-|		title : Seaspiracy 	|	rating : 8.2 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
-|		title : The Three Deaths of Marisela Escobedo 	|	rating : 8.2 	|	runtime : N/A 	|	language : Spanish 	|	genre : Documentary 	|
-|		title : Chasing Coral 	|	rating : 8.1 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
-|		title : My Octopus Teacher 	|	rating : 8.1 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
-|		title : Rising Phoenix 	|	rating : 8.1 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
-|		title : Struggle: The Life and Lost Art of Szukaiski 	|	rating : 8.0 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
-|		title : A Secret Love 	|	rating : 7.9 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
-|		title : Icarus 	|	rating : 7.9 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
-|		title : Marriage Story 	|	rating : 7.9 	|	runtime : N/A 	|	language : English 	|	genre : Drama 	|
-|		title : The Ivory Game 	|	rating : 7.9 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
-|		title : If Anything Happens I Love You 	|	rating : 7.8 	|	runtime : N/A 	|	language : English 	|	genre : Animation / Short 	|
-|		title : The Irishman 	|	rating : 7.8 	|	runtime : N/A 	|	language : English 	|	genre : Crime drama 	|
-|		title : The Trial of the Chicago 7 	|	rating : 7.8 	|	runtime : N/A 	|	language : English 	|	genre : Drama 	|
-|		title : Anima 	|	rating : 7.7 	|	runtime : N/A 	|	language : English 	|	genre : Musical / Short 	|
-|		title : Beasts of No Nation 	|	rating : 7.7 	|	runtime : N/A 	|	language : English/Akan 	|	genre : War drama 	|
-|		title : Brene Brown: The Call to Courage 	|	rating : 7.7 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
-|		title : Crip Camp: A Disability Revolution 	|	rating : 7.7 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
-|		title : Jim & Andy: The Great Beyond - Featuring a Very Special, Contractually Obligated Mention of Tony Cliffton  	|	rating : 7.7 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
-|		title : Justin Timberlake + The Tennessee Kids 	|	rating : 7.7 	|	runtime : N/A 	|	language : English 	|	genre : Concert Film 	|
+|		title : David Attenborough: A Life on Our Planet 	|	rating : 9.0 	|	duration : 83 	|	language : English 	|	genre : Documentary 	|
+|		title : Emicida: AmarElo - It's All For Yesterday 	|	rating : 8.6 	|	duration : 89 	|	language : Portuguese 	|	genre : Documentary 	|
+|		title : Springsteen on Broadway 	|	rating : 8.5 	|	duration : 153 	|	language : English 	|	genre : One-man show 	|
+|		title : Ben Platt: Live from Radio City Music Hall 	|	rating : 8.4 	|	duration : 85 	|	language : English 	|	genre : Concert Film 	|
+|		title : Taylor Swift: Reputation Stadium Tour 	|	rating : 8.4 	|	duration : 125 	|	language : English 	|	genre : Concert Film 	|
+|		title : Winter on Fire: Ukraine's Fight for Freedom 	|	rating : 8.4 	|	duration : 91 	|	language : English/Ukranian/Russian 	|	genre : Documentary 	|
+|		title : Cuba and the Cameraman 	|	rating : 8.3 	|	duration : 114 	|	language : English 	|	genre : Documentary 	|
+|		title : Dancing with the Birds 	|	rating : 8.3 	|	duration : 51 	|	language : English 	|	genre : Documentary 	|
+|		title : 13th 	|	rating : 8.2 	|	duration : 100 	|	language : English 	|	genre : Documentary 	|
+|		title : Disclosure: Trans Lives on Screen 	|	rating : 8.2 	|	duration : 107 	|	language : English 	|	genre : Documentary 	|
+|		title : Klaus 	|	rating : 8.2 	|	duration : 97 	|	language : English 	|	genre : Animation/Christmas/Comedy/Adventure 	|
+|		title : Seaspiracy 	|	rating : 8.2 	|	duration : 89 	|	language : English 	|	genre : Documentary 	|
+|		title : The Three Deaths of Marisela Escobedo 	|	rating : 8.2 	|	duration : 109 	|	language : Spanish 	|	genre : Documentary 	|
+|		title : Chasing Coral 	|	rating : 8.1 	|	duration : 89 	|	language : English 	|	genre : Documentary 	|
+|		title : My Octopus Teacher 	|	rating : 8.1 	|	duration : 85 	|	language : English 	|	genre : Documentary 	|
+|		title : Rising Phoenix 	|	rating : 8.1 	|	duration : 106 	|	language : English 	|	genre : Documentary 	|
+|		title : Struggle: The Life and Lost Art of Szukaiski 	|	rating : 8.0 	|	duration : 105 	|	language : English 	|	genre : Documentary 	|
+|		title : A Secret Love 	|	rating : 7.9 	|	duration : 82 	|	language : English 	|	genre : Documentary 	|
+|		title : Icarus 	|	rating : 7.9 	|	duration : 120 	|	language : English 	|	genre : Documentary 	|
+|		title : Marriage Story 	|	rating : 7.9 	|	duration : 136 	|	language : English 	|	genre : Drama 	|
+|		title : The Ivory Game 	|	rating : 7.9 	|	duration : 112 	|	language : English 	|	genre : Documentary 	|
+|		title : If Anything Happens I Love You 	|	rating : 7.8 	|	duration : 12 	|	language : English 	|	genre : Animation / Short 	|
+|		title : The Irishman 	|	rating : 7.8 	|	duration : 209 	|	language : English 	|	genre : Crime drama 	|
+|		title : The Trial of the Chicago 7 	|	rating : 7.8 	|	duration : 130 	|	language : English 	|	genre : Drama 	|
+|		title : Anima 	|	rating : 7.7 	|	duration : 15 	|	language : English 	|	genre : Musical / Short 	|
+|		title : Beasts of No Nation 	|	rating : 7.7 	|	duration : 136 	|	language : English/Akan 	|	genre : War drama 	|
+|		title : Brene Brown: The Call to Courage 	|	rating : 7.7 	|	duration : 76 	|	language : English 	|	genre : Documentary 	|
+|		title : Crip Camp: A Disability Revolution 	|	rating : 7.7 	|	duration : 108 	|	language : English 	|	genre : Documentary 	|
+|		title : Jim & Andy: The Great Beyond - Featuring a Very Special, Contractually Obligated Mention of Tony Cliffton  	|	rating : 7.7 	|	duration : 94 	|	language : English 	|	genre : Documentary 	|
+|		title : Justin Timberlake + The Tennessee Kids 	|	rating : 7.7 	|	duration : 90 	|	language : English 	|	genre : Concert Film 	|
 
 ==========================================
 
@@ -312,9 +312,11 @@ SELECT DISTINCT ?title ?ratingValue ?ratingSource
 WHERE {
   ?film a unified:film .
 
+  # Utilise subPropertyOf* pour trouver tous les titres
   ?titleProp rdfs:subPropertyOf* unified:title .
   ?film ?titleProp ?title .
 
+  # Utilise subPropertyOf* pour trouver tous les ratings
   OPTIONAL {
     ?ratingProp rdfs:subPropertyOf* unified:rating .
     ?film ?ratingProp ?ratingValue .
@@ -329,41 +331,132 @@ WHERE {
 
   FILTER (?ratingSource != "Unknown" && BOUND(?ratingValue))
 }
+ORDER BY ?title
 LIMIT 30
 --- Résultats ---
 |=============================|
 |      Request Results        |
 |=============================|
-|		title : Our Souls at Night 	|	ratingValue : 6.9 	|	ratingSource : Netflix 	|
-|		title : Jingle Jangle: A Christmas Journey 	|	ratingValue : 6.5 	|	ratingSource : Netflix 	|
-|		title : Shirkers 	|	ratingValue : 7.4 	|	ratingSource : Netflix 	|
-|		title : Travis Scott: Look Mom I Can Fly 	|	ratingValue : 6.3 	|	ratingSource : Netflix 	|
-|		title : Come Sunday 	|	ratingValue : 6.0 	|	ratingSource : Netflix 	|
-|		title : Pele 	|	ratingValue : 7.0 	|	ratingSource : Netflix 	|
-|		title : Death to 2020 	|	ratingValue : 6.8 	|	ratingSource : Netflix 	|
-|		title : The Social Dilemma 	|	ratingValue : 7.6 	|	ratingSource : Netflix 	|
-|		title : The Heartbreak Club 	|	ratingValue : 6.4 	|	ratingSource : Netflix 	|
-|		title : The Angel 	|	ratingValue : 6.6 	|	ratingSource : Netflix 	|
-|		title : Dangerous Lies 	|	ratingValue : 5.3 	|	ratingSource : Netflix 	|
-|		title : Lost Bullet 	|	ratingValue : 6.2 	|	ratingSource : Netflix 	|
-|		title : We Can Be Heroes 	|	ratingValue : 4.7 	|	ratingSource : Netflix 	|
-|		title : Laerte-se 	|	ratingValue : 6.9 	|	ratingSource : Netflix 	|
-|		title : A Fall from Grace 	|	ratingValue : 5.9 	|	ratingSource : Netflix 	|
-|		title : Gerald's Game 	|	ratingValue : 6.5 	|	ratingSource : Netflix 	|
-|		title : Lost Girls 	|	ratingValue : 6.1 	|	ratingSource : Netflix 	|
-|		title : Dude 	|	ratingValue : 5.1 	|	ratingSource : Netflix 	|
-|		title : Paradox 	|	ratingValue : 3.9 	|	ratingSource : Netflix 	|
-|		title : Taylor Swift: Reputation Stadium Tour 	|	ratingValue : 8.4 	|	ratingSource : Netflix 	|
-|		title : Ben Platt: Live from Radio City Music Hall 	|	ratingValue : 8.4 	|	ratingSource : Netflix 	|
-|		title : A Christmas Prince: The Royal Wedding 	|	ratingValue : 5.3 	|	ratingSource : Netflix 	|
-|		title : Mrs. Serial Killer 	|	ratingValue : 4.8 	|	ratingSource : Netflix 	|
-|		title : Sol Levante 	|	ratingValue : 4.7 	|	ratingSource : Netflix 	|
-|		title : The Christmas Chronicles: Part Two 	|	ratingValue : 6.0 	|	ratingSource : Netflix 	|
-|		title : The Last Thing He Wanted 	|	ratingValue : 4.3 	|	ratingSource : Netflix 	|
-|		title : Mascots 	|	ratingValue : 5.8 	|	ratingSource : Netflix 	|
-|		title : The Dirt 	|	ratingValue : 7.0 	|	ratingSource : Netflix 	|
-|		title : Jim & Andy: The Great Beyond - Featuring a Very Special, Contractually Obligated Mention of Tony Cliffton  	|	ratingValue : 7.7 	|	ratingSource : Netflix 	|
-|		title : The Siege of Jadotville 	|	ratingValue : 7.2 	|	ratingSource : Netflix 	|
+|		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingSource : Netflix 	|
+|		title : #Unfit: The Psychology of Donald Trump 	|	ratingValue : 4.4 	|	ratingSource : Amazon 	|
+|		title : 10 Cloverfield Lane 	|	ratingValue : 4.4 	|	ratingSource : Amazon 	|
+|		title : 10 YEARS 	|	ratingValue : 4.3 	|	ratingSource : Amazon 	|
+|		title : 10 to Midnight 	|	ratingValue : 4.5 	|	ratingSource : Amazon 	|
+|		title : 12 Feet Deep: Trapped Sisters 	|	ratingValue : 4.0 	|	ratingSource : Amazon 	|
+|		title : 13 Hours 	|	ratingValue : 4.8 	|	ratingSource : Amazon 	|
+|		title : 13th 	|	ratingValue : 8.2 	|	ratingSource : Netflix 	|
+|		title : 13th: A Conversation with Oprah Winfrey & Ava DuVernay 	|	ratingValue : 7.1 	|	ratingSource : Netflix 	|
+|		title : 15 August 	|	ratingValue : 5.8 	|	ratingSource : Netflix 	|
+|		title : 16 and Missing 	|	ratingValue : 4.5 	|	ratingSource : Amazon 	|
+|		title : 1917 	|	ratingValue : 4.4 	|	ratingSource : Amazon 	|
+|		title : 1922 	|	ratingValue : 6.3 	|	ratingSource : Netflix 	|
+|		title : 1984 	|	ratingValue : 4.2 	|	ratingSource : Amazon 	|
+|		title : 2 Guns 	|	ratingValue : 4.6 	|	ratingSource : Amazon 	|
+|		title : 20000 Leagues Under the Sea 	|	ratingValue : 4.0 	|	ratingSource : Amazon 	|
+|		title : 2001: A Space Odyssey 	|	ratingValue : 4.6 	|	ratingSource : Amazon 	|
+|		title : 21 Grams 	|	ratingValue : 4.3 	|	ratingSource : Amazon 	|
+|		title : 22 July 	|	ratingValue : 6.8 	|	ratingSource : Netflix 	|
+|		title : 22 Jump Street 	|	ratingValue : 4.6 	|	ratingSource : Amazon 	|
+|		title : 3 Days to Kill 	|	ratingValue : 4.4 	|	ratingSource : Amazon 	|
+|		title : 5 Star Christmas 	|	ratingValue : 4.6 	|	ratingSource : Netflix 	|
+|		title : 50/50 	|	ratingValue : 4.6 	|	ratingSource : Amazon 	|
+|		title : 6 Balloons 	|	ratingValue : 5.9 	|	ratingSource : Netflix 	|
+|		title : 6 Underground 	|	ratingValue : 6.1 	|	ratingSource : Netflix 	|
+|		title : 7 Signs of Christ's Return 	|	ratingValue : 4.1 	|	ratingSource : Amazon 	|
+|		title : 7 a�os 	|	ratingValue : 6.8 	|	ratingSource : Netflix 	|
+|		title : 7th & Union 	|	ratingValue : 4.0 	|	ratingSource : Amazon 	|
+|		title : 80 for Brady 	|	ratingValue : 4.3 	|	ratingSource : Amazon 	|
+|		title : 9 Hour Rainstorm for Sleep black screen 	|	ratingValue : 4.5 	|	ratingSource : Amazon 	|
+
+==========================================
+
+
+==========================================
+REQUÊTE: Ontologie enrichie
+Fichier: ../queries/enriched-ontology-request.sparql
+==========================================
+
+--- Code SPARQL ---
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?title ?source ?duration ?releaseDate ?contentRating
+WHERE {
+  ?film a unified:film ;
+        unified:title ?title .
+
+  # Utilise subPropertyOf* pour recuperer la duree depuis toutes les sources
+  OPTIONAL {
+    ?durationProp rdfs:subPropertyOf* unified:duration .
+    ?film ?durationProp ?duration .
+  }
+
+  # Utilise subPropertyOf* pour recuperer la date de sortie
+  OPTIONAL {
+    ?dateProp rdfs:subPropertyOf* unified:releaseDate .
+    ?film ?dateProp ?releaseDate .
+  }
+
+  # Utilise subPropertyOf* pour recuperer le content rating (MPAA/certificate)
+  OPTIONAL {
+    ?ratingProp rdfs:subPropertyOf* unified:contentRating .
+    ?film ?ratingProp ?contentRating .
+  }
+
+  # Determine la source du film
+  OPTIONAL {
+    ?film a ?filmClass .
+    BIND(
+      IF(?filmClass = amazon:AmazonFilm, "Amazon",
+        IF(?filmClass = netflix:NetflixFilm, "Netflix",
+          IF(?filmClass = imdb:ImdbFilm, "IMDB", "Unknown")))
+      AS ?source
+    )
+  }
+
+  FILTER(?source != "Unknown")
+  FILTER(BOUND(?duration) || BOUND(?releaseDate) || BOUND(?contentRating))
+}
+ORDER BY ?source ?title
+LIMIT 30
+
+--- Résultats ---
+|=============================|
+|      Request Results        |
+|=============================|
+|		title : #Saraitda 	|	source : IMDB 	|	duration : 98 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 'Allo 'Allo! 	|	source : IMDB 	|	duration : 45 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : (500) Days of Summer 	|	source : IMDB 	|	duration : 95 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 10 	|	source : IMDB 	|	duration : 122 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 10 Cloverfield Lane 	|	source : IMDB 	|	duration : 103 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 10 Things I Hate About You 	|	source : IMDB 	|	duration : 97 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 10 Years 	|	source : IMDB 	|	duration : 110 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 101 Dalmatians 	|	source : IMDB 	|	duration : 103 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 12 Angry Men 	|	source : IMDB 	|	duration : 96 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 12 Mighty Orphans 	|	source : IMDB 	|	duration : 118 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 12 Monkeys 	|	source : IMDB 	|	duration : 42 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 12 Strong 	|	source : IMDB 	|	duration : 130 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 12 Years a Slave 	|	source : IMDB 	|	duration : 134 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 127 Hours 	|	source : IMDB 	|	duration : 94 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 13 Ghosts 	|	source : IMDB 	|	duration : 85 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 13 Going on 30 	|	source : IMDB 	|	duration : 98 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 13 Hours 	|	source : IMDB 	|	duration : 144 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 13 Minutes (II) 	|	source : IMDB 	|	duration : 108 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 13 Reasons Why 	|	source : IMDB 	|	duration : 60 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 1408 	|	source : IMDB 	|	duration : 104 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 17 Again 	|	source : IMDB 	|	duration : 102 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 1917 	|	source : IMDB 	|	duration : 119 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 1922 	|	source : IMDB 	|	duration : 102 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 2 Broke Girls 	|	source : IMDB 	|	duration : 22 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 2 Days in the Valley 	|	source : IMDB 	|	duration : 104 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 2 Fast 2 Furious 	|	source : IMDB 	|	duration : 107 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 2 Guns 	|	source : IMDB 	|	duration : 109 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 2001: A Space Odyssey 	|	source : IMDB 	|	duration : 149 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 2010: The Year We Make Contact 	|	source : IMDB 	|	duration : 116 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 2012 	|	source : IMDB 	|	duration : 158 	|	releaseDate : N/A 	|	contentRating : N/A 	|
 
 ==========================================
 
