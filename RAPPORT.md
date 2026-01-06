@@ -8,15 +8,15 @@ fontsize: 11pt
 ---
 
 ## Table des matières
-1. [Jeux de données et extraction](#1-jeux-de-données-et-extraction)
-2. [Intégration des données](#2-intégration-des-données)
-3. [Requêtes SPARQL](#3-requêtes-sparql)
-4. [Raisonnement RDFS](#4-raisonnement-rdfs)
-5. [Conclusion](#5-conclusion)
+1. [Jeux de données et extraction](#jeux-de-donnees-et-extraction)
+2. [Intégration des données](#integration-des-donnees)
+3. [Requêtes SPARQL](#requetes-sparql)
+4. [Raisonnement RDFS](#raisonnement-rdfs)
+5. [Conclusion](#conclusion)
 
 ---
 
-## 1. Jeux de données et extraction
+## 1. Jeux de données et extraction {#jeux-de-donnees-et-extraction}
 
 ### 1.1. Sources de données sélectionnées
 
@@ -49,6 +49,7 @@ Nous avons donc opté pour des **fichiers CSV Kaggle** qui nous permettent un co
 ### 1.3. Processus d'extraction
 
 L'extraction est réalisée par le module Java `CsvReader.java` qui :
+
 - Parse les fichiers CSV avec gestion des délimiteurs et des guillemets
 - Convertit les valeurs en types Java appropriés (String, Integer, Double, LocalDate, List)
 - Applique des transformations via annotations :
@@ -66,13 +67,14 @@ private Double rating;
 ```
 
 **Note importante** : Les classes modèles (NetflixFilm, AmazonFilm, ImdbFilm) ne sont **pas compilées** avec le projet. Elles sont stockées sous forme de fichiers `.java` dans `data/csv/convert-*/` et sont **chargées dynamiquement à la volée** lors de l'exécution via le module `ClassLoader.java`. Ce mécanisme permet de :
+
 - Modifier facilement le schéma des données sans recompiler le projet
 - Ajouter de nouvelles sources de données en créant simplement un nouveau fichier `.java`
 - Garder une architecture flexible et extensible
 
 ---
 
-## 2. Intégration des données
+## 2. Intégration des données {#integration-des-donnees}
 
 ### 2.1. Conversion en RDF/Turtle
 
@@ -145,6 +147,7 @@ imdb:duration rdfs:subPropertyOf unified:duration .
 ```
 
 **Propriétés unifiées créées automatiquement** :
+
 - `unified:title` ← {netflix:title, amazon:title, imdb:title}
 - `unified:rating` ← {netflix:rating, amazon:rating, imdb:rating}
 - `unified:genre` ← {netflix:genre, imdb:genre}
@@ -203,7 +206,7 @@ java -jar rdfs-generator.jar merge integrated.ttl to_add_ontology.ttl final_file
 
 ---
 
-## 3. Requêtes SPARQL
+## 3. Requêtes SPARQL {#requetes-sparql}
 
 En tout nous avons développé 9 requêtes SPARQL.
 
@@ -456,7 +459,7 @@ QueryExecution qexec = QueryExecutionFactory.create(query, infModel);
 
 ---
 
-## 4. Raisonnement RDFS
+## 4. Raisonnement RDFS {#raisonnement-rdfs}
 
 ### 4.1. Construction de l'ontologie
 
@@ -563,6 +566,7 @@ Requête :
 ```
 
 **Résultat** : Récupère toutes les propriétés descendantes de `contentAdvisory` :
+
 - `imdb:violence`
 - `imdb:nudity`
 - `imdb:profanity`
@@ -626,11 +630,12 @@ Résultat : Distribution par source (Netflix: 120, Amazon: 90, IMDB: 150).
 
 ---
 
-## 5. Conclusion
+## 5. Conclusion {#conclusion}
 
 Le projet a permis d'intégrer trois sources de données différentes (Netflix, Amazon, IMDB) dans un graphe RDF unifié. L'utilisation du raisonnement RDFS a simplifié l'interrogation des données en permettant d'écrire des requêtes SPARQL sur des propriétés unifiées plutôt que de gérer les différences entre sources.
 
 Les principales contributions techniques sont :
+
 - Génération automatique de TTL depuis CSV avec chargement dynamique des classes modèles
 - Alignement automatique des entités via `owl:sameAs`
 - Unification des propriétés par analyse du domaine des classes (`rdfs:subPropertyOf`)
