@@ -1,27 +1,41 @@
-PREFIX amazon: <http://example.org/amazon/>
+# Requête fédérée : enrichit les films locaux avec des données Wikidata
+# Récupère les films de Christopher Nolan et complète avec pays, budget et box-office
+
+PREFIX unified: <http://example.org/unified/>
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?localTitle ?rating
+SELECT (?localTitle AS ?title) 
+       (ROUND(AVG(?rating)) AS ?avgRating)
        (GROUP_CONCAT(DISTINCT ?country; separator=", ") AS ?countries) 
        ?year
+       (MAX(?wdBudget) AS ?budget)
+       (MAX(?wdBoxOffice) AS ?boxOffice)
 WHERE {
-  ?film a amazon:AmazonFilm ;
-        amazon:title ?localTitle ;
-        amazon:rating ?rating ;
+  # Films locaux avec titre et rating
+  ?film a unified:film ;
+        unified:title ?localTitle ;
+        unified:rating ?rating .
 
+  # Interrogation Wikidata pour films de Christopher Nolan
   SERVICE <https://query.wikidata.org/sparql> {
     {
-      SELECT ?wikidataFilm ?wikidataTitle ?country (YEAR(MIN(?date)) AS ?year)
+      SELECT ?wikidataFilm ?wikidataTitle ?country 
+             (YEAR(MIN(?date)) AS ?year)
+             (MAX(?budgetVal) AS ?wdBudget)
+             (MAX(?boxOfficeVal) AS ?wdBoxOffice)
       WHERE {
-        ?wikidataFilm wdt:P31 wd:Q11424 ;
-                      wdt:P57 wd:Q25191 ;
+        ?wikidataFilm wdt:P31 wd:Q11424 ;        # instance de film
+                      wdt:P57 wd:Q25191 ;        # réalisé par Christopher Nolan
                       rdfs:label ?wikidataTitle ;
-                      wdt:P495 ?countryEntity ;
-                      wdt:P577 ?date .
+                      wdt:P495 ?countryEntity ;  # pays de production
+                      wdt:P577 ?date .           # date de sortie
 
         ?countryEntity rdfs:label ?country .
+        
+        OPTIONAL { ?wikidataFilm wdt:P2130 ?budgetVal }      # budget
+        OPTIONAL { ?wikidataFilm wdt:P2142 ?boxOfficeVal }   # box-office
 
         FILTER(LANG(?wikidataTitle) = "en")
         FILTER(LANG(?country) = "en")
@@ -30,8 +44,8 @@ WHERE {
     }
   }
 
-  # Matcher les titres locaux avec les titres Wikidata (insensible à la casse)
+  # Match titres locaux avec Wikidata (insensible à la casse)
   FILTER(LCASE(STR(?wikidataTitle)) = LCASE(STR(?localTitle)))
 }
-GROUP BY ?localTitle ?rating ?year
+GROUP BY ?localTitle ?year
 ORDER BY ?year

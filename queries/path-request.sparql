@@ -2,7 +2,7 @@
 PREFIX unified: <http://example.org/unified/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?title ?ratingValue ?ratingProp ?genreValue ?genreProp
+SELECT DISTINCT ?title ?ratingValue ?ratingProp ?genreValue ?genreProp
 WHERE {
   ?film a unified:film .
 

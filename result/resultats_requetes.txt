@@ -29,9 +29,9 @@ GROUP BY ?genre
 HAVING (COUNT(DISTINCT ?film) > 5)
 ORDER BY DESC(?totalFilms)
 --- Résultats ---
-                  |=============================|
-                  |      Request Results        |
-                  |=============================|
+|=============================|
+|      Request Results        |
+|=============================|
 |		genre : Drama 	|	totalFilms : 3173 	|	avgDuration : 97.0 	|	avgRating : 7.0 	|	minRating : 2.0 	|	maxRating : 9.7 	|
 |		genre : Comedy 	|	totalFilms : 1937 	|	avgDuration : 85.0 	|	avgRating : 7.0 	|	minRating : 1.9 	|	maxRating : 9.2 	|
 |		genre : Action 	|	totalFilms : 1545 	|	avgDuration : 100.0 	|	avgRating : 7.0 	|	minRating : 1.2 	|	maxRating : 9.3 	|
@@ -98,9 +98,9 @@ ORDER BY ?title
 LIMIT 30
 
 --- Résultats ---
-                  |=============================|
-                  |      Request Results        |
-                  |=============================|
+|=============================|
+|      Request Results        |
+|=============================|
 |		title : #REALITYHIGH 	|	language : English 	|	violence : N/A 	|	certificate : N/A 	|
 |		title : #Saraitda 	|	language : N/A 	|	violence : Moderate 	|	certificate : TV-MA 	|
 |		title : #Unfit: The Psychology of Donald Trump 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
@@ -179,9 +179,9 @@ ORDER BY DESC(?rating) ?title
 LIMIT 30
 
 --- Résultats ---
-                  |=============================|
-                  |      Request Results        |
-                  |=============================|
+|=============================|
+|      Request Results        |
+|=============================|
 |		title : David Attenborough: A Life on Our Planet 	|	rating : 9.0 	|	runtime : N/A 	|	language : English 	|	genre : Documentary 	|
 |		title : Emicida: AmarElo - It's All For Yesterday 	|	rating : 8.6 	|	runtime : N/A 	|	language : Portuguese 	|	genre : Documentary 	|
 |		title : Springsteen on Broadway 	|	rating : 8.5 	|	runtime : N/A 	|	language : English 	|	genre : One-man show 	|
@@ -260,9 +260,9 @@ ORDER BY DESC(?rating)
 LIMIT 30
 
 --- Résultats ---
-                  |=============================|
-                  |      Request Results        |
-                  |=============================|
+|=============================|
+|      Request Results        |
+|=============================|
 |		title : Aspirants 	|	rating : 9.7 	|	genre : Drama 	|	certificate : None 	|
 |		title : The Chosen 	|	rating : 9.6 	|	genre : Drama 	|	certificate : TV-PG 	|
 |		title : The Chosen 	|	rating : 9.6 	|	genre : History 	|	certificate : TV-PG 	|
@@ -307,7 +307,7 @@ Fichier: ../queries/path-request.sparql
 PREFIX unified: <http://example.org/unified/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?title ?ratingValue ?ratingProp ?genreValue ?genreProp
+SELECT DISTINCT ?title ?ratingValue ?ratingProp ?genreValue ?genreProp
 WHERE {
   ?film a unified:film .
 
@@ -331,39 +331,39 @@ ORDER BY ?title
 LIMIT 30
 
 --- Résultats ---
-                  |=============================|
-                  |      Request Results        |
-                  |=============================|
-|		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/netflix/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/netflix/genre 	|
+|=============================|
+|      Request Results        |
+|=============================|
 |		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/netflix/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/netflix/genre 	|
 |		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/netflix/genre 	|
-|		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/netflix/genre 	|
-|		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/netflix/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/unified/genre 	|
 |		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/netflix/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/unified/genre 	|
 |		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/unified/genre 	|
-|		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/unified/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Action 	|	genreProp : http://example.org/imdb/genre 	|
 |		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Action 	|	genreProp : http://example.org/imdb/genre 	|
 |		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Action 	|	genreProp : http://example.org/imdb/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Action 	|	genreProp : http://example.org/imdb/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/imdb/genre 	|
 |		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/imdb/genre 	|
 |		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/imdb/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/imdb/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Horror 	|	genreProp : http://example.org/imdb/genre 	|
 |		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Horror 	|	genreProp : http://example.org/imdb/genre 	|
 |		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Horror 	|	genreProp : http://example.org/imdb/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Horror 	|	genreProp : http://example.org/imdb/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Action 	|	genreProp : http://example.org/unified/genre 	|
 |		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Action 	|	genreProp : http://example.org/unified/genre 	|
 |		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Action 	|	genreProp : http://example.org/unified/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Action 	|	genreProp : http://example.org/unified/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/unified/genre 	|
 |		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/unified/genre 	|
 |		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/unified/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/unified/genre 	|
 |		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Horror 	|	genreProp : http://example.org/unified/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Horror 	|	genreProp : http://example.org/unified/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Horror 	|	genreProp : http://example.org/unified/genre 	|
+|		title : #Unfit: The Psychology of Donald Trump 	|	ratingValue : 4.4 	|	ratingProp : http://example.org/amazon/rating 	|	genreValue : N/A 	|	genreProp : N/A 	|
+|		title : #Unfit: The Psychology of Donald Trump 	|	ratingValue : 4.4 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : N/A 	|	genreProp : N/A 	|
+|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/imdb/genre 	|
+|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/imdb/genre 	|
+|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : History 	|	genreProp : http://example.org/imdb/genre 	|
+|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : History 	|	genreProp : http://example.org/imdb/genre 	|
+|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : War 	|	genreProp : http://example.org/imdb/genre 	|
+|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : War 	|	genreProp : http://example.org/imdb/genre 	|
+|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/unified/genre 	|
+|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/unified/genre 	|
+|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : History 	|	genreProp : http://example.org/unified/genre 	|
+|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : History 	|	genreProp : http://example.org/unified/genre 	|
+|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : War 	|	genreProp : http://example.org/unified/genre 	|
+|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : War 	|	genreProp : http://example.org/unified/genre 	|
 
 ==========================================
 
@@ -413,9 +413,9 @@ GROUP BY ?title ?amazonRating ?amazonPrice ?netflixRating ?violence ?nudity
 ORDER BY DESC(?amazonRating) ?amazonPrice
 LIMIT 30
 --- Résultats ---
-                  |=============================|
-                  |      Request Results        |
-                  |=============================|
+|=============================|
+|      Request Results        |
+|=============================|
 |		title : Renfroe's White Christmas 	|	amazonRating : 5.0 	|	amazonPrice : 2.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
 |		title : The Bumble Nums - Season 4 	|	amazonRating : 4.9 	|	amazonPrice : 0.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
 |		title : The Prince of Egypt 	|	amazonRating : 4.9 	|	amazonPrice : 2.99 	|	genres : Drama, Animation, Adventure 	|	netflixRating : N/A 	|	violence : Moderate 	|	nudity : Mild 	|
@@ -456,33 +456,44 @@ Fichier: ../queries/federated-request.sparql
 ==========================================
 
 --- Code SPARQL ---
-PREFIX amazon: <http://example.org/amazon/>
+# Requête fédérée : enrichit les films locaux avec des données Wikidata
+# Récupère les films de Christopher Nolan et complète avec pays, budget et box-office
+
+PREFIX unified: <http://example.org/unified/>
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?localTitle ?rating
+SELECT (?localTitle AS ?title) 
+       (ROUND(AVG(?rating)) AS ?avgRating)
        (GROUP_CONCAT(DISTINCT ?country; separator=", ") AS ?countries) 
        ?year
+       (MAX(?wdBudget) AS ?budget)
+       (MAX(?wdBoxOffice) AS ?boxOffice)
 WHERE {
-  ?film a amazon:AmazonFilm ;
-        amazon:title ?localTitle ;
-        amazon:rating ?rating ;
-        amazon:directedBy ?director .
-  
-  FILTER(REGEX(?director, "Nolan", "i"))
+  # Films locaux avec titre et rating
+  ?film a unified:film ;
+        unified:title ?localTitle ;
+        unified:rating ?rating .
 
+  # Interrogation Wikidata pour films de Christopher Nolan
   SERVICE <https://query.wikidata.org/sparql> {
     {
-      SELECT ?wikidataFilm ?wikidataTitle ?country (YEAR(MIN(?date)) AS ?year)
+      SELECT ?wikidataFilm ?wikidataTitle ?country 
+             (YEAR(MIN(?date)) AS ?year)
+             (MAX(?budgetVal) AS ?wdBudget)
+             (MAX(?boxOfficeVal) AS ?wdBoxOffice)
       WHERE {
-        ?wikidataFilm wdt:P31 wd:Q11424 ;
-                      wdt:P57 wd:Q25191 ;
+        ?wikidataFilm wdt:P31 wd:Q11424 ;        # instance de film
+                      wdt:P57 wd:Q25191 ;        # réalisé par Christopher Nolan
                       rdfs:label ?wikidataTitle ;
-                      wdt:P495 ?countryEntity ;
-                      wdt:P577 ?date .
+                      wdt:P495 ?countryEntity ;  # pays de production
+                      wdt:P577 ?date .           # date de sortie
 
         ?countryEntity rdfs:label ?country .
+        
+        OPTIONAL { ?wikidataFilm wdt:P2130 ?budgetVal }      # budget
+        OPTIONAL { ?wikidataFilm wdt:P2142 ?boxOfficeVal }   # box-office
 
         FILTER(LANG(?wikidataTitle) = "en")
         FILTER(LANG(?country) = "en")
@@ -491,18 +502,24 @@ WHERE {
     }
   }
 
+  # Match titres locaux avec Wikidata (insensible à la casse)
   FILTER(LCASE(STR(?wikidataTitle)) = LCASE(STR(?localTitle)))
 }
-GROUP BY ?localTitle ?rating ?year
+GROUP BY ?localTitle ?year
 ORDER BY ?year
 --- Résultats ---
-                  |=============================|
-                  |      Request Results        |
-                  |=============================|
-|		localTitle : The Prestige 	|	rating : 4.7 	|	countries : United States, United Kingdom 	|	year : 2006 	|
-|		localTitle : The Dark Knight 	|	rating : 4.7 	|	countries : United States, United Kingdom 	|	year : 2008 	|
-|		localTitle : The Dark Knight Rises 	|	rating : 4.7 	|	countries : United States, United Kingdom 	|	year : 2012 	|
-|		localTitle : Interstellar 	|	rating : 4.7 	|	countries : United States, United Kingdom 	|	year : 2014 	|
+|=============================|
+|      Request Results        |
+|=============================|
+|		title : Insomnia 	|	avgRating : 7.0 	|	countries : United States 	|	year : 2002 	|	budget : 46000000 	|	boxOffice : 113714830 	|
+|		title : Batman Begins 	|	avgRating : 8.0 	|	countries : United States, United Kingdom 	|	year : 2005 	|	budget : 150000000 	|	boxOffice : 373672993 	|
+|		title : The Prestige 	|	avgRating : 7.0 	|	countries : United States, United Kingdom 	|	year : 2006 	|	budget : 40000000 	|	boxOffice : 109676311 	|
+|		title : The Dark Knight 	|	avgRating : 7.0 	|	countries : United States, United Kingdom 	|	year : 2008 	|	budget : 185000000 	|	boxOffice : 1006234167 	|
+|		title : Inception 	|	avgRating : 9.0 	|	countries : United States, United Kingdom 	|	year : 2010 	|	budget : 160000000 	|	boxOffice : 836848102 	|
+|		title : The Dark Knight Rises 	|	avgRating : 7.0 	|	countries : United States, United Kingdom 	|	year : 2012 	|	budget : 250000000 	|	boxOffice : 1081169825 	|
+|		title : Interstellar 	|	avgRating : 6.0 	|	countries : United States, United Kingdom 	|	year : 2014 	|	budget : 165000000 	|	boxOffice : 701729206 	|
+|		title : Dunkirk 	|	avgRating : 8.0 	|	countries : United States, Netherlands, France, United Kingdom 	|	year : 2017 	|	budget : 100000000 	|	boxOffice : 526940665 	|
+|		title : Tenet 	|	avgRating : 7.0 	|	countries : United States, United Kingdom 	|	year : 2020 	|	budget : 200000000 	|	boxOffice : 361300000 	|
 
 ==========================================
 

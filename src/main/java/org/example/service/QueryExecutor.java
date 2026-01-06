@@ -27,9 +27,9 @@ public class QueryExecutor {
 
         try (QueryExecution qexec = QueryExecutionFactory.create(query, infModel)) {
             ResultSet resultSet = qexec.execSelect();
-            System.out.println("                  |=============================|");
-            System.out.println("                  |      Request Results        |");
-            System.out.println("                  |=============================|");
+            System.out.println("|=============================|");
+            System.out.println("|      Request Results        |");
+            System.out.println("|=============================|");
 
             while (resultSet.hasNext()) {
                 QuerySolution solution = resultSet.next();
