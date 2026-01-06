@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Script pour exécuter les requêtes SPARQL et capturer les résultats
+
 OUTPUT_FILE="../result/resultats_requetes.txt"
 
 echo "==================================="
