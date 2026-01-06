@@ -83,7 +83,7 @@ netflix:title rdf:type rdf:Property ;
     rdfs:domain netflix:NetflixFilm ;
     rdfs:range rdfs:Literal .
 
-netflix:runtime rdf:type rdf:Property ;
+netflix:duration rdf:type rdf:Property ;
     rdfs:domain netflix:NetflixFilm ;
     rdfs:range xsd:integer .
 ```
@@ -93,7 +93,7 @@ netflix:runtime rdf:type rdf:Property ;
 netflix:The_Irishman rdf:type netflix:NetflixFilm ;
     netflix:title "The Irishman" ;
     netflix:genre "Crime" ;
-    netflix:runtime 209 ;
+    netflix:duration 209 ;
     netflix:rating 7.8 .
 ```
 
@@ -128,21 +128,19 @@ Le processus d'unification analyse les propriétés de chaque classe et identifi
 **Exemple d'unification** :
 ```turtle
 # Propriétés sources différentes mais sémantiquement identiques
-netflix:runtime → unified:duration
+netflix:duration → unified:duration
 imdb:duration → unified:duration
 
 # Relation de hiérarchie générée automatiquement
-netflix:runtime rdfs:subPropertyOf unified:duration .
+netflix:duration rdfs:subPropertyOf unified:duration .
 imdb:duration rdfs:subPropertyOf unified:duration .
 ```
 
-**Propriétés unifiées créées** :
+**Propriétés unifiées créées automatiquement** :
 - `unified:title` ← {netflix:title, amazon:title, imdb:title}
 - `unified:rating` ← {netflix:rating, amazon:rating, imdb:rating}
 - `unified:genre` ← {netflix:genre, imdb:genre}
-- `unified:duration` ← {netflix:runtime, imdb:duration}
-- `unified:releaseDate` ← {netflix:premiere, amazon:releaseYear, imdb:date}
-- `unified:contentRating` ← {amazon:mpaaRating, imdb:certificate}
+- `unified:duration` ← {netflix:duration, imdb:duration}
 
 ### 2.4. Hiérarchie de classes
 
