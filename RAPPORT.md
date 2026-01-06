@@ -628,55 +628,15 @@ Résultat : Distribution par source (Netflix: 120, Amazon: 90, IMDB: 150).
 
 ## 5. Conclusion
 
-### 5.1. Apports du raisonnement RDFS
+Le projet a permis d'intégrer trois sources de données différentes (Netflix, Amazon, IMDB) dans un graphe RDF unifié. L'utilisation du raisonnement RDFS a simplifié l'interrogation des données en permettant d'écrire des requêtes SPARQL sur des propriétés unifiées plutôt que de gérer les différences entre sources.
 
-Ce projet démontre comment le raisonnement RDFS permet d'**exploiter efficacement des jeux de données hétérogènes** :
+Les principales contributions techniques sont :
+- Génération automatique de TTL depuis CSV avec chargement dynamique des classes modèles
+- Alignement automatique des entités via `owl:sameAs`
+- Unification des propriétés par analyse du domaine des classes (`rdfs:subPropertyOf`)
+- 9 requêtes SPARQL démontrant agrégation, OPTIONAL, MINUS, expressions de chemin et fédération
 
-1. **Interopérabilité sémantique** : Les propriétés et classes de sources différentes sont alignées via `rdfs:subPropertyOf` et `rdfs:subClassOf`, permettant des requêtes unifiées sans connaître les schémas sources.
-
-2. **Requêtes simplifiées** : Au lieu d'écrire des UNION pour chaque source, une seule clause suffit :
-   ```sparql
-   ?film unified:rating ?rating .  # ← Fonctionne pour Netflix, Amazon, IMDB
-   ```
-
-3. **Extensibilité** : L'ajout d'une nouvelle source nécessite uniquement de définir les relations `rdfs:subPropertyOf` vers l'ontologie unifiée.
-
-4. **Expressivité accrue** : Les expressions de chemin (`rdfs:subPropertyOf*`) permettent de naviguer dans des hiérarchies complexes sans écrire de logique procédurale.
-
-### 5.2. Limites du raisonnement RDFS
-
-**Limites rencontrées** :
-
-1. **Pas d'inférence inverse** : RDFS ne peut pas inférer automatiquement que deux propriétés sont équivalentes (`owl:equivalentProperty`).
-
-2. **Quantité de données** : A cause de la taille de nos données, c'était parfois compliqué d'exécuter certaines requêtes complexes avec le raisonnement RDFS et de les débugger
-
-3. **Conflits de valeurs** : Si un même film a des valeurs différentes dans deux sources (ex: durée 120 min vs 125 min), RDFS les conserve toutes sans résolution.
-
-### 5.3. Améliorations possibles
-
-**Extensions envisagées** :
-
-1. **Passage à OWL** :
-   - Utiliser `owl:equivalentProperty` pour des alignements plus précis
-   - Définir des contraintes de cardinalité (`owl:FunctionalProperty`)
-   - Utiliser `owl:InverseFunctionalProperty` pour identifier les entités de manière plus robuste
-
-2. **Résolution de conflits** :
-   - Implémenter une stratégie de fusion (moyenne, valeur la plus récente, source prioritaire)
-   - Utiliser des graphes nommés pour tracer la provenance des données
-
-3. **Enrichissement externe** :
-   - Intégrer systématiquement Wikidata/DBpedia pour récupérer réalisateurs, acteurs, budgets
-   - Utiliser des services de géolocalisation pour les lieux de tournage
-
-### 5.5. Bilan
-
-Le projet a permis de maîtriser :
-- La modélisation RDF/RDFS avec hiérarchies de classes et propriétés
-- L'intégration multi-sources avec alignement automatique
-- Le raisonnement RDFS via Apache Jena
-- SPARQL avancé (agrégation, path expressions, fédération)
+Les limites rencontrées incluent la performance sur de gros volumes de données et l'absence de résolution automatique des conflits de valeurs entre sources. Une évolution vers OWL permettrait d'ajouter des contraintes de cardinalité et des relations d'équivalence plus riches.
 
 ---
 
