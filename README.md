@@ -122,7 +122,7 @@ Le fichier `to_add_ontology.ttl` contient l'ontologie RDFS enrichie avec :
 
 ### Propriétés unifiées
 - `unified:title`, `unified:rating`, `unified:genre` - Propriétés de base
-- `unified:duration` - Unifie `netflix:runtime` et `imdb:duration`
+- `unified:duration` - Unifie `netflix:duration` et `imdb:duration`
 - `unified:releaseDate` - Unifie `amazon:releaseYear`, `imdb:date`, `netflix:premiere`
 - `unified:contentRating` - Unifie `amazon:mpaaRating` et `imdb:certificate`
 - `unified:contentAdvisory` - Super-propriété pour les avertissements IMDB (violence, nudity, profanity, alcohol, frightening)
