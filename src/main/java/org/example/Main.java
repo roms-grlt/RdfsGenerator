@@ -35,7 +35,18 @@ public class Main {
                 break;
             case "query" :
                 executeQuery(args[1], args[2]);
+                break;
+            case "merge" :
+                mergeFile(args[1], args[2], args[3]);
         }
+    }
+
+    private static void mergeFile(String filePath1, String filePath2, String outputFile) throws IOException {
+        String content1 = new String (Files.readAllBytes(Paths.get(filePath1)));
+        String content2 = new String (Files.readAllBytes(Paths.get(filePath2)));
+
+        String result = content1.concat("\n").concat(content2);
+        Files.write(Paths.get(outputFile), result.getBytes());
     }
 
     private static void executeQuery(String requestFilePath, String turtleFilePath) throws IOException {

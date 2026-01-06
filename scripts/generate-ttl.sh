@@ -17,4 +17,7 @@ echo "Intégration des fichiers TTL avec ontologie enrichie"
 cd ../ttl
 java -jar ../../target/rdfs-generator.jar integrate ../integrated.ttl 3 imdb imbd-csv.ttl amazon amazon-csv.ttl netflix netflix-csv.ttl title film NetflixFilm AmazonFilm ImdbFilm
 
+echo "Merge du fichier générée avec l'ontologie 'fait-main'"
+java -jar ../../target/rdfs-generator.jar merge ../integrated.ttl ../to_add_ontology.ttl ../final_file.ttl
+
 echo "Génération terminée"
