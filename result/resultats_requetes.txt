@@ -429,36 +429,36 @@ LIMIT 30
 |=============================|
 |      Request Results        |
 |=============================|
-|		title : #Saraitda 	|	source : IMDB 	|	duration : 98 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 'Allo 'Allo! 	|	source : IMDB 	|	duration : 45 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : (500) Days of Summer 	|	source : IMDB 	|	duration : 95 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 10 	|	source : IMDB 	|	duration : 122 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 10 Cloverfield Lane 	|	source : IMDB 	|	duration : 103 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 10 Things I Hate About You 	|	source : IMDB 	|	duration : 97 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 10 Years 	|	source : IMDB 	|	duration : 110 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 101 Dalmatians 	|	source : IMDB 	|	duration : 103 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 12 Angry Men 	|	source : IMDB 	|	duration : 96 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 12 Mighty Orphans 	|	source : IMDB 	|	duration : 118 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 12 Monkeys 	|	source : IMDB 	|	duration : 42 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 12 Strong 	|	source : IMDB 	|	duration : 130 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 12 Years a Slave 	|	source : IMDB 	|	duration : 134 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 127 Hours 	|	source : IMDB 	|	duration : 94 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 13 Ghosts 	|	source : IMDB 	|	duration : 85 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 13 Going on 30 	|	source : IMDB 	|	duration : 98 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 13 Hours 	|	source : IMDB 	|	duration : 144 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 13 Minutes (II) 	|	source : IMDB 	|	duration : 108 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 13 Reasons Why 	|	source : IMDB 	|	duration : 60 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 1408 	|	source : IMDB 	|	duration : 104 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 17 Again 	|	source : IMDB 	|	duration : 102 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 1917 	|	source : IMDB 	|	duration : 119 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 1922 	|	source : IMDB 	|	duration : 102 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 2 Broke Girls 	|	source : IMDB 	|	duration : 22 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 2 Days in the Valley 	|	source : IMDB 	|	duration : 104 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 2 Fast 2 Furious 	|	source : IMDB 	|	duration : 107 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 2 Guns 	|	source : IMDB 	|	duration : 109 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 2001: A Space Odyssey 	|	source : IMDB 	|	duration : 149 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 2010: The Year We Make Contact 	|	source : IMDB 	|	duration : 116 	|	releaseDate : N/A 	|	contentRating : N/A 	|
-|		title : 2012 	|	source : IMDB 	|	duration : 158 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : #Unfit: The Psychology of Donald Trump 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2020 	|	contentRating : N/A 	|
+|		title : 10 Cloverfield Lane 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2016 	|	contentRating : PG-13 	|
+|		title : 10 YEARS 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2012 	|	contentRating : PG-13 	|
+|		title : 10 to Midnight 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 1983 	|	contentRating : R 	|
+|		title : 12 Feet Deep: Trapped Sisters 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2017 	|	contentRating : N/A 	|
+|		title : 13 Hours 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2016 	|	contentRating : R 	|
+|		title : 16 and Missing 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2015 	|	contentRating : N/A 	|
+|		title : 1917 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2020 	|	contentRating : R 	|
+|		title : 1984 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 1985 	|	contentRating : R 	|
+|		title : 2 Guns 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2013 	|	contentRating : R 	|
+|		title : 20000 Leagues Under the Sea 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 1997 	|	contentRating : N/A 	|
+|		title : 2001: A Space Odyssey 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 1970 	|	contentRating : G 	|
+|		title : 21 Grams 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2004 	|	contentRating : R 	|
+|		title : 22 Jump Street 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2014 	|	contentRating : R 	|
+|		title : 3 Days to Kill 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2014 	|	contentRating : R 	|
+|		title : 50/50 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2011 	|	contentRating : R 	|
+|		title : 7 Signs of Christ's Return 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 1997 	|	contentRating : N/A 	|
+|		title : 7th & Union 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2021 	|	contentRating : N/A 	|
+|		title : 80 for Brady 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2023 	|	contentRating : PG-13 	|
+|		title : 9 Hour Rainstorm for Sleep black screen 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2017 	|	contentRating : N/A 	|
+|		title : 9/11 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2017 	|	contentRating : R 	|
+|		title : 9/11: Minute by Minute 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2021 	|	contentRating : N/A 	|
+|		title : A Better Life 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2011 	|	contentRating : PG-13 	|
+|		title : A Bold Affair 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 1998 	|	contentRating : R 	|
+|		title : A Bride for Christmas 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2012 	|	contentRating : N/A 	|
+|		title : A Bridge Too Far 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 1977 	|	contentRating : PG 	|
+|		title : A Cape Cod Christmas 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2021 	|	contentRating : PG 	|
+|		title : A Cinderella Christmas 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2016 	|	contentRating : N/A 	|
+|		title : A Country Romance 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2022 	|	contentRating : N/A 	|
+|		title : A Father's Legacy 	|	source : Amazon 	|	duration : N/A 	|	releaseDate : 2021 	|	contentRating : N/A 	|
 
 ==========================================
 

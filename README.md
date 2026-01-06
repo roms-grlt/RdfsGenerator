@@ -6,6 +6,29 @@ Projet d'intégration multi-sources de données de films (Amazon, Netflix, IMDB)
 - Java 11+
 - Maven
 
+## Récupération des données
+
+Les données proviennent de trois sources Kaggle :
+
+### 1. Netflix Original Films
+- **Source** : https://www.kaggle.com/datasets/luiscorter/netflix-original-films-imdb-scores
+- **Fichier** : Télécharger `netflix_originals.csv`
+- **Destination** : `data/csv/convert-netflix/netflix.csv`
+
+### 2. Amazon Movies and Films
+- **Source** : https://www.kaggle.com/datasets/muhammadawaistayyab/amazon-movies-and-films
+- **Fichier** : Télécharger `amazon_movies.csv`
+- **Destination** : `data/csv/convert-amazon/amazon.csv`
+
+### 3. IMDB Most Popular Films
+- **Source** : https://www.kaggle.com/datasets/mazenramadan/imdb-most-popular-films-and-series
+- **Fichier** : Télécharger le CSV
+- **IMPORTANT** : Lors du téléchargement, **bien sélectionner les 14 colonnes** :
+  - name, date, rate, votes, genre, duration, type, certificate, episodes, nudity, violence, profanity, alcohol, frightening
+- **Destination** : `data/csv/convert-imdb/imdb.csv`
+
+Une fois les fichiers CSV téléchargés et placés dans les répertoires appropriés, vous pouvez procéder à la compilation.
+
 ## Compilation
 ```bash
 mvn clean package

@@ -49,7 +49,7 @@ for query in "${queries[@]}"; do
         echo "--- Résultats ---"
 
         # Exécute et capture les résultats
-        java -jar ../target/rdfs-generator.jar query "../queries/${file}.sparql" ../data/integrated.ttl 2>&1
+        java -jar ../target/rdfs-generator.jar query "../queries/${file}.sparql" ../data/final_file.ttl 2>&1
         
         echo ""
         echo "=========================================="

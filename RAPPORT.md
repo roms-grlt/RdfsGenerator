@@ -707,22 +707,9 @@ Les ~300 films intégrés avec ~1200 triplets RDF et 9 requêtes SPARQL démontr
 
 ## Références
 
-**Technologies** :
-- Apache Jena 4.10.0 - https://jena.apache.org/
-- SPARQL 1.1 Specification - https://www.w3.org/TR/sparql11-query/
-- RDF Schema (RDFS) - https://www.w3.org/TR/rdf-schema/
-- OWL Web Ontology Language - https://www.w3.org/TR/owl2-overview/
-
-**Sources de données** :
 - Kaggle Netflix Dataset - https://www.kaggle.com/datasets/luiscorter/netflix-original-films-imdb-scores
 - Kaggle Amazon Dataset - https://www.kaggle.com/datasets/muhammadawaistayyab/amazon-movies-and-films
 - Kaggle IMDB Dataset - https://www.kaggle.com/datasets/mazenramadan/imdb-most-popular-films-and-series
 
-**Documentation technique** :
-- Jena RDF API Tutorial - https://jena.apache.org/tutorials/rdf_api.html
-- Jena RDFS Inference - https://jena.apache.org/documentation/inference/
-- SPARQL Path Expressions - https://www.w3.org/TR/sparql11-query/#propertypaths
-
-**Cours et tutoriels** :
-- W3C RDF Primer - https://www.w3.org/TR/rdf11-primer/
-- Linked Data Patterns - http://patterns.dataincubator.org/
+- Introduction au RDF et à l'API RDF de Jena - https://web-semantique.developpez.com/tutoriels/jena/introduction-rdf/
+- Apache Jena tutorial - write models in different formats with jena RDF,TURTLE,JSON - https://www.youtube.com/watch?v=Ps_cVNSwfeA
