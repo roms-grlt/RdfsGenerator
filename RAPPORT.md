@@ -5,6 +5,56 @@ date: "Janvier 2025"
 lang: fr
 geometry: margin=2.5cm
 fontsize: 11pt
+header-includes:
+  - \usepackage{fvextra}
+  - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+---
+
+## Instructions d'exécution
+
+Pour reproduire l'intégration complète du projet :
+
+**Prérequis :** Java 11+, Maven
+
+**Étape 1 : Récupération des données**
+
+Télécharger les 3 datasets Kaggle et les placer dans les répertoires appropriés :
+
+- Netflix : https://www.kaggle.com/datasets/luiscorter/netflix-original-films-imdb-scores → `data/csv/convert-netflix/netflix.csv`
+- Amazon : https://www.kaggle.com/datasets/muhammadawaistayyab/amazon-movies-and-films → `data/csv/convert-amazon/amazon.csv`
+- IMDB : https://www.kaggle.com/datasets/mazenramadan/imdb-most-popular-films-and-series → `data/csv/convert-imdb/imdb.csv`
+  - **IMPORTANT** : Sélectionner uniquement les 14 premières colonnes (name, date, rate, votes, genre, duration, type, certificate, episodes, nudity, violence, profanity, alcohol, frightening)
+
+**Étape 2 : Compilation du projet**
+
+```bash
+mvn clean package
+```
+
+**Étape 3 : Génération et intégration automatique**
+
+```bash
+cd scripts
+./generate-ttl.sh
+```
+
+Ce script effectue automatiquement la conversion CSV → TTL, l'intégration avec création des liens `owl:sameAs`, et la fusion avec l'ontologie enrichie.
+
+**Étape 4 : Exécution des requêtes SPARQL**
+
+```bash
+cd scripts
+./run-queries.sh
+```
+
+Les résultats sont sauvegardés dans `result/resultats_requetes.txt`.
+
+**Pour exécuter une requête individuelle :**
+
+```bash
+java -jar target/rdfs-generator.jar query queries/aggregation-request.sparql data/final_file.ttl
+```
+
 ---
 
 ## Table des matières
