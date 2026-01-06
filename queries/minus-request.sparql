@@ -4,14 +4,14 @@ PREFIX amazon: <http://example.org/amazon/>
 PREFIX netflix: <http://example.org/netflix/>
 PREFIX imdb: <http://example.org/imdb/>
 
-SELECT ?title ?rating ?runtime ?language ?genre
+SELECT ?title ?rating ?duration ?language ?genre
 WHERE {
   # Films Netflix avec leurs informations
   ?film a netflix:NetflixFilm ;
         unified:title ?title ;
         netflix:rating ?rating .
 
-  OPTIONAL { ?film netflix:runtime ?runtime }
+  OPTIONAL { ?film unified:duration ?duration }
   OPTIONAL { ?film netflix:language ?language }
   OPTIONAL { ?film netflix:genre ?genre }
 

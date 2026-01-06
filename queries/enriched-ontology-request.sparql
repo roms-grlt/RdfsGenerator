@@ -1,0 +1,46 @@
+
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?title ?source ?duration ?releaseDate ?contentRating
+WHERE {
+  ?film a unified:film ;
+        unified:title ?title .
+
+  # Utilise subPropertyOf* pour recuperer la duree depuis toutes les sources
+  OPTIONAL {
+    ?durationProp rdfs:subPropertyOf* unified:duration .
+    ?film ?durationProp ?duration .
+  }
+
+  # Utilise subPropertyOf* pour recuperer la date de sortie
+  OPTIONAL {
+    ?dateProp rdfs:subPropertyOf* unified:releaseDate .
+    ?film ?dateProp ?releaseDate .
+  }
+
+  # Utilise subPropertyOf* pour recuperer le content rating (MPAA/certificate)
+  OPTIONAL {
+    ?ratingProp rdfs:subPropertyOf* unified:contentRating .
+    ?film ?ratingProp ?contentRating .
+  }
+
+  # Determine la source du film
+  OPTIONAL {
+    ?film a ?filmClass .
+    BIND(
+      IF(?filmClass = amazon:AmazonFilm, "Amazon",
+        IF(?filmClass = netflix:NetflixFilm, "Netflix",
+          IF(?filmClass = imdb:ImdbFilm, "IMDB", "Unknown")))
+      AS ?source
+    )
+  }
+
+  FILTER(?source != "Unknown")
+  FILTER(BOUND(?duration) || BOUND(?releaseDate) || BOUND(?contentRating))
+}
+ORDER BY ?source ?title
+LIMIT 30

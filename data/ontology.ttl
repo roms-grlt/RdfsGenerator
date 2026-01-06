@@ -1,144 +1,8 @@
+# ========================================
+# CLASSES
+# ========================================
 
-amazon:directedBy  rdf:type  rdf:Property;
-        rdfs:domain  amazon:AmazonFilm;
-        rdfs:range   rdfs:Literal .
-
-imdb:violence  rdf:type  rdf:Property;
-        rdfs:domain  imdb:ImdbFilm;
-        rdfs:range   rdfs:Literal .
-
-imdb:nudity  rdf:type  rdf:Property;
-        rdfs:domain  imdb:ImdbFilm;
-        rdfs:range   rdfs:Literal .
-
-amazon:rating  rdf:type     rdf:Property;
-        rdfs:domain         amazon:AmazonFilm;
-        rdfs:range          rdfs:Literal;
-        rdfs:subPropertyOf  unified:rating .
-
-amazon:starring  rdf:type  rdf:Property;
-        rdfs:domain  amazon:AmazonFilm;
-        rdfs:range   rdfs:Literal .
-
-imdb:type  rdf:type  rdf:Property;
-        rdfs:domain  imdb:ImdbFilm;
-        rdfs:range   rdfs:Literal .
-
-
-amazon:numberOfRating
-        rdf:type     rdf:Property;
-        rdfs:domain  amazon:AmazonFilm;
-        rdfs:range   rdfs:Literal .
-
-imdb:votes  rdf:type  rdf:Property;
-        rdfs:domain  imdb:ImdbFilm;
-        rdfs:range   rdfs:Literal .
-
-amazon:id  rdf:type  rdf:Property;
-        rdfs:domain  amazon:AmazonFilm;
-        rdfs:range   rdfs:Literal .
-
-amazon:title  rdf:type      rdf:Property;
-        rdfs:domain         amazon:AmazonFilm;
-        rdfs:range          rdfs:Literal;
-        rdfs:subPropertyOf  unified:title .
-
-netflix:premiere  rdf:type  rdf:Property;
-        rdfs:domain  netflix:NetflixFilm;
-        rdfs:range   rdfs:Literal .
-
-amazon:price  rdf:type  rdf:Property;
-        rdfs:domain  amazon:AmazonFilm;
-        rdfs:range   rdfs:Literal .
-
-imdb:frightening  rdf:type  rdf:Property;
-        rdfs:domain  imdb:ImdbFilm;
-        rdfs:range   rdfs:Literal .
-
-imdb:title  rdf:type        rdf:Property;
-        rdfs:domain         imdb:ImdbFilm;
-        rdfs:range          rdfs:Literal;
-        rdfs:subPropertyOf  unified:title .
-
-unified:rating  rdf:type  rdf:Property;
-        rdfs:domain  unified:film;
-        rdfs:range   rdfs:Literal .
-
-netflix:title  rdf:type     rdf:Property;
-        rdfs:domain         netflix:NetflixFilm;
-        rdfs:range          rdfs:Literal;
-        rdfs:subPropertyOf  unified:title .
-
-imdb:genre  rdf:type        rdf:Property;
-        rdfs:domain         imdb:ImdbFilm;
-        rdfs:range          rdfs:Literal;
-        rdfs:subPropertyOf  unified:genre .
-
-netflix:rating  rdf:type    rdf:Property;
-        rdfs:domain         netflix:NetflixFilm;
-        rdfs:range          rdfs:Literal;
-        rdfs:subPropertyOf  unified:rating .
-
-netflix:language  rdf:type  rdf:Property;
-        rdfs:domain  netflix:NetflixFilm;
-        rdfs:range   rdfs:Literal .
-
-imdb:alcohol  rdf:type  rdf:Property;
-        rdfs:domain  imdb:ImdbFilm;
-        rdfs:range   rdfs:Literal .
-
-netflix:runtime  rdf:type  rdf:Property;
-        rdfs:domain  netflix:NetflixFilm;
-        rdfs:range   rdfs:Literal .
-
-imdb:episodes  rdf:type  rdf:Property;
-        rdfs:domain  imdb:ImdbFilm;
-        rdfs:range   rdfs:Literal .
-
-unified:title  rdf:type  rdf:Property;
-        rdfs:domain  unified:film;
-        rdfs:range   rdfs:Literal .
-
-amazon:releaseYear  rdf:type  rdf:Property;
-        rdfs:domain  amazon:AmazonFilm;
-        rdfs:range   rdfs:Literal .
-
-imdb:duration  rdf:type  rdf:Property;
-        rdfs:domain  imdb:ImdbFilm;
-        rdfs:range   rdfs:Literal .
-
-netflix:genre  rdf:type     rdf:Property;
-        rdfs:domain         netflix:NetflixFilm;
-        rdfs:range          rdfs:Literal;
-        rdfs:subPropertyOf  unified:genre .
-
-imdb:certificate  rdf:type  rdf:Property;
-        rdfs:domain  imdb:ImdbFilm;
-        rdfs:range   rdfs:Literal .
-
-amazon:format  rdf:type  rdf:Property;
-        rdfs:domain  amazon:AmazonFilm;
-        rdfs:range   rdfs:Literal .
-
-imdb:profanity  rdf:type  rdf:Property;
-        rdfs:domain  imdb:ImdbFilm;
-        rdfs:range   rdfs:Literal .
-
-imdb:date  rdf:type  rdf:Property;
-        rdfs:domain  imdb:ImdbFilm;
-        rdfs:range   rdfs:Literal .
-
-unified:genre  rdf:type  rdf:Property;
-        rdfs:domain  unified:film;
-        rdfs:range   rdfs:Literal .
-
-imdb:rate  rdf:type  rdf:Property;
-        rdfs:domain  imdb:ImdbFilm;
-        rdfs:range   rdfs:Literal .
-
-amazon:mpaaRating  rdf:type  rdf:Property;
-        rdfs:domain  amazon:AmazonFilm;
-        rdfs:range   rdfs:Literal .
+unified:film  rdf:type  rdfs:Class .
 
 amazon:AmazonFilm  rdf:type  rdfs:Class;
         rdfs:subClassOf  unified:film .
@@ -149,4 +13,192 @@ imdb:ImdbFilm  rdf:type  rdfs:Class;
 netflix:NetflixFilm  rdf:type  rdfs:Class;
         rdfs:subClassOf  unified:film .
 
-unified:film  rdf:type  rdfs:Class .
+# ========================================
+# PROPRIETES UNIFIEES (niveau unified)
+# ========================================
+
+unified:title  rdf:type  rdf:Property;
+        rdfs:domain  unified:film;
+        rdfs:range   rdfs:Literal .
+
+unified:rating  rdf:type  rdf:Property;
+        rdfs:domain  unified:film;
+        rdfs:range   rdfs:Literal;
+        rdfs:comment "Note du film (echelle variable selon la source)" .
+
+unified:genre  rdf:type  rdf:Property;
+        rdfs:domain  unified:film;
+        rdfs:range   rdfs:Literal .
+
+unified:duration  rdf:type  rdf:Property;
+        rdfs:domain  unified:film;
+        rdfs:range   rdfs:Literal;
+        rdfs:comment "Duree du film en minutes" .
+
+unified:releaseDate  rdf:type  rdf:Property;
+        rdfs:domain  unified:film;
+        rdfs:range   rdfs:Literal;
+        rdfs:comment "Date ou annee de sortie du film" .
+
+unified:contentRating  rdf:type  rdf:Property;
+        rdfs:domain  unified:film;
+        rdfs:range   rdfs:Literal;
+        rdfs:comment "Classification du contenu (MPAA, certificate, etc.)" .
+
+unified:contentAdvisory  rdf:type  rdf:Property;
+        rdfs:domain  unified:film;
+        rdfs:range   rdfs:Literal;
+        rdfs:comment "Avertissements sur le contenu (violence, nudite, etc.)" .
+
+# ========================================
+# PROPRIETES AMAZON
+# ========================================
+
+amazon:id  rdf:type  rdf:Property;
+        rdfs:domain  amazon:AmazonFilm;
+        rdfs:range   rdfs:Literal .
+
+amazon:title  rdf:type      rdf:Property;
+        rdfs:domain         amazon:AmazonFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:title .
+
+amazon:rating  rdf:type     rdf:Property;
+        rdfs:domain         amazon:AmazonFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:rating .
+
+amazon:numberOfRating  rdf:type  rdf:Property;
+        rdfs:domain  amazon:AmazonFilm;
+        rdfs:range   rdfs:Literal .
+
+amazon:format  rdf:type  rdf:Property;
+        rdfs:domain  amazon:AmazonFilm;
+        rdfs:range   rdfs:Literal .
+
+amazon:releaseYear  rdf:type  rdf:Property;
+        rdfs:domain         amazon:AmazonFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:releaseDate .
+
+amazon:mpaaRating  rdf:type  rdf:Property;
+        rdfs:domain         amazon:AmazonFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:contentRating .
+
+amazon:directedBy  rdf:type  rdf:Property;
+        rdfs:domain  amazon:AmazonFilm;
+        rdfs:range   rdfs:Literal .
+
+amazon:starring  rdf:type  rdf:Property;
+        rdfs:domain  amazon:AmazonFilm;
+        rdfs:range   rdfs:Literal .
+
+amazon:price  rdf:type  rdf:Property;
+        rdfs:domain  amazon:AmazonFilm;
+        rdfs:range   rdfs:Literal .
+
+# ========================================
+# PROPRIETES NETFLIX
+# ========================================
+
+netflix:title  rdf:type     rdf:Property;
+        rdfs:domain         netflix:NetflixFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:title .
+
+netflix:genre  rdf:type     rdf:Property;
+        rdfs:domain         netflix:NetflixFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:genre .
+
+netflix:premiere  rdf:type  rdf:Property;
+        rdfs:domain         netflix:NetflixFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:releaseDate .
+
+netflix:runtime  rdf:type   rdf:Property;
+        rdfs:domain         netflix:NetflixFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:duration .
+
+netflix:rating  rdf:type    rdf:Property;
+        rdfs:domain         netflix:NetflixFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:rating .
+
+netflix:language  rdf:type  rdf:Property;
+        rdfs:domain  netflix:NetflixFilm;
+        rdfs:range   rdfs:Literal .
+
+# ========================================
+# PROPRIETES IMDB
+# ========================================
+
+imdb:title  rdf:type        rdf:Property;
+        rdfs:domain         imdb:ImdbFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:title .
+
+imdb:date  rdf:type  rdf:Property;
+        rdfs:domain         imdb:ImdbFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:releaseDate .
+
+imdb:rate  rdf:type  rdf:Property;
+        rdfs:domain  imdb:ImdbFilm;
+        rdfs:range   rdfs:Literal .
+
+imdb:votes  rdf:type  rdf:Property;
+        rdfs:domain  imdb:ImdbFilm;
+        rdfs:range   rdfs:Literal .
+
+imdb:genre  rdf:type        rdf:Property;
+        rdfs:domain         imdb:ImdbFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:genre .
+
+imdb:duration  rdf:type  rdf:Property;
+        rdfs:domain         imdb:ImdbFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:duration .
+
+imdb:type  rdf:type  rdf:Property;
+        rdfs:domain  imdb:ImdbFilm;
+        rdfs:range   rdfs:Literal .
+
+imdb:certificate  rdf:type  rdf:Property;
+        rdfs:domain         imdb:ImdbFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:contentRating .
+
+imdb:episodes  rdf:type  rdf:Property;
+        rdfs:domain  imdb:ImdbFilm;
+        rdfs:range   rdfs:Literal .
+
+# Avertissements de contenu IMDB (sous-proprietes de contentAdvisory)
+
+imdb:nudity  rdf:type  rdf:Property;
+        rdfs:domain         imdb:ImdbFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:contentAdvisory .
+
+imdb:violence  rdf:type  rdf:Property;
+        rdfs:domain         imdb:ImdbFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:contentAdvisory .
+
+imdb:profanity  rdf:type  rdf:Property;
+        rdfs:domain         imdb:ImdbFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:contentAdvisory .
+
+imdb:alcohol  rdf:type  rdf:Property;
+        rdfs:domain         imdb:ImdbFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:contentAdvisory .
+
+imdb:frightening  rdf:type  rdf:Property;
+        rdfs:domain         imdb:ImdbFilm;
+        rdfs:range          rdfs:Literal;
+        rdfs:subPropertyOf  unified:contentAdvisory .

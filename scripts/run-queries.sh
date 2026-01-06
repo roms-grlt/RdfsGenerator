@@ -23,6 +23,7 @@ queries=(
     "minus-request:Exclusion (MINUS)"
     "not-exists-request:Filter NOT EXISTS"
     "path-request:Expressions de chemin"
+    "enriched-ontology-request:Ontologie enrichie"
     "class-hierarchy-request:Hiérarchie de classes"
     "complex-request:Requête complexe"
     "federated-request:Requête fédérée (SERVICE)"
