@@ -56,7 +56,7 @@ java -jar target/rdfs-generator.jar csv \
   http://example.org/imdb/
 ```
 
-#### Intégrer plusieurs fichiers TTL (prend un peu de temps à cause du raisonnement RDFS)
+#### Intégrer plusieurs fichiers TTL
 ```bash
 java -jar target/rdfs-generator.jar integrate <output_file> <nb_sources> \
   <prefix1> <file1> <prefix2> <file2> ... \
@@ -68,6 +68,17 @@ java -jar target/rdfs-generator.jar integrate data/integrated.ttl 3 \
   amazon data/ttl/amazon-csv.ttl \
   netflix data/ttl/netflix-csv.ttl \
   title film NetflixFilm AmazonFilm ImdbFilm
+```
+
+#### Fusionner avec l'ontologie enrichie
+```bash
+java -jar target/rdfs-generator.jar merge <input_file> <ontology_file> <output_file>
+
+# Exemple
+java -jar target/rdfs-generator.jar merge \
+  data/integrated.ttl \
+  data/to_add_ontology.ttl \
+  data/final_file.ttl
 ```
 
 #### Exécuter une requête SPARQL
