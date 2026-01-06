@@ -1,9 +1,9 @@
 # Projet : Knowledge Graphs et Raisonnement RDFS
 ## Intégration Multi-Sources de Données de Films
 
-**Auteurs** : [Vos noms]
+**Auteurs** : Romain Groult, Alban Talagrand
 **Date** : Janvier 2026
-**Cours** : Bases de Données Spécialisées - Master
+**Cours** : Bases de Données Spécialisées - Master GENIAL
 
 ---
 
