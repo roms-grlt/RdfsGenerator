@@ -85,7 +85,8 @@ java -jar target/rdfs-generator.jar query \
 - `aggregation-request.sparql` - Statistiques par genre avec raisonnement RDFS
 - `optional-request.sparql` - Intégration multi-sources avec données optionnelles
 - `minus-request.sparql` - Exclusion de films Netflix et contenu court
-- `complex-request.sparql` - Combinaison des 3 sources
-- `path-request.sparql` - Démonstration du raisonnement RDFS
-- `federated-request.sparql` - Requête fédérée avec DBpedia
 - `not-exists-request.sparql` - FILTER NOT EXISTS
+- `path-request.sparql` - Expressions de chemin RDFS (subPropertyOf*)
+- `class-hierarchy-request.sparql` - Hiérarchie de classes RDFS (subClassOf)
+- `complex-request.sparql` - Combinaison des 3 sources
+- `federated-request.sparql` - Requête fédérée avec Wikidata

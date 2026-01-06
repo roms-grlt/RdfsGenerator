@@ -1,8 +1,9 @@
-# Requete avec expressions de chemin RDFS (subPropertyOf*)
 PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT DISTINCT ?title ?ratingValue ?ratingProp ?genreValue ?genreProp
+SELECT DISTINCT ?title ?ratingValue ?ratingSource
 WHERE {
   ?film a unified:film .
 
@@ -14,13 +15,16 @@ WHERE {
   OPTIONAL {
     ?ratingProp rdfs:subPropertyOf* unified:rating .
     ?film ?ratingProp ?ratingValue .
+    
+    # Détermine la source du rating
+    BIND(
+      IF(?ratingProp = amazon:rating, "Amazon",
+        IF(?ratingProp = netflix:rating, "Netflix", "Unknown"))
+      AS ?ratingSource
+    )
   }
 
-  # Utilise subPropertyOf* pour trouver tous les genres
-  OPTIONAL {
-    ?genreProp rdfs:subPropertyOf* unified:genre .
-    ?film ?genreProp ?genreValue .
-  }
+  FILTER (?ratingSource != "Unknown" && BOUND(?ratingValue))
 }
 ORDER BY ?title
 LIMIT 30

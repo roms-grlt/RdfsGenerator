@@ -1,0 +1,25 @@
+# Requete hierarchie de classes : utilise rdfs:subClassOf
+# Compte les films par source et montre la hierarchie Amazon/Netflix/IMDB -> unified:film
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?sourceClass ?parentClass (COUNT(?film) as ?nbFilms) (AVG(?rating) as ?avgRating)
+WHERE {
+  # Toutes les sous-classes de unified:film
+  ?sourceClass rdfs:subClassOf unified:film .
+
+  # Instances de ces sous-classes
+  ?film rdf:type ?sourceClass ;
+        unified:rating ?rating .
+
+  # Classe parente (devrait etre unified:film)
+  ?sourceClass rdfs:subClassOf ?parentClass .
+
+  FILTER(?rating >= 7.0)
+}
+GROUP BY ?sourceClass ?parentClass
+ORDER BY DESC(?nbFilms)

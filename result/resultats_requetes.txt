@@ -303,67 +303,115 @@ Fichier: ../queries/path-request.sparql
 ==========================================
 
 --- Code SPARQL ---
-# Requete avec expressions de chemin RDFS (subPropertyOf*)
 PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT DISTINCT ?title ?ratingValue ?ratingProp ?genreValue ?genreProp
+SELECT DISTINCT ?title ?ratingValue ?ratingSource
 WHERE {
   ?film a unified:film .
 
-  # Utilise subPropertyOf* pour trouver tous les titres
   ?titleProp rdfs:subPropertyOf* unified:title .
   ?film ?titleProp ?title .
 
-  # Utilise subPropertyOf* pour trouver tous les ratings
   OPTIONAL {
     ?ratingProp rdfs:subPropertyOf* unified:rating .
     ?film ?ratingProp ?ratingValue .
+    
+    # Détermine la source du rating
+    BIND(
+      IF(?ratingProp = amazon:rating, "Amazon",
+        IF(?ratingProp = netflix:rating, "Netflix", "Unknown"))
+      AS ?ratingSource
+    )
   }
 
-  # Utilise subPropertyOf* pour trouver tous les genres
-  OPTIONAL {
-    ?genreProp rdfs:subPropertyOf* unified:genre .
-    ?film ?genreProp ?genreValue .
-  }
+  FILTER (?ratingSource != "Unknown" && BOUND(?ratingValue))
 }
-ORDER BY ?title
 LIMIT 30
+--- Résultats ---
+|=============================|
+|      Request Results        |
+|=============================|
+|		title : Our Souls at Night 	|	ratingValue : 6.9 	|	ratingSource : Netflix 	|
+|		title : Jingle Jangle: A Christmas Journey 	|	ratingValue : 6.5 	|	ratingSource : Netflix 	|
+|		title : Shirkers 	|	ratingValue : 7.4 	|	ratingSource : Netflix 	|
+|		title : Travis Scott: Look Mom I Can Fly 	|	ratingValue : 6.3 	|	ratingSource : Netflix 	|
+|		title : Come Sunday 	|	ratingValue : 6.0 	|	ratingSource : Netflix 	|
+|		title : Pele 	|	ratingValue : 7.0 	|	ratingSource : Netflix 	|
+|		title : Death to 2020 	|	ratingValue : 6.8 	|	ratingSource : Netflix 	|
+|		title : The Social Dilemma 	|	ratingValue : 7.6 	|	ratingSource : Netflix 	|
+|		title : The Heartbreak Club 	|	ratingValue : 6.4 	|	ratingSource : Netflix 	|
+|		title : The Angel 	|	ratingValue : 6.6 	|	ratingSource : Netflix 	|
+|		title : Dangerous Lies 	|	ratingValue : 5.3 	|	ratingSource : Netflix 	|
+|		title : Lost Bullet 	|	ratingValue : 6.2 	|	ratingSource : Netflix 	|
+|		title : We Can Be Heroes 	|	ratingValue : 4.7 	|	ratingSource : Netflix 	|
+|		title : Laerte-se 	|	ratingValue : 6.9 	|	ratingSource : Netflix 	|
+|		title : A Fall from Grace 	|	ratingValue : 5.9 	|	ratingSource : Netflix 	|
+|		title : Gerald's Game 	|	ratingValue : 6.5 	|	ratingSource : Netflix 	|
+|		title : Lost Girls 	|	ratingValue : 6.1 	|	ratingSource : Netflix 	|
+|		title : Dude 	|	ratingValue : 5.1 	|	ratingSource : Netflix 	|
+|		title : Paradox 	|	ratingValue : 3.9 	|	ratingSource : Netflix 	|
+|		title : Taylor Swift: Reputation Stadium Tour 	|	ratingValue : 8.4 	|	ratingSource : Netflix 	|
+|		title : Ben Platt: Live from Radio City Music Hall 	|	ratingValue : 8.4 	|	ratingSource : Netflix 	|
+|		title : A Christmas Prince: The Royal Wedding 	|	ratingValue : 5.3 	|	ratingSource : Netflix 	|
+|		title : Mrs. Serial Killer 	|	ratingValue : 4.8 	|	ratingSource : Netflix 	|
+|		title : Sol Levante 	|	ratingValue : 4.7 	|	ratingSource : Netflix 	|
+|		title : The Christmas Chronicles: Part Two 	|	ratingValue : 6.0 	|	ratingSource : Netflix 	|
+|		title : The Last Thing He Wanted 	|	ratingValue : 4.3 	|	ratingSource : Netflix 	|
+|		title : Mascots 	|	ratingValue : 5.8 	|	ratingSource : Netflix 	|
+|		title : The Dirt 	|	ratingValue : 7.0 	|	ratingSource : Netflix 	|
+|		title : Jim & Andy: The Great Beyond - Featuring a Very Special, Contractually Obligated Mention of Tony Cliffton  	|	ratingValue : 7.7 	|	ratingSource : Netflix 	|
+|		title : The Siege of Jadotville 	|	ratingValue : 7.2 	|	ratingSource : Netflix 	|
+
+==========================================
+
+
+==========================================
+REQUÊTE: Hiérarchie de classes
+Fichier: ../queries/class-hierarchy-request.sparql
+==========================================
+
+--- Code SPARQL ---
+# Requete hierarchie de classes : utilise rdfs:subClassOf
+# Compte les films par source et montre la hierarchie Amazon/Netflix/IMDB -> unified:film
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?sourceClass ?parentClass (COUNT(?film) as ?nbFilms) (AVG(?rating) as ?avgRating)
+WHERE {
+  # Toutes les sous-classes de unified:film
+  ?sourceClass rdfs:subClassOf unified:film .
+
+  # Instances de ces sous-classes
+  ?film rdf:type ?sourceClass ;
+        unified:rating ?rating .
+
+  # Classe parente (devrait etre unified:film)
+  ?sourceClass rdfs:subClassOf ?parentClass .
+
+  FILTER(?rating >= 7.0)
+}
+GROUP BY ?sourceClass ?parentClass
+ORDER BY DESC(?nbFilms)
 
 --- Résultats ---
 |=============================|
 |      Request Results        |
 |=============================|
-|		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/netflix/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/netflix/genre 	|
-|		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/netflix/genre 	|
-|		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/netflix/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/unified/genre 	|
-|		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/unified/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Action 	|	genreProp : http://example.org/imdb/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Action 	|	genreProp : http://example.org/imdb/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/imdb/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/imdb/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Horror 	|	genreProp : http://example.org/imdb/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Horror 	|	genreProp : http://example.org/imdb/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Action 	|	genreProp : http://example.org/unified/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Action 	|	genreProp : http://example.org/unified/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/unified/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/unified/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Horror 	|	genreProp : http://example.org/unified/genre 	|
-|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Horror 	|	genreProp : http://example.org/unified/genre 	|
-|		title : #Unfit: The Psychology of Donald Trump 	|	ratingValue : 4.4 	|	ratingProp : http://example.org/amazon/rating 	|	genreValue : N/A 	|	genreProp : N/A 	|
-|		title : #Unfit: The Psychology of Donald Trump 	|	ratingValue : 4.4 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : N/A 	|	genreProp : N/A 	|
-|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/imdb/genre 	|
-|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/imdb/genre 	|
-|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : History 	|	genreProp : http://example.org/imdb/genre 	|
-|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : History 	|	genreProp : http://example.org/imdb/genre 	|
-|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : War 	|	genreProp : http://example.org/imdb/genre 	|
-|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : War 	|	genreProp : http://example.org/imdb/genre 	|
-|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/unified/genre 	|
-|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/unified/genre 	|
-|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : History 	|	genreProp : http://example.org/unified/genre 	|
-|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : History 	|	genreProp : http://example.org/unified/genre 	|
-|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : War 	|	genreProp : http://example.org/unified/genre 	|
-|		title : 'Allo 'Allo! 	|	ratingValue : 8.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : War 	|	genreProp : http://example.org/unified/genre 	|
+|		sourceClass : http://example.org/unified/film 	|	parentClass : http://example.org/unified/film 	|	nbFilms : 3225 	|	avgRating : 7.688527131782945736434109 	|
+|		sourceClass : http://example.org/unified/film 	|	parentClass : http://www.w3.org/2000/01/rdf-schema#Resource 	|	nbFilms : 3225 	|	avgRating : 7.688527131782945736434109 	|
+|		sourceClass : http://example.org/imdb/ImdbFilm 	|	parentClass : http://example.org/imdb/ImdbFilm 	|	nbFilms : 3073 	|	avgRating : 7.702180279856817442238855 	|
+|		sourceClass : http://example.org/imdb/ImdbFilm 	|	parentClass : http://example.org/unified/film 	|	nbFilms : 3073 	|	avgRating : 7.702180279856817442238855 	|
+|		sourceClass : http://example.org/imdb/ImdbFilm 	|	parentClass : http://www.w3.org/2000/01/rdf-schema#Resource 	|	nbFilms : 3073 	|	avgRating : 7.702180279856817442238855 	|
+|		sourceClass : http://example.org/netflix/NetflixFilm 	|	parentClass : http://example.org/netflix/NetflixFilm 	|	nbFilms : 152 	|	avgRating : 7.4125 	|
+|		sourceClass : http://example.org/netflix/NetflixFilm 	|	parentClass : http://example.org/unified/film 	|	nbFilms : 152 	|	avgRating : 7.4125 	|
+|		sourceClass : http://example.org/netflix/NetflixFilm 	|	parentClass : http://www.w3.org/2000/01/rdf-schema#Resource 	|	nbFilms : 152 	|	avgRating : 7.4125 	|
 
 ==========================================
 
