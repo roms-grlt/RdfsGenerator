@@ -1,19 +1,10 @@
 ---
-title: "Rapport depProjet : Knowledge Graphs et Raisonnement RDFS"
+title: "Rapport de Projet : Knowledge Graphs et Raisonnement RDFS"
 author: "Romain Groult & Alban Talagrand"
 date: "Janvier 2025"
 lang: fr
 geometry: margin=2.5cm
 fontsize: 11pt
----
-
-# Projet : Knowledge Graphs et Raisonnement RDFS
-## Intégration Multi-Sources de Données de Films
-
-**Auteurs** : Romain Groult, Alban Talagrand
-**Date** : Janvier 2026
-**Cours** : Bases de Données Spécialisées - Master GENIAL
-
 ---
 
 ## Table des matières
@@ -29,26 +20,29 @@ fontsize: 11pt
 
 ### 1.1. Sources de données sélectionnées
 
-Nous avons choisi trois jeux de données CSV provenant de Kaggle, tous relatifs au domaine cinématographique :
+Nous avons choisi trois jeux de données CSV provenant de Kaggle, tous liés au films :
 
 1. **Netflix Original Films** (https://www.kaggle.com/datasets/luiscorter/netflix-original-films-imdb-scores)
    - Films originaux Netflix avec notes IMDB
    - 6 attributs : titre, genre, date de première, durée, note IMDB, langue
+   - 586 entrées
 
 2. **Amazon Movies and Films** (https://www.kaggle.com/datasets/muhammadawaistayyab/amazon-movies-and-films)
    - Catalogue de films Amazon
    - 10 attributs : ID, titre, note, nombre de notes, format, année de sortie, classification MPAA, réalisateur, acteurs, prix
+   - 2110 entrées
 
 3. **IMDB Most Popular Films** (https://www.kaggle.com/datasets/mazenramadan/imdb-most-popular-films-and-series)
    - Films et séries populaires IMDB
    - 15 attributs : titre, date, note, votes, genre, durée, type, classification, épisodes, avertissements de contenu (nudité, violence, profanité, alcool, contenu effrayant)
+    - 6179 entrées
 
 ### 1.2. Choix de la méthodologie d'extraction
 
-Nous avons initialement exploré l'utilisation de dumps RDF et d'endpoints SPARQL (DBpedia, Wikidata). Cependant, nous avons rencontré deux problèmes majeurs :
+Nous avons initialement commencé par vouloir utiliser des dumps RDF et des endpoints SPARQL (DBpedia, Wikidata). Cependant, nous avons rencontré deux problèmes majeurs :
 
-- **Incohérence des données** : Les schémas RDF existants étaient trop hétérogènes, avec des propriétés et structures très différentes entre les sources
-- **Complexité des ontologies** : Les ontologies DBpedia et Wikidata sont extrêmement riches mais difficiles à manipuler pour un projet d'intégration simple
+- **Incohérence des données** : Les schémas RDF existants étaient trop différents, avec des propriétés et structures qui variaient entre les sources
+- **Complexité des ontologies** : Les ontologies DBpedia et Wikidata sont extrêmement riches mais difficiles à manipuler pour un projet simple
 
 Nous avons donc opté pour des **fichiers CSV Kaggle** qui nous permettent un contrôle total sur la modélisation RDF et l'alignement des schémas.
 
@@ -172,7 +166,7 @@ Cette hiérarchie permet d'interroger tous les films via la classe parente tout 
 
 ### 2.5. Ontologie enrichie manuelle
 
-En complément de l'unification automatique, nous avons créé `to_add_ontology.ttl` avec des alignements sémantiques supplémentaires :
+En complément de l'unification automatique, nous avons créé `to_add_ontology.ttl` avec des ajouts de règles RDFS manuelles :
 
 **Super-propriété pour avertissements de contenu** :
 ```turtle
@@ -194,19 +188,16 @@ Cela permet de requêter tous les avertissements via une seule propriété paren
 Le script `generate-ttl.sh` automatise tout le processus :
 
 ```bash
-# 1. Génération des TTL individuels
 java -jar rdfs-generator.jar csv data/csv/imdb.csv ImdbFilm.java imdb-csv.ttl
 java -jar rdfs-generator.jar csv data/csv/amazon.csv AmazonFilm.java amazon-csv.ttl
 java -jar rdfs-generator.jar csv data/csv/netflix.csv NetflixFilm.java netflix-csv.ttl
 
-# 2. Intégration avec owl:sameAs et unification
 java -jar rdfs-generator.jar integrate integrated.ttl 3 \
   imdb imdb-csv.ttl \
   amazon amazon-csv.ttl \
   netflix netflix-csv.ttl \
   title film NetflixFilm AmazonFilm ImdbFilm
 
-# 3. Fusion avec ontologie enrichie
 java -jar rdfs-generator.jar merge integrated.ttl to_add_ontology.ttl final_file.ttl
 ```
 
@@ -501,7 +492,7 @@ unified:rating rdf:type rdf:Property ;
 **Alignements inter-sources** :
 ```turtle
 # Durée
-netflix:runtime rdfs:subPropertyOf unified:duration .
+netflix:duration rdfs:subPropertyOf unified:duration .
 imdb:duration rdfs:subPropertyOf unified:duration .
 
 # Date de sortie
