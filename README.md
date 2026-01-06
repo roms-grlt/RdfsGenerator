@@ -41,7 +41,6 @@ mvn clean package
 │   ├── csv/            # CSV sources et classes de conversion
 │   ├── ttl/            # Fichiers TTL générés par source
 │   ├── integrated.ttl  # TTL intégré (auto-généré)
-│   ├── ontology.ttl    # Ontologie RDFS de base
 │   ├── to_add_ontology.ttl  # Ontologie enrichie à merger
 │   └── final_file.ttl  # Fichier final avec ontologie enrichie
 ├── queries/            # Requêtes SPARQL

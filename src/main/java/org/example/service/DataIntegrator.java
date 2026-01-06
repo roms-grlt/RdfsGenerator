@@ -35,46 +35,12 @@ public class DataIntegrator {
 
         unifyOntology(combinedModel, unifiedClassName, classNames);
 
-        // Charge et integre l'ontologie enrichie
-        loadEnrichedOntology(combinedModel, outputFile);
-
         try (Writer writer = new FileWriter(outputFile)) {
             combinedModel.write(writer, "TURTLE");
         }
 
         System.out.println("Integration complete. Output written to: " + outputFile);
         printIntegrationStats(combinedModel, datasetModels);
-    }
-
-    private static void loadEnrichedOntology(Model combinedModel, String outputFile) {
-        try {
-            // Determine le chemin de l'ontologie relative au fichier de sortie
-            String ontologyPath = outputFile.substring(0, outputFile.lastIndexOf('/') + 1) + "ontology.ttl";
-
-            java.io.File ontologyFile = new java.io.File(ontologyPath);
-            if (ontologyFile.exists()) {
-                // Cree un modele temporaire avec les prefixes necessaires
-                Model ontologyModel = ModelFactory.createDefaultModel();
-                ontologyModel.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-                ontologyModel.setNsPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
-                ontologyModel.setNsPrefix("unified", UNIFIED_NS);
-                ontologyModel.setNsPrefix("amazon", "http://example.org/amazon/");
-                ontologyModel.setNsPrefix("netflix", "http://example.org/netflix/");
-                ontologyModel.setNsPrefix("imdb", "http://example.org/imdb/");
-
-                ontologyModel.read(ontologyPath, "TURTLE");
-
-                // Ajoute seulement les triplets de l'ontologie qui ne sont pas déjà présents
-                // (évite les doublons avec l'ontologie auto-générée)
-                combinedModel.add(ontologyModel);
-
-                System.out.println("Enriched ontology loaded from: " + ontologyPath);
-            } else {
-                System.out.println("No enriched ontology found at: " + ontologyPath);
-            }
-        } catch (Exception e) {
-            System.err.println("Warning: Could not load enriched ontology: " + e.getMessage());
-        }
     }
 
     private static void unifyOntology(Model model, String unifiedClassName, List<String> classNames) {

@@ -62,6 +62,11 @@ private Integer duration;
 private Double rating;
 ```
 
+**Note importante** : Les classes modèles (NetflixFilm, AmazonFilm, ImdbFilm) ne sont **pas compilées** avec le projet. Elles sont stockées sous forme de fichiers `.java` dans `data/csv/convert-*/` et sont **chargées dynamiquement à la volée** lors de l'exécution via le module `ClassLoader.java`. Ce mécanisme permet de :
+- Modifier facilement le schéma des données sans recompiler le projet
+- Ajouter de nouvelles sources de données en créant simplement un nouveau fichier `.java`
+- Garder une architecture flexible et extensible
+
 ---
 
 ## 2. Intégration des données
@@ -196,13 +201,11 @@ java -jar rdfs-generator.jar integrate integrated.ttl 3 \
 java -jar rdfs-generator.jar merge integrated.ttl to_add_ontology.ttl final_file.ttl
 ```
 
-**Résultat** : Un graphe RDF unifié avec ~300 films alignés et une ontologie cohérente.
-
 ---
 
 ## 3. Requêtes SPARQL
 
-Nous avons développé 9 requêtes SPARQL couvrant tous les aspects demandés. Toutes exploitent le raisonnement RDFS via l'inférence automatique d'Apache Jena.
+En tout nous avons développé 9 requêtes SPARQL.
 
 ### 3.1. Requête avec agrégation
 
@@ -230,7 +233,7 @@ HAVING (COUNT(DISTINCT ?film) > 5)
 ORDER BY DESC(?totalFilms)
 ```
 
-**Résultat** : Agrégation de données provenant des 3 sources grâce aux propriétés unifiées. Le raisonnement RDFS permet d'inférer que `netflix:rating` et `amazon:rating` sont des instances de `unified:rating`.
+**Résultat** : Agrégation de données provenant des 3 sources grâce aux propriétés unifiées.
 
 ### 3.2. Requête avec OPTIONAL
 
@@ -457,7 +460,7 @@ QueryExecution qexec = QueryExecutionFactory.create(query, infModel);
 
 ### 4.1. Construction de l'ontologie
 
-Notre ontologie RDFS (`data/ontology.ttl` + `to_add_ontology.ttl`) comprend :
+Notre ontologie RDFS (`to_add_ontology.ttl`) comprend :
 
 **Hiérarchie de classes** :
 ```turtle
@@ -537,8 +540,8 @@ SELECT (COUNT(?film) as ?total)
 WHERE { ?film a unified:film . }
 ```
 
-**Sans raisonnement** : 0 résultats (car aucune instance n'est directement typée `unified:film`)
-**Avec raisonnement RDFS** : ~300 résultats (tous les films Netflix, Amazon, IMDB sont inférés comme `unified:film`)
+**Sans raisonnement** : 0 résultats car aucune instance n'est directement typée `unified:film`
+**Avec raisonnement RDFS** : tous les films Netflix, Amazon, IMDB sont inférés comme `unified:film`
 
 **Cas 2 : Requête sur propriété parente**
 
@@ -566,8 +569,6 @@ Requête :
 - `imdb:alcohol`
 - `imdb:frightening`
 
-L'opérateur `*` calcule la fermeture transitive, permettant de naviguer dans des hiérarchies de profondeur arbitraire.
-
 ### 4.4. Comparaison données brutes vs. enrichies
 
 **Données brutes** (avant raisonnement) :
@@ -587,7 +588,6 @@ netflix:Inception a netflix:NetflixFilm ;       # ← Original
     unified:rating 8.8 .                        # ← Inféré
 ```
 
-Le modèle inféré triple le nombre de triplets, permettant des requêtes agnostiques de la source.
 
 ### 4.5. Requêtes démontrant le raisonnement
 
@@ -649,11 +649,9 @@ Ce projet démontre comment le raisonnement RDFS permet d'**exploiter efficaceme
 
 1. **Pas d'inférence inverse** : RDFS ne peut pas inférer automatiquement que deux propriétés sont équivalentes (`owl:equivalentProperty`).
 
-2. **Pas de contraintes** : RDFS ne permet pas de définir des cardinalités (min/max occurrences) ou des disjonctions de classes.
+2. **Quantité de données** : A cause de la taille de nos données, c'était parfois compliqué d'exécuter certaines requêtes complexes avec le raisonnement RDFS et de les débugger
 
-3. **Performance** : Le raisonnement matérialise tous les triplets inférés en mémoire, ce qui peut être coûteux pour de très grands graphes (notre projet reste à échelle raisonnable avec ~1000 triplets).
-
-4. **Conflits de valeurs** : Si un même film a des valeurs différentes dans deux sources (ex: durée 120 min vs 125 min), RDFS les conserve toutes sans résolution.
+3. **Conflits de valeurs** : Si un même film a des valeurs différentes dans deux sources (ex: durée 120 min vs 125 min), RDFS les conserve toutes sans résolution.
 
 ### 5.3. Améliorations possibles
 
@@ -672,25 +670,6 @@ Ce projet démontre comment le raisonnement RDFS permet d'**exploiter efficaceme
    - Intégrer systématiquement Wikidata/DBpedia pour récupérer réalisateurs, acteurs, budgets
    - Utiliser des services de géolocalisation pour les lieux de tournage
 
-4. **Validation SHACL** :
-   - Définir des contraintes de qualité (ex: la note doit être entre 0 et 10)
-   - Détecter les incohérences dans les données importées
-
-5. **Interface utilisateur** :
-   - Développer une interface web SPARQL pour interroger le graphe
-   - Visualiser les relations `owl:sameAs` sous forme de graphe
-
-### 5.4. Architecture technique réutilisable
-
-Le projet démontre une **architecture générique** pour l'intégration de données hétérogènes :
-
-1. **Module d'extraction** (CsvReader) : Adaptable à d'autres formats (JSON, XML)
-2. **Module de conversion** (TtlWriter) : Génération RDF basée sur annotations Java
-3. **Module d'alignement** (DataIntegrator) : Algorithme de résolution d'entités réutilisable
-4. **Module de requêtage** (QueryExecutor) : Raisonnement transparent
-
-Cette architecture peut être appliquée à d'autres domaines (géographie, publications scientifiques, réseaux sociaux).
-
 ### 5.5. Bilan
 
 Le projet a permis de maîtriser :
@@ -698,8 +677,6 @@ Le projet a permis de maîtriser :
 - L'intégration multi-sources avec alignement automatique
 - Le raisonnement RDFS via Apache Jena
 - SPARQL avancé (agrégation, path expressions, fédération)
-
-Les ~300 films intégrés avec ~1200 triplets RDF et 9 requêtes SPARQL démontrent l'efficacité du web sémantique pour résoudre des problèmes d'hétérogénéité de données.
 
 ---
 
@@ -710,4 +687,5 @@ Les ~300 films intégrés avec ~1200 triplets RDF et 9 requêtes SPARQL démontr
 - Kaggle IMDB Dataset - https://www.kaggle.com/datasets/mazenramadan/imdb-most-popular-films-and-series
 
 - Introduction au RDF et à l'API RDF de Jena - https://web-semantique.developpez.com/tutoriels/jena/introduction-rdf/
+
 - Apache Jena tutorial - write models in different formats with jena RDF,TURTLE,JSON - https://www.youtube.com/watch?v=Ps_cVNSwfeA
