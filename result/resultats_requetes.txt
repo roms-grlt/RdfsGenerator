@@ -303,29 +303,68 @@ Fichier: ../queries/path-request.sparql
 ==========================================
 
 --- Code SPARQL ---
+# Requete avec expressions de chemin RDFS (subPropertyOf*)
+# Montre d'ou viennent les proprietes grace au raisonnement RDFS
+PREFIX unified: <http://example.org/unified/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?title ?ratingValue ?ratingProp ?genreValue ?genreProp
+WHERE {
+  ?film a unified:film .
+
+  # Utilise subPropertyOf* pour trouver tous les titres
+  ?titleProp rdfs:subPropertyOf* unified:title .
+  ?film ?titleProp ?title .
+
+  # Utilise subPropertyOf* pour trouver tous les ratings
+  OPTIONAL {
+    ?ratingProp rdfs:subPropertyOf* unified:rating .
+    ?film ?ratingProp ?ratingValue .
+  }
+
+  # Utilise subPropertyOf* pour trouver tous les genres
+  OPTIONAL {
+    ?genreProp rdfs:subPropertyOf* unified:genre .
+    ?film ?genreProp ?genreValue .
+  }
+}
+ORDER BY ?title
+LIMIT 30
 
 --- Résultats ---
-Exception in thread "main" org.apache.jena.query.QueryParseException: Encountered "<EOF>" at line 0, column 0.
-Was expecting one of:
-    "\ufeff" ...
-    "base" ...
-    "prefix" ...
-    "select" ...
-    "json" ...
-    "describe" ...
-    "construct" ...
-    "ask" ...
-    
-	at org.apache.jena.sparql.lang.ParserARQ.perform(ParserARQ.java:99)
-	at org.apache.jena.sparql.lang.ParserARQ.parse$(ParserARQ.java:52)
-	at org.apache.jena.sparql.lang.SPARQLParser.parse(SPARQLParser.java:33)
-	at org.apache.jena.query.QueryFactory.parse(QueryFactory.java:144)
-	at org.apache.jena.query.QueryFactory.create(QueryFactory.java:83)
-	at org.apache.jena.query.QueryFactory.create(QueryFactory.java:56)
-	at org.apache.jena.query.QueryFactory.create(QueryFactory.java:44)
-	at org.example.service.QueryExecutor.executeQuery(QueryExecutor.java:25)
-	at org.example.Main.executeQuery(Main.java:43)
-	at org.example.Main.main(Main.java:37)
+                  |=============================|
+                  |      Request Results        |
+                  |=============================|
+|		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/netflix/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/netflix/genre 	|
+|		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/netflix/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/netflix/genre 	|
+|		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/netflix/genre 	|
+|		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/netflix/genre 	|
+|		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/netflix/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/unified/genre 	|
+|		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/netflix/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/unified/genre 	|
+|		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/unified/genre 	|
+|		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Comedy 	|	genreProp : http://example.org/unified/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Action 	|	genreProp : http://example.org/imdb/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Action 	|	genreProp : http://example.org/imdb/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Action 	|	genreProp : http://example.org/imdb/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Action 	|	genreProp : http://example.org/imdb/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/imdb/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/imdb/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/imdb/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/imdb/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Horror 	|	genreProp : http://example.org/imdb/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Horror 	|	genreProp : http://example.org/imdb/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Horror 	|	genreProp : http://example.org/imdb/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Horror 	|	genreProp : http://example.org/imdb/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Action 	|	genreProp : http://example.org/unified/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Action 	|	genreProp : http://example.org/unified/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Action 	|	genreProp : http://example.org/unified/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Action 	|	genreProp : http://example.org/unified/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/unified/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/unified/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/unified/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/unified/rating 	|	genreValue : Drama 	|	genreProp : http://example.org/unified/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Horror 	|	genreProp : http://example.org/unified/genre 	|
+|		title : #Saraitda 	|	ratingValue : 6.3 	|	ratingProp : http://example.org/imdb/rating 	|	genreValue : Horror 	|	genreProp : http://example.org/unified/genre 	|
 
 ==========================================
 
