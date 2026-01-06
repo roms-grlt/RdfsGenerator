@@ -304,7 +304,6 @@ Fichier: ../queries/path-request.sparql
 
 --- Code SPARQL ---
 # Requete avec expressions de chemin RDFS (subPropertyOf*)
-# Montre d'ou viennent les proprietes grace au raisonnement RDFS
 PREFIX unified: <http://example.org/unified/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
@@ -457,37 +456,53 @@ Fichier: ../queries/federated-request.sparql
 ==========================================
 
 --- Code SPARQL ---
-PREFIX unified: <http://example.org/unified/>
 PREFIX amazon: <http://example.org/amazon/>
-PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?film ?title ?director ?directorBio
+SELECT ?localTitle ?rating
+       (GROUP_CONCAT(DISTINCT ?country; separator=", ") AS ?countries) 
+       ?year
 WHERE {
-  # 1. Limiter d'abord les films locaux (plus efficace avant SERVICE)
-  {
-    SELECT ?film ?title ?director
-    WHERE {
-      ?film a amazon:AmazonFilm ;
-            unified:title ?title ;
-            amazon:directedBy ?director .
-    }
-    LIMIT 20
-  }
+  ?film a amazon:AmazonFilm ;
+        amazon:title ?localTitle ;
+        amazon:rating ?rating ;
+        amazon:directedBy ?director .
   
-  # 2. SERVICE optimisé avec FILTER sur label
-  SERVICE <https://dbpedia.org/sparql> {
-    ?directorUri rdfs:label ?director ;
-                 dbo:abstract ?directorBio .
-    
-    # Filtres groupés pour réduire les résultats intermédiaires
-    FILTER(LANG(?director) = "en" && LANG(?directorBio) = "en")
+  FILTER(REGEX(?director, "Nolan", "i"))
+
+  SERVICE <https://query.wikidata.org/sparql> {
+    {
+      SELECT ?wikidataFilm ?wikidataTitle ?country (YEAR(MIN(?date)) AS ?year)
+      WHERE {
+        ?wikidataFilm wdt:P31 wd:Q11424 ;
+                      wdt:P57 wd:Q25191 ;
+                      rdfs:label ?wikidataTitle ;
+                      wdt:P495 ?countryEntity ;
+                      wdt:P577 ?date .
+
+        ?countryEntity rdfs:label ?country .
+
+        FILTER(LANG(?wikidataTitle) = "en")
+        FILTER(LANG(?country) = "en")
+      }
+      GROUP BY ?wikidataFilm ?wikidataTitle ?country
+    }
   }
+
+  FILTER(LCASE(STR(?wikidataTitle)) = LCASE(STR(?localTitle)))
 }
+GROUP BY ?localTitle ?rating ?year
+ORDER BY ?year
 --- Résultats ---
                   |=============================|
                   |      Request Results        |
                   |=============================|
+|		localTitle : The Prestige 	|	rating : 4.7 	|	countries : United States, United Kingdom 	|	year : 2006 	|
+|		localTitle : The Dark Knight 	|	rating : 4.7 	|	countries : United States, United Kingdom 	|	year : 2008 	|
+|		localTitle : The Dark Knight Rises 	|	rating : 4.7 	|	countries : United States, United Kingdom 	|	year : 2012 	|
+|		localTitle : Interstellar 	|	rating : 4.7 	|	countries : United States, United Kingdom 	|	year : 2014 	|
 
 ==========================================
 
