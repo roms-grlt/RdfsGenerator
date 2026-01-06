@@ -1,3 +1,4 @@
+# Requête enrichie : récupère les métadonnées étendues des films
 
 PREFIX unified: <http://example.org/unified/>
 PREFIX amazon: <http://example.org/amazon/>
@@ -10,25 +11,25 @@ WHERE {
   ?film a unified:film ;
         unified:title ?title .
 
-  # Utilise subPropertyOf* pour recuperer la duree depuis toutes les sources
+  # Durée du film (via subPropertyOf)
   OPTIONAL {
     ?durationProp rdfs:subPropertyOf* unified:duration .
     ?film ?durationProp ?duration .
   }
 
-  # Utilise subPropertyOf* pour recuperer la date de sortie
+  # Date de sortie (via subPropertyOf)
   OPTIONAL {
     ?dateProp rdfs:subPropertyOf* unified:releaseDate .
     ?film ?dateProp ?releaseDate .
   }
 
-  # Utilise subPropertyOf* pour recuperer le content rating (MPAA/certificate)
+  # Classification du contenu - MPAA/certificate (via subPropertyOf)
   OPTIONAL {
     ?ratingProp rdfs:subPropertyOf* unified:contentRating .
     ?film ?ratingProp ?contentRating .
   }
 
-  # Determine la source du film
+  # Identifie la source du film (Amazon/Netflix/IMDB)
   OPTIONAL {
     ?film a ?filmClass .
     BIND(

@@ -17,8 +17,10 @@ mvn clean package
 ├── data/               # Données et ontologie
 │   ├── csv/            # CSV sources et classes de conversion
 │   ├── ttl/            # Fichiers TTL générés par source
-│   ├── integrated.ttl  # TTL intégré final
-│   └── ontology.ttl    # Ontologie RDFS
+│   ├── integrated.ttl  # TTL intégré (auto-généré)
+│   ├── ontology.ttl    # Ontologie RDFS de base
+│   ├── to_add_ontology.ttl  # Ontologie enrichie à merger
+│   └── final_file.ttl  # Fichier final avec ontologie enrichie
 ├── queries/            # Requêtes SPARQL
 ├── scripts/            # Scripts d'exécution
 ├── result/             # Résultats des requêtes
@@ -91,6 +93,23 @@ java -jar target/rdfs-generator.jar query \
   data/integrated.ttl
 ```
 
+## Ontologie enrichie
+
+Le fichier `to_add_ontology.ttl` contient l'ontologie RDFS enrichie avec :
+
+### Propriétés unifiées
+- `unified:title`, `unified:rating`, `unified:genre` - Propriétés de base
+- `unified:duration` - Unifie `netflix:runtime` et `imdb:duration`
+- `unified:releaseDate` - Unifie `amazon:releaseYear`, `imdb:date`, `netflix:premiere`
+- `unified:contentRating` - Unifie `amazon:mpaaRating` et `imdb:certificate`
+- `unified:contentAdvisory` - Super-propriété pour les avertissements IMDB (violence, nudity, profanity, alcohol, frightening)
+
+### Hiérarchie de classes
+- `unified:film` - Classe parente
+- `amazon:AmazonFilm`, `netflix:NetflixFilm`, `imdb:ImdbFilm` - Sous-classes
+
+Le raisonnement RDFS permet d'interroger les données via les propriétés unifiées en utilisant `rdfs:subPropertyOf*` dans les requêtes SPARQL.
+
 ## Requêtes disponibles
 
 - `aggregation-request.sparql` - Statistiques par genre avec raisonnement RDFS
@@ -99,5 +118,6 @@ java -jar target/rdfs-generator.jar query \
 - `not-exists-request.sparql` - FILTER NOT EXISTS
 - `path-request.sparql` - Expressions de chemin RDFS (subPropertyOf*)
 - `class-hierarchy-request.sparql` - Hiérarchie de classes RDFS (subClassOf)
+- `enriched-ontology-request.sparql` - Démonstration des propriétés unifiées enrichies
 - `complex-request.sparql` - Combinaison des 3 sources
-- `federated-request.sparql` - Requête fédérée avec Wikidata
+- `federated-request.sparql` - Requête fédérée avec DBpedia
