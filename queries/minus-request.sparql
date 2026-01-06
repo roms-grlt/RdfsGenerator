@@ -1,0 +1,36 @@
+# Requête MINUS : films Netflix sans contenu adulte
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+
+SELECT ?title ?rating ?duration ?language ?genre
+WHERE {
+  # Films Netflix avec leurs informations
+  ?film a netflix:NetflixFilm ;
+        unified:title ?title ;
+        netflix:rating ?rating .
+
+  OPTIONAL { ?film unified:duration ?duration }
+  OPTIONAL { ?film netflix:language ?language }
+  OPTIONAL { ?film netflix:genre ?genre }
+
+  MINUS {
+    ?film imdb:violence ?violence .
+    FILTER(?violence IN ("Moderate", "Severe"))
+  }
+
+  MINUS {
+    ?film imdb:nudity ?nudity .
+    FILTER(?nudity IN ("Moderate", "Severe"))
+  }
+
+  MINUS {
+    ?film imdb:profanity ?profanity .
+    FILTER(?profanity = "Severe")
+  }
+
+  FILTER(?rating >= 7.0)
+}
+ORDER BY DESC(?rating) ?title
+LIMIT 30

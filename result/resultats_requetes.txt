@@ -1,0 +1,666 @@
+==========================================
+   RÉSULTATS DES REQUÊTES SPARQL
+==========================================
+
+
+==========================================
+REQUÊTE: Agrégation (GROUP BY, HAVING)
+Fichier: ../queries/aggregation-request.sparql
+==========================================
+
+--- Code SPARQL ---
+# Requête d'agrégation multi-sources : statistiques par genre
+PREFIX unified: <http://example.org/unified/>
+
+SELECT ?genre
+       (COUNT(DISTINCT ?film) as ?totalFilms)
+       (ROUND(AVG(?duration)) as ?avgDuration)
+       (ROUND(AVG(?rating)) as ?avgRating)
+       (MIN(?rating) as ?minRating)
+       (MAX(?rating) as ?maxRating)
+WHERE {
+  ?film a unified:film .
+
+  ?film unified:genre ?genre .
+  ?film unified:rating ?rating .
+  ?film unified:duration ?duration .
+}
+GROUP BY ?genre
+HAVING (COUNT(DISTINCT ?film) > 5)
+ORDER BY DESC(?totalFilms)
+--- Résultats ---
+|=============================|
+|      Request Results        |
+|=============================|
+|		genre : Drama 	|	totalFilms : 3173 	|	avgDuration : 97.0 	|	avgRating : 7.0 	|	minRating : 2.0 	|	maxRating : 9.7 	|
+|		genre : Comedy 	|	totalFilms : 1937 	|	avgDuration : 85.0 	|	avgRating : 7.0 	|	minRating : 1.9 	|	maxRating : 9.2 	|
+|		genre : Action 	|	totalFilms : 1545 	|	avgDuration : 100.0 	|	avgRating : 7.0 	|	minRating : 1.2 	|	maxRating : 9.3 	|
+|		genre : Adventure 	|	totalFilms : 1194 	|	avgDuration : 100.0 	|	avgRating : 7.0 	|	minRating : 2.4 	|	maxRating : 9.3 	|
+|		genre : Crime 	|	totalFilms : 1143 	|	avgDuration : 95.0 	|	avgRating : 7.0 	|	minRating : 2.8 	|	maxRating : 9.5 	|
+|		genre : Thriller 	|	totalFilms : 1007 	|	avgDuration : 103.0 	|	avgRating : 6.0 	|	minRating : 2.3 	|	maxRating : 9.4 	|
+|		genre : Horror 	|	totalFilms : 853 	|	avgDuration : 95.0 	|	avgRating : 6.0 	|	minRating : 2.3 	|	maxRating : 9.0 	|
+|		genre : Romance 	|	totalFilms : 742 	|	avgDuration : 99.0 	|	avgRating : 7.0 	|	minRating : 3.1 	|	maxRating : 9.0 	|
+|		genre : Mystery 	|	totalFilms : 741 	|	avgDuration : 93.0 	|	avgRating : 7.0 	|	minRating : 3.2 	|	maxRating : 9.1 	|
+|		genre : Fantasy 	|	totalFilms : 545 	|	avgDuration : 98.0 	|	avgRating : 7.0 	|	minRating : 1.2 	|	maxRating : 9.2 	|
+|		genre : Sci-Fi 	|	totalFilms : 544 	|	avgDuration : 100.0 	|	avgRating : 7.0 	|	minRating : 1.2 	|	maxRating : 9.0 	|
+|		genre : Animation 	|	totalFilms : 371 	|	avgDuration : 67.0 	|	avgRating : 7.0 	|	minRating : 3.3 	|	maxRating : 9.6 	|
+|		genre : Family 	|	totalFilms : 334 	|	avgDuration : 82.0 	|	avgRating : 7.0 	|	minRating : 2.7 	|	maxRating : 9.6 	|
+|		genre : Biography 	|	totalFilms : 290 	|	avgDuration : 120.0 	|	avgRating : 7.0 	|	minRating : 4.6 	|	maxRating : 9.5 	|
+|		genre : Documentary 	|	totalFilms : 185 	|	avgDuration : 74.0 	|	avgRating : 7.0 	|	minRating : 2.5 	|	maxRating : 9.1 	|
+|		genre : History 	|	totalFilms : 182 	|	avgDuration : 119.0 	|	avgRating : 7.0 	|	minRating : 3.9 	|	maxRating : 9.6 	|
+|		genre : Music 	|	totalFilms : 110 	|	avgDuration : 95.0 	|	avgRating : 7.0 	|	minRating : 3.2 	|	maxRating : 9.3 	|
+|		genre : Sport 	|	totalFilms : 77 	|	avgDuration : 102.0 	|	avgRating : 7.0 	|	minRating : 5.5 	|	maxRating : 8.8 	|
+|		genre : War 	|	totalFilms : 75 	|	avgDuration : 125.0 	|	avgRating : 8.0 	|	minRating : 4.9 	|	maxRating : 8.6 	|
+|		genre : Western 	|	totalFilms : 66 	|	avgDuration : 111.0 	|	avgRating : 7.0 	|	minRating : 2.7 	|	maxRating : 8.8 	|
+|		genre : Musical 	|	totalFilms : 47 	|	avgDuration : 106.0 	|	avgRating : 7.0 	|	minRating : 4.2 	|	maxRating : 8.8 	|
+|		genre : Romantic comedy 	|	totalFilms : 39 	|	avgDuration : 101.0 	|	avgRating : 6.0 	|	minRating : 4.1 	|	maxRating : 7.2 	|
+|		genre : Reality-TV 	|	totalFilms : 34 	|	avgDuration : 46.0 	|	avgRating : 7.0 	|	minRating : 2.8 	|	maxRating : 9.1 	|
+|		genre : Short 	|	totalFilms : 26 	|	avgDuration : 15.0 	|	avgRating : 7.0 	|	minRating : 4.1 	|	maxRating : 8.5 	|
+|		genre : Game-Show 	|	totalFilms : 17 	|	avgDuration : 49.0 	|	avgRating : 7.0 	|	minRating : 4.6 	|	maxRating : 9.0 	|
+|		genre : Comedy-drama 	|	totalFilms : 14 	|	avgDuration : 105.0 	|	avgRating : 6.0 	|	minRating : 5.2 	|	maxRating : 7.3 	|
+|		genre : Crime drama 	|	totalFilms : 11 	|	avgDuration : 118.0 	|	avgRating : 7.0 	|	minRating : 5.5 	|	maxRating : 7.8 	|
+|		genre : Biopic 	|	totalFilms : 9 	|	avgDuration : 108.0 	|	avgRating : 6.0 	|	minRating : 5.8 	|	maxRating : 7.3 	|
+|		genre : Film-Noir 	|	totalFilms : 7 	|	avgDuration : 100.0 	|	avgRating : 8.0 	|	minRating : 6.9 	|	maxRating : 8.4 	|
+|		genre : Aftershow / Interview 	|	totalFilms : 6 	|	avgDuration : 24.0 	|	avgRating : 7.0 	|	minRating : 5.2 	|	maxRating : 7.4 	|
+|		genre : Concert Film 	|	totalFilms : 6 	|	avgDuration : 99.0 	|	avgRating : 8.0 	|	minRating : 6.4 	|	maxRating : 8.4 	|
+
+==========================================
+
+
+==========================================
+REQUÊTE: Données optionnelles (OPTIONAL)
+Fichier: ../queries/optional-request.sparql
+==========================================
+
+--- Code SPARQL ---
+# Requête OPTIONAL : récupère les informations de films avec des données optionnelles
+# Les champs optionnels peuvent être absents selon la source du film
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+
+SELECT ?title ?language ?violence ?certificate
+WHERE {
+  ?film a unified:film ;
+        unified:title ?title .
+
+  # Langue (disponible sur Netflix)
+  OPTIONAL { ?film netflix:language ?language }
+
+  # Violence (disponible sur IMDB)
+  OPTIONAL { ?film imdb:violence ?violence }
+
+  # Certificat (disponible sur IMDB)
+  OPTIONAL { ?film imdb:certificate ?certificate }
+}
+ORDER BY ?title
+LIMIT 30
+
+--- Résultats ---
+|=============================|
+|      Request Results        |
+|=============================|
+|		title : #REALITYHIGH 	|	language : English 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : #Saraitda 	|	language : N/A 	|	violence : Moderate 	|	certificate : TV-MA 	|
+|		title : #Unfit: The Psychology of Donald Trump 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 'Allo 'Allo! 	|	language : N/A 	|	violence : N/A 	|	certificate : None 	|
+|		title : 'Allo 'Allo! 	|	language : N/A 	|	violence : N/A 	|	certificate : None 	|
+|		title : (500) Days of Summer 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
+|		title : 10 	|	language : N/A 	|	violence : None 	|	certificate : R 	|
+|		title : 10 	|	language : N/A 	|	violence : None 	|	certificate : R 	|
+|		title : 10 Cloverfield Lane 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 10 Cloverfield Lane 	|	language : N/A 	|	violence : Moderate 	|	certificate : PG-13 	|
+|		title : 10 Things I Hate About You 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
+|		title : 10 YEARS 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 10 Years 	|	language : N/A 	|	violence : None 	|	certificate : PG-13 	|
+|		title : 10 Years 	|	language : N/A 	|	violence : None 	|	certificate : PG-13 	|
+|		title : 10 to Midnight 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 101 Dalmatians 	|	language : N/A 	|	violence : Mild 	|	certificate : G 	|
+|		title : 12 Angry Men 	|	language : N/A 	|	violence : None 	|	certificate : Approved 	|
+|		title : 12 Feet Deep: Trapped Sisters 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 12 Mighty Orphans 	|	language : N/A 	|	violence : Mild 	|	certificate : PG-13 	|
+|		title : 12 Monkeys 	|	language : N/A 	|	violence : Moderate 	|	certificate : TV-14 	|
+|		title : 12 Strong 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
+|		title : 12 Strong 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
+|		title : 12 Years a Slave 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
+|		title : 127 Hours 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
+|		title : 13 Ghosts 	|	language : N/A 	|	violence : Mild 	|	certificate : Not Rated 	|
+|		title : 13 Ghosts 	|	language : N/A 	|	violence : Mild 	|	certificate : Not Rated 	|
+|		title : 13 Going on 30 	|	language : N/A 	|	violence : None 	|	certificate : PG-13 	|
+|		title : 13 Hours 	|	language : N/A 	|	violence : N/A 	|	certificate : N/A 	|
+|		title : 13 Hours 	|	language : N/A 	|	violence : Severe 	|	certificate : R 	|
+|		title : 13 Minutes (II) 	|	language : N/A 	|	violence : N/A 	|	certificate : PG-13 	|
+
+==========================================
+
+
+==========================================
+REQUÊTE: Exclusion (MINUS)
+Fichier: ../queries/minus-request.sparql
+==========================================
+
+--- Code SPARQL ---
+# Requête MINUS : films Netflix sans contenu adulte
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+
+SELECT ?title ?rating ?duration ?language ?genre
+WHERE {
+  # Films Netflix avec leurs informations
+  ?film a netflix:NetflixFilm ;
+        unified:title ?title ;
+        netflix:rating ?rating .
+
+  OPTIONAL { ?film unified:duration ?duration }
+  OPTIONAL { ?film netflix:language ?language }
+  OPTIONAL { ?film netflix:genre ?genre }
+
+  MINUS {
+    ?film imdb:violence ?violence .
+    FILTER(?violence IN ("Moderate", "Severe"))
+  }
+
+  MINUS {
+    ?film imdb:nudity ?nudity .
+    FILTER(?nudity IN ("Moderate", "Severe"))
+  }
+
+  MINUS {
+    ?film imdb:profanity ?profanity .
+    FILTER(?profanity = "Severe")
+  }
+
+  FILTER(?rating >= 7.0)
+}
+ORDER BY DESC(?rating) ?title
+LIMIT 30
+
+--- Résultats ---
+|=============================|
+|      Request Results        |
+|=============================|
+|		title : David Attenborough: A Life on Our Planet 	|	rating : 9.0 	|	duration : 83 	|	language : English 	|	genre : Documentary 	|
+|		title : Emicida: AmarElo - It's All For Yesterday 	|	rating : 8.6 	|	duration : 89 	|	language : Portuguese 	|	genre : Documentary 	|
+|		title : Springsteen on Broadway 	|	rating : 8.5 	|	duration : 153 	|	language : English 	|	genre : One-man show 	|
+|		title : Ben Platt: Live from Radio City Music Hall 	|	rating : 8.4 	|	duration : 85 	|	language : English 	|	genre : Concert Film 	|
+|		title : Taylor Swift: Reputation Stadium Tour 	|	rating : 8.4 	|	duration : 125 	|	language : English 	|	genre : Concert Film 	|
+|		title : Winter on Fire: Ukraine's Fight for Freedom 	|	rating : 8.4 	|	duration : 91 	|	language : English/Ukranian/Russian 	|	genre : Documentary 	|
+|		title : Cuba and the Cameraman 	|	rating : 8.3 	|	duration : 114 	|	language : English 	|	genre : Documentary 	|
+|		title : Dancing with the Birds 	|	rating : 8.3 	|	duration : 51 	|	language : English 	|	genre : Documentary 	|
+|		title : 13th 	|	rating : 8.2 	|	duration : 100 	|	language : English 	|	genre : Documentary 	|
+|		title : Disclosure: Trans Lives on Screen 	|	rating : 8.2 	|	duration : 107 	|	language : English 	|	genre : Documentary 	|
+|		title : Klaus 	|	rating : 8.2 	|	duration : 97 	|	language : English 	|	genre : Animation/Christmas/Comedy/Adventure 	|
+|		title : Seaspiracy 	|	rating : 8.2 	|	duration : 89 	|	language : English 	|	genre : Documentary 	|
+|		title : The Three Deaths of Marisela Escobedo 	|	rating : 8.2 	|	duration : 109 	|	language : Spanish 	|	genre : Documentary 	|
+|		title : Chasing Coral 	|	rating : 8.1 	|	duration : 89 	|	language : English 	|	genre : Documentary 	|
+|		title : My Octopus Teacher 	|	rating : 8.1 	|	duration : 85 	|	language : English 	|	genre : Documentary 	|
+|		title : Rising Phoenix 	|	rating : 8.1 	|	duration : 106 	|	language : English 	|	genre : Documentary 	|
+|		title : Struggle: The Life and Lost Art of Szukaiski 	|	rating : 8.0 	|	duration : 105 	|	language : English 	|	genre : Documentary 	|
+|		title : A Secret Love 	|	rating : 7.9 	|	duration : 82 	|	language : English 	|	genre : Documentary 	|
+|		title : Icarus 	|	rating : 7.9 	|	duration : 120 	|	language : English 	|	genre : Documentary 	|
+|		title : Marriage Story 	|	rating : 7.9 	|	duration : 136 	|	language : English 	|	genre : Drama 	|
+|		title : The Ivory Game 	|	rating : 7.9 	|	duration : 112 	|	language : English 	|	genre : Documentary 	|
+|		title : If Anything Happens I Love You 	|	rating : 7.8 	|	duration : 12 	|	language : English 	|	genre : Animation / Short 	|
+|		title : The Irishman 	|	rating : 7.8 	|	duration : 209 	|	language : English 	|	genre : Crime drama 	|
+|		title : The Trial of the Chicago 7 	|	rating : 7.8 	|	duration : 130 	|	language : English 	|	genre : Drama 	|
+|		title : Anima 	|	rating : 7.7 	|	duration : 15 	|	language : English 	|	genre : Musical / Short 	|
+|		title : Beasts of No Nation 	|	rating : 7.7 	|	duration : 136 	|	language : English/Akan 	|	genre : War drama 	|
+|		title : Brene Brown: The Call to Courage 	|	rating : 7.7 	|	duration : 76 	|	language : English 	|	genre : Documentary 	|
+|		title : Crip Camp: A Disability Revolution 	|	rating : 7.7 	|	duration : 108 	|	language : English 	|	genre : Documentary 	|
+|		title : Jim & Andy: The Great Beyond - Featuring a Very Special, Contractually Obligated Mention of Tony Cliffton  	|	rating : 7.7 	|	duration : 94 	|	language : English 	|	genre : Documentary 	|
+|		title : Justin Timberlake + The Tennessee Kids 	|	rating : 7.7 	|	duration : 90 	|	language : English 	|	genre : Concert Film 	|
+
+==========================================
+
+
+==========================================
+REQUÊTE: Filter NOT EXISTS
+Fichier: ../queries/not-exists-request.sparql
+==========================================
+
+--- Code SPARQL ---
+# Requête FILTER NOT EXISTS : films familiaux sans contenu inapproprié
+# Films bien notés qui n'ont pas de violence ou contenu adulte
+PREFIX unified: <http://example.org/unified/>
+PREFIX imdb: <http://example.org/imdb/>
+
+SELECT ?title ?rating ?genre ?certificate
+WHERE {
+  ?film a unified:film ;
+        unified:title ?title ;
+        unified:rating ?rating .
+
+  OPTIONAL { ?film unified:genre ?genre }
+  OPTIONAL { ?film imdb:certificate ?certificate }
+
+  # Exclure les films avec violence modérée ou sévère
+  FILTER NOT EXISTS {
+    ?film imdb:violence ?violence .
+    FILTER(?violence IN ("Moderate", "Severe"))
+  }
+
+  # Exclure les films avec classification adulte
+  FILTER NOT EXISTS {
+    ?film imdb:certificate ?cert .
+    FILTER(?cert IN ("R", "NC-17", "TV-MA"))
+  }
+
+  # Exclure les films avec nudité
+  FILTER NOT EXISTS {
+    ?film imdb:nudity ?nudity .
+    FILTER(?nudity IN ("Moderate", "Severe"))
+  }
+
+  FILTER(?rating >= 4.0)
+}
+ORDER BY DESC(?rating)
+LIMIT 30
+
+--- Résultats ---
+|=============================|
+|      Request Results        |
+|=============================|
+|		title : Aspirants 	|	rating : 9.7 	|	genre : Drama 	|	certificate : None 	|
+|		title : The Chosen 	|	rating : 9.6 	|	genre : Drama 	|	certificate : TV-PG 	|
+|		title : The Chosen 	|	rating : 9.6 	|	genre : History 	|	certificate : TV-PG 	|
+|		title : Bluey 	|	rating : 9.6 	|	genre : Animation 	|	certificate : TV-Y 	|
+|		title : Bluey 	|	rating : 9.6 	|	genre : Family 	|	certificate : TV-Y 	|
+|		title : Scam 1992: The Harshad Mehta Story 	|	rating : 9.5 	|	genre : Biography 	|	certificate : TV-14 	|
+|		title : Scam 1992: The Harshad Mehta Story 	|	rating : 9.5 	|	genre : Crime 	|	certificate : TV-14 	|
+|		title : Scam 1992: The Harshad Mehta Story 	|	rating : 9.5 	|	genre : Drama 	|	certificate : TV-14 	|
+|		title : Toma 	|	rating : 9.3 	|	genre : Biography 	|	certificate : None 	|
+|		title : Toma 	|	rating : 9.3 	|	genre : Drama 	|	certificate : None 	|
+|		title : Toma 	|	rating : 9.3 	|	genre : Music 	|	certificate : None 	|
+|		title : Avatar: The Last Airbender 	|	rating : 9.3 	|	genre : Action 	|	certificate : TV-Y7-FV 	|
+|		title : Avatar: The Last Airbender 	|	rating : 9.3 	|	genre : Adventure 	|	certificate : TV-Y7-FV 	|
+|		title : Avatar: The Last Airbender 	|	rating : 9.3 	|	genre : Animation 	|	certificate : TV-Y7-FV 	|
+|		title : Sardar Udham 	|	rating : 9.2 	|	genre : Biography 	|	certificate : None 	|
+|		title : Sardar Udham 	|	rating : 9.2 	|	genre : Crime 	|	certificate : None 	|
+|		title : Sardar Udham 	|	rating : 9.2 	|	genre : Drama 	|	certificate : None 	|
+|		title : Kota Factory 	|	rating : 9.2 	|	genre : Comedy 	|	certificate : TV-14 	|
+|		title : Kota Factory 	|	rating : 9.2 	|	genre : Drama 	|	certificate : TV-14 	|
+|		title : Critical Role 	|	rating : 9.2 	|	genre : Adventure 	|	certificate : TV-14 	|
+|		title : Critical Role 	|	rating : 9.2 	|	genre : Fantasy 	|	certificate : TV-14 	|
+|		title : Critical Role 	|	rating : 9.2 	|	genre : Adventure 	|	certificate : TV-14 	|
+|		title : Critical Role 	|	rating : 9.2 	|	genre : Fantasy 	|	certificate : TV-14 	|
+|		title : Clarkson's Farm 	|	rating : 9.1 	|	genre : Documentary 	|	certificate : TV-PG 	|
+|		title : Clarkson's Farm 	|	rating : 9.1 	|	genre : Reality-TV 	|	certificate : TV-PG 	|
+|		title : Leyla ile Mecnun 	|	rating : 9.1 	|	genre : Adventure 	|	certificate : TV-PG 	|
+|		title : Leyla ile Mecnun 	|	rating : 9.1 	|	genre : Comedy 	|	certificate : TV-PG 	|
+|		title : Leyla ile Mecnun 	|	rating : 9.1 	|	genre : Drama 	|	certificate : TV-PG 	|
+|		title : David Attenborough: A Life on Our Planet 	|	rating : 9.0 	|	genre : Documentary 	|	certificate : N/A 	|
+|		title : 12 Angry Men 	|	rating : 9.0 	|	genre : Crime 	|	certificate : Approved 	|
+
+==========================================
+
+
+==========================================
+REQUÊTE: Expressions de chemin
+Fichier: ../queries/path-request.sparql
+==========================================
+
+--- Code SPARQL ---
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?title ?ratingValue ?ratingSource
+WHERE {
+  ?film a unified:film .
+
+  # Utilise subPropertyOf* pour trouver tous les titres
+  ?titleProp rdfs:subPropertyOf* unified:title .
+  ?film ?titleProp ?title .
+
+  # Utilise subPropertyOf* pour trouver tous les ratings
+  OPTIONAL {
+    ?ratingProp rdfs:subPropertyOf* unified:rating .
+    ?film ?ratingProp ?ratingValue .
+    
+    # Détermine la source du rating
+    BIND(
+      IF(?ratingProp = amazon:rating, "Amazon",
+        IF(?ratingProp = netflix:rating, "Netflix", "Unknown"))
+      AS ?ratingSource
+    )
+  }
+
+  FILTER (?ratingSource != "Unknown" && BOUND(?ratingValue))
+}
+ORDER BY ?title
+LIMIT 30
+--- Résultats ---
+|=============================|
+|      Request Results        |
+|=============================|
+|		title : #REALITYHIGH 	|	ratingValue : 5.2 	|	ratingSource : Netflix 	|
+|		title : #Unfit: The Psychology of Donald Trump 	|	ratingValue : 4.4 	|	ratingSource : Amazon 	|
+|		title : 10 Cloverfield Lane 	|	ratingValue : 4.4 	|	ratingSource : Amazon 	|
+|		title : 10 YEARS 	|	ratingValue : 4.3 	|	ratingSource : Amazon 	|
+|		title : 10 to Midnight 	|	ratingValue : 4.5 	|	ratingSource : Amazon 	|
+|		title : 12 Feet Deep: Trapped Sisters 	|	ratingValue : 4.0 	|	ratingSource : Amazon 	|
+|		title : 13 Hours 	|	ratingValue : 4.8 	|	ratingSource : Amazon 	|
+|		title : 13th 	|	ratingValue : 8.2 	|	ratingSource : Netflix 	|
+|		title : 13th: A Conversation with Oprah Winfrey & Ava DuVernay 	|	ratingValue : 7.1 	|	ratingSource : Netflix 	|
+|		title : 15 August 	|	ratingValue : 5.8 	|	ratingSource : Netflix 	|
+|		title : 16 and Missing 	|	ratingValue : 4.5 	|	ratingSource : Amazon 	|
+|		title : 1917 	|	ratingValue : 4.4 	|	ratingSource : Amazon 	|
+|		title : 1922 	|	ratingValue : 6.3 	|	ratingSource : Netflix 	|
+|		title : 1984 	|	ratingValue : 4.2 	|	ratingSource : Amazon 	|
+|		title : 2 Guns 	|	ratingValue : 4.6 	|	ratingSource : Amazon 	|
+|		title : 20000 Leagues Under the Sea 	|	ratingValue : 4.0 	|	ratingSource : Amazon 	|
+|		title : 2001: A Space Odyssey 	|	ratingValue : 4.6 	|	ratingSource : Amazon 	|
+|		title : 21 Grams 	|	ratingValue : 4.3 	|	ratingSource : Amazon 	|
+|		title : 22 July 	|	ratingValue : 6.8 	|	ratingSource : Netflix 	|
+|		title : 22 Jump Street 	|	ratingValue : 4.6 	|	ratingSource : Amazon 	|
+|		title : 3 Days to Kill 	|	ratingValue : 4.4 	|	ratingSource : Amazon 	|
+|		title : 5 Star Christmas 	|	ratingValue : 4.6 	|	ratingSource : Netflix 	|
+|		title : 50/50 	|	ratingValue : 4.6 	|	ratingSource : Amazon 	|
+|		title : 6 Balloons 	|	ratingValue : 5.9 	|	ratingSource : Netflix 	|
+|		title : 6 Underground 	|	ratingValue : 6.1 	|	ratingSource : Netflix 	|
+|		title : 7 Signs of Christ's Return 	|	ratingValue : 4.1 	|	ratingSource : Amazon 	|
+|		title : 7 a�os 	|	ratingValue : 6.8 	|	ratingSource : Netflix 	|
+|		title : 7th & Union 	|	ratingValue : 4.0 	|	ratingSource : Amazon 	|
+|		title : 80 for Brady 	|	ratingValue : 4.3 	|	ratingSource : Amazon 	|
+|		title : 9 Hour Rainstorm for Sleep black screen 	|	ratingValue : 4.5 	|	ratingSource : Amazon 	|
+
+==========================================
+
+
+==========================================
+REQUÊTE: Ontologie enrichie
+Fichier: ../queries/enriched-ontology-request.sparql
+==========================================
+
+--- Code SPARQL ---
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?title ?source ?duration ?releaseDate ?contentRating
+WHERE {
+  ?film a unified:film ;
+        unified:title ?title .
+
+  # Utilise subPropertyOf* pour recuperer la duree depuis toutes les sources
+  OPTIONAL {
+    ?durationProp rdfs:subPropertyOf* unified:duration .
+    ?film ?durationProp ?duration .
+  }
+
+  # Utilise subPropertyOf* pour recuperer la date de sortie
+  OPTIONAL {
+    ?dateProp rdfs:subPropertyOf* unified:releaseDate .
+    ?film ?dateProp ?releaseDate .
+  }
+
+  # Utilise subPropertyOf* pour recuperer le content rating (MPAA/certificate)
+  OPTIONAL {
+    ?ratingProp rdfs:subPropertyOf* unified:contentRating .
+    ?film ?ratingProp ?contentRating .
+  }
+
+  # Determine la source du film
+  OPTIONAL {
+    ?film a ?filmClass .
+    BIND(
+      IF(?filmClass = amazon:AmazonFilm, "Amazon",
+        IF(?filmClass = netflix:NetflixFilm, "Netflix",
+          IF(?filmClass = imdb:ImdbFilm, "IMDB", "Unknown")))
+      AS ?source
+    )
+  }
+
+  FILTER(?source != "Unknown")
+  FILTER(BOUND(?duration) || BOUND(?releaseDate) || BOUND(?contentRating))
+}
+ORDER BY ?source ?title
+LIMIT 30
+
+--- Résultats ---
+|=============================|
+|      Request Results        |
+|=============================|
+|		title : #Saraitda 	|	source : IMDB 	|	duration : 98 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 'Allo 'Allo! 	|	source : IMDB 	|	duration : 45 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : (500) Days of Summer 	|	source : IMDB 	|	duration : 95 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 10 	|	source : IMDB 	|	duration : 122 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 10 Cloverfield Lane 	|	source : IMDB 	|	duration : 103 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 10 Things I Hate About You 	|	source : IMDB 	|	duration : 97 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 10 Years 	|	source : IMDB 	|	duration : 110 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 101 Dalmatians 	|	source : IMDB 	|	duration : 103 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 12 Angry Men 	|	source : IMDB 	|	duration : 96 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 12 Mighty Orphans 	|	source : IMDB 	|	duration : 118 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 12 Monkeys 	|	source : IMDB 	|	duration : 42 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 12 Strong 	|	source : IMDB 	|	duration : 130 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 12 Years a Slave 	|	source : IMDB 	|	duration : 134 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 127 Hours 	|	source : IMDB 	|	duration : 94 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 13 Ghosts 	|	source : IMDB 	|	duration : 85 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 13 Going on 30 	|	source : IMDB 	|	duration : 98 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 13 Hours 	|	source : IMDB 	|	duration : 144 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 13 Minutes (II) 	|	source : IMDB 	|	duration : 108 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 13 Reasons Why 	|	source : IMDB 	|	duration : 60 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 1408 	|	source : IMDB 	|	duration : 104 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 17 Again 	|	source : IMDB 	|	duration : 102 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 1917 	|	source : IMDB 	|	duration : 119 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 1922 	|	source : IMDB 	|	duration : 102 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 2 Broke Girls 	|	source : IMDB 	|	duration : 22 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 2 Days in the Valley 	|	source : IMDB 	|	duration : 104 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 2 Fast 2 Furious 	|	source : IMDB 	|	duration : 107 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 2 Guns 	|	source : IMDB 	|	duration : 109 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 2001: A Space Odyssey 	|	source : IMDB 	|	duration : 149 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 2010: The Year We Make Contact 	|	source : IMDB 	|	duration : 116 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+|		title : 2012 	|	source : IMDB 	|	duration : 158 	|	releaseDate : N/A 	|	contentRating : N/A 	|
+
+==========================================
+
+
+==========================================
+REQUÊTE: Hiérarchie de classes
+Fichier: ../queries/class-hierarchy-request.sparql
+==========================================
+
+--- Code SPARQL ---
+# Requete hierarchie de classes : utilise rdfs:subClassOf
+# Compte les films par source et montre la hierarchie Amazon/Netflix/IMDB -> unified:film
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?sourceClass ?parentClass (COUNT(?film) as ?nbFilms) (AVG(?rating) as ?avgRating)
+WHERE {
+  # Toutes les sous-classes de unified:film
+  ?sourceClass rdfs:subClassOf unified:film .
+
+  # Instances de ces sous-classes
+  ?film rdf:type ?sourceClass ;
+        unified:rating ?rating .
+
+  # Classe parente (devrait etre unified:film)
+  ?sourceClass rdfs:subClassOf ?parentClass .
+
+  FILTER(?rating >= 7.0)
+}
+GROUP BY ?sourceClass ?parentClass
+ORDER BY DESC(?nbFilms)
+
+--- Résultats ---
+|=============================|
+|      Request Results        |
+|=============================|
+|		sourceClass : http://example.org/unified/film 	|	parentClass : http://example.org/unified/film 	|	nbFilms : 3225 	|	avgRating : 7.688527131782945736434109 	|
+|		sourceClass : http://example.org/unified/film 	|	parentClass : http://www.w3.org/2000/01/rdf-schema#Resource 	|	nbFilms : 3225 	|	avgRating : 7.688527131782945736434109 	|
+|		sourceClass : http://example.org/imdb/ImdbFilm 	|	parentClass : http://example.org/imdb/ImdbFilm 	|	nbFilms : 3073 	|	avgRating : 7.702180279856817442238855 	|
+|		sourceClass : http://example.org/imdb/ImdbFilm 	|	parentClass : http://example.org/unified/film 	|	nbFilms : 3073 	|	avgRating : 7.702180279856817442238855 	|
+|		sourceClass : http://example.org/imdb/ImdbFilm 	|	parentClass : http://www.w3.org/2000/01/rdf-schema#Resource 	|	nbFilms : 3073 	|	avgRating : 7.702180279856817442238855 	|
+|		sourceClass : http://example.org/netflix/NetflixFilm 	|	parentClass : http://example.org/netflix/NetflixFilm 	|	nbFilms : 152 	|	avgRating : 7.4125 	|
+|		sourceClass : http://example.org/netflix/NetflixFilm 	|	parentClass : http://example.org/unified/film 	|	nbFilms : 152 	|	avgRating : 7.4125 	|
+|		sourceClass : http://example.org/netflix/NetflixFilm 	|	parentClass : http://www.w3.org/2000/01/rdf-schema#Resource 	|	nbFilms : 152 	|	avgRating : 7.4125 	|
+
+==========================================
+
+
+==========================================
+REQUÊTE: Requête complexe
+Fichier: ../queries/complex-request.sparql
+==========================================
+
+--- Code SPARQL ---
+# Requête complexe multi-sources : films Amazon abordables avec données IMDB et comparaison Netflix
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+
+SELECT ?title ?amazonRating ?amazonPrice
+       (GROUP_CONCAT(DISTINCT ?genre; separator=", ") as ?genres)
+       ?netflixRating ?violence ?nudity
+WHERE {
+  # Films Amazon avec prix et note
+  ?amazonFilm a amazon:AmazonFilm ;
+              unified:title ?title ;
+              amazon:rating ?amazonRating ;
+              amazon:price ?amazonPrice .
+
+  # Données IMDB (genres et contenus sensibles)
+  OPTIONAL {
+    ?imdbFilm a imdb:ImdbFilm ;
+              unified:title ?title .
+    OPTIONAL { ?imdbFilm imdb:genre ?genre }
+    OPTIONAL { ?imdbFilm imdb:violence ?violence }
+    OPTIONAL { ?imdbFilm imdb:nudity ?nudity }
+  }
+
+  # Comparaison avec Netflix
+  OPTIONAL {
+    ?netflixFilm a netflix:NetflixFilm ;
+                 unified:title ?title ;
+                 netflix:rating ?netflixRating .
+  }
+
+  FILTER(?amazonRating >= 4.0 && ?amazonPrice < 15)
+  FILTER(!BOUND(?violence) || ?violence != "Severe")
+}
+GROUP BY ?title ?amazonRating ?amazonPrice ?netflixRating ?violence ?nudity
+ORDER BY DESC(?amazonRating) ?amazonPrice
+LIMIT 30
+--- Résultats ---
+|=============================|
+|      Request Results        |
+|=============================|
+|		title : Renfroe's White Christmas 	|	amazonRating : 5.0 	|	amazonPrice : 2.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : The Bumble Nums - Season 4 	|	amazonRating : 4.9 	|	amazonPrice : 0.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : The Prince of Egypt 	|	amazonRating : 4.9 	|	amazonPrice : 2.99 	|	genres : Drama, Animation, Adventure 	|	netflixRating : N/A 	|	violence : Moderate 	|	nudity : Mild 	|
+|		title : Harry Potter And The Prisoner Of Azkaban 	|	amazonRating : 4.9 	|	amazonPrice : 3.79 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Harry Potter and the Deathly Hallows - Part 2 	|	amazonRating : 4.9 	|	amazonPrice : 3.79 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Pride and Prejudice 	|	amazonRating : 4.9 	|	amazonPrice : 3.79 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Shrek 	|	amazonRating : 4.9 	|	amazonPrice : 3.79 	|	genres : Animation, Comedy, Adventure 	|	netflixRating : N/A 	|	violence : Mild 	|	nudity : Mild 	|
+|		title : The Sandlot 	|	amazonRating : 4.9 	|	amazonPrice : 3.79 	|	genres : Comedy, Family, Drama 	|	netflixRating : N/A 	|	violence : Mild 	|	nudity : Mild 	|
+|		title : Harry Potter and the Goblet of Fire 	|	amazonRating : 4.9 	|	amazonPrice : 3.79 	|	genres : Fantasy, Family, Adventure 	|	netflixRating : N/A 	|	violence : Moderate 	|	nudity : None 	|
+|		title : Forrest Gump 	|	amazonRating : 4.9 	|	amazonPrice : 3.79 	|	genres : Romance, Drama 	|	netflixRating : N/A 	|	violence : Moderate 	|	nudity : Moderate 	|
+|		title : I Can Only Imagine 	|	amazonRating : 4.9 	|	amazonPrice : 3.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Harry Potter and the Order of the Phoenix 	|	amazonRating : 4.9 	|	amazonPrice : 3.99 	|	genres : Adventure, Action, Family 	|	netflixRating : N/A 	|	violence : Moderate 	|	nudity : None 	|
+|		title : The Help 	|	amazonRating : 4.9 	|	amazonPrice : 3.99 	|	genres : Drama 	|	netflixRating : N/A 	|	violence : Mild 	|	nudity : None 	|
+|		title : Curious George: A Halloween Boo Fest 	|	amazonRating : 4.9 	|	amazonPrice : 7.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : The Lord of the Rings: Return of the King: Extended Edition 	|	amazonRating : 4.9 	|	amazonPrice : 14.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Falling for Vermont 	|	amazonRating : 4.8 	|	amazonPrice : 0.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Harvest Moon 	|	amazonRating : 4.8 	|	amazonPrice : 0.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Old MacDonald Had a Farm & More Kids Songs - Super Simple Songs 	|	amazonRating : 4.8 	|	amazonPrice : 0.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Pumpkin Pie Wars 	|	amazonRating : 4.8 	|	amazonPrice : 0.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Daniel Visits a New Neighborhood 	|	amazonRating : 4.8 	|	amazonPrice : 1.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Mem Famous 	|	amazonRating : 4.8 	|	amazonPrice : 1.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Where the Red Fern Grows 	|	amazonRating : 4.8 	|	amazonPrice : 1.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Driving Miss Daisy 	|	amazonRating : 4.8 	|	amazonPrice : 2.89 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Tucker & Dale vs Evil 	|	amazonRating : 4.8 	|	amazonPrice : 2.89 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : The Hunt for Red October 	|	amazonRating : 4.8 	|	amazonPrice : 2.89 	|	genres : Action, Adventure, Thriller 	|	netflixRating : N/A 	|	violence : Mild 	|	nudity : None 	|
+|		title : Addams Family Values 	|	amazonRating : 4.8 	|	amazonPrice : 2.89 	|	genres : Comedy, Fantasy 	|	netflixRating : N/A 	|	violence : Moderate 	|	nudity : Mild 	|
+|		title : Freedom Writers 	|	amazonRating : 4.8 	|	amazonPrice : 2.89 	|	genres : Drama, Crime, Biography 	|	netflixRating : N/A 	|	violence : Moderate 	|	nudity : None 	|
+|		title : All About the Benjamins 	|	amazonRating : 4.8 	|	amazonPrice : 2.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Girls Just Want to Have Fun 	|	amazonRating : 4.8 	|	amazonPrice : 2.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+|		title : Lucy Shimmers and the Prince of Peace 	|	amazonRating : 4.8 	|	amazonPrice : 2.99 	|	genres : N/A 	|	netflixRating : N/A 	|	violence : N/A 	|	nudity : N/A 	|
+
+==========================================
+
+
+==========================================
+REQUÊTE: Requête fédérée (SERVICE)
+Fichier: ../queries/federated-request.sparql
+==========================================
+
+--- Code SPARQL ---
+# Requête fédérée : enrichit les films locaux avec des données Wikidata
+# Récupère les films de Christopher Nolan et complète avec pays, budget et box-office
+
+PREFIX unified: <http://example.org/unified/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT (?localTitle AS ?title) 
+       (ROUND(AVG(?rating)) AS ?avgRating)
+       (GROUP_CONCAT(DISTINCT ?country; separator=", ") AS ?countries) 
+       ?year
+       (MAX(?wdBudget) AS ?budget)
+       (MAX(?wdBoxOffice) AS ?boxOffice)
+WHERE {
+  # Films locaux avec titre et rating
+  ?film a unified:film ;
+        unified:title ?localTitle ;
+        unified:rating ?rating .
+
+  # Interrogation Wikidata pour films de Christopher Nolan
+  SERVICE <https://query.wikidata.org/sparql> {
+    {
+      SELECT ?wikidataFilm ?wikidataTitle ?country 
+             (YEAR(MIN(?date)) AS ?year)
+             (MAX(?budgetVal) AS ?wdBudget)
+             (MAX(?boxOfficeVal) AS ?wdBoxOffice)
+      WHERE {
+        ?wikidataFilm wdt:P31 wd:Q11424 ;        # instance de film
+                      wdt:P57 wd:Q25191 ;        # réalisé par Christopher Nolan
+                      rdfs:label ?wikidataTitle ;
+                      wdt:P495 ?countryEntity ;  # pays de production
+                      wdt:P577 ?date .           # date de sortie
+
+        ?countryEntity rdfs:label ?country .
+        
+        OPTIONAL { ?wikidataFilm wdt:P2130 ?budgetVal }      # budget
+        OPTIONAL { ?wikidataFilm wdt:P2142 ?boxOfficeVal }   # box-office
+
+        FILTER(LANG(?wikidataTitle) = "en")
+        FILTER(LANG(?country) = "en")
+      }
+      GROUP BY ?wikidataFilm ?wikidataTitle ?country
+    }
+  }
+
+  # Match titres locaux avec Wikidata (insensible à la casse)
+  FILTER(LCASE(STR(?wikidataTitle)) = LCASE(STR(?localTitle)))
+}
+GROUP BY ?localTitle ?year
+ORDER BY ?year
+--- Résultats ---
+|=============================|
+|      Request Results        |
+|=============================|
+|		title : Insomnia 	|	avgRating : 7.0 	|	countries : United States 	|	year : 2002 	|	budget : 46000000 	|	boxOffice : 113714830 	|
+|		title : Batman Begins 	|	avgRating : 8.0 	|	countries : United States, United Kingdom 	|	year : 2005 	|	budget : 150000000 	|	boxOffice : 373672993 	|
+|		title : The Prestige 	|	avgRating : 7.0 	|	countries : United States, United Kingdom 	|	year : 2006 	|	budget : 40000000 	|	boxOffice : 109676311 	|
+|		title : The Dark Knight 	|	avgRating : 7.0 	|	countries : United States, United Kingdom 	|	year : 2008 	|	budget : 185000000 	|	boxOffice : 1006234167 	|
+|		title : Inception 	|	avgRating : 9.0 	|	countries : United States, United Kingdom 	|	year : 2010 	|	budget : 160000000 	|	boxOffice : 836848102 	|
+|		title : The Dark Knight Rises 	|	avgRating : 7.0 	|	countries : United States, United Kingdom 	|	year : 2012 	|	budget : 250000000 	|	boxOffice : 1081169825 	|
+|		title : Interstellar 	|	avgRating : 6.0 	|	countries : United States, United Kingdom 	|	year : 2014 	|	budget : 165000000 	|	boxOffice : 701729206 	|
+|		title : Dunkirk 	|	avgRating : 8.0 	|	countries : United States, Netherlands, France, United Kingdom 	|	year : 2017 	|	budget : 100000000 	|	boxOffice : 526940665 	|
+|		title : Tenet 	|	avgRating : 7.0 	|	countries : United States, United Kingdom 	|	year : 2020 	|	budget : 200000000 	|	boxOffice : 361300000 	|
+
+==========================================
+

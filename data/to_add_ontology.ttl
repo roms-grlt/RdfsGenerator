@@ -1,0 +1,36 @@
+
+unified:releaseDate  rdf:type  rdf:Property;
+        rdfs:domain  unified:film;
+        rdfs:range   rdfs:Literal;
+        rdfs:comment "Date ou annee de sortie du film" .
+
+unified:contentRating  rdf:type  rdf:Property;
+        rdfs:domain  unified:film;
+        rdfs:range   rdfs:Literal;
+        rdfs:comment "Classification du contenu (MPAA, certificate, etc.)" .
+
+unified:contentAdvisory  rdf:type  rdf:Property;
+        rdfs:domain  unified:film;
+        rdfs:range   rdfs:Literal;
+        rdfs:comment "Avertissements sur le contenu (violence, nudite, etc.)" .
+
+
+amazon:releaseYear  rdfs:subPropertyOf  unified:releaseDate .
+
+amazon:mpaaRating  rdfs:subPropertyOf  unified:contentRating .
+
+netflix:premiere  rdfs:subPropertyOf  unified:releaseDate .
+
+imdb:date  rdfs:subPropertyOf  unified:releaseDate .
+
+imdb:certificate  rdfs:subPropertyOf  unified:contentRating .
+
+imdb:nudity  rdfs:subPropertyOf  unified:contentAdvisory .
+
+imdb:violence  rdfs:subPropertyOf  unified:contentAdvisory .
+
+imdb:profanity  rdfs:subPropertyOf  unified:contentAdvisory .
+
+imdb:alcohol  rdfs:subPropertyOf  unified:contentAdvisory .
+
+imdb:frightening  rdfs:subPropertyOf  unified:contentAdvisory .

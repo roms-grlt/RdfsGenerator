@@ -1,0 +1,19 @@
+# Requête d'agrégation multi-sources : statistiques par genre
+PREFIX unified: <http://example.org/unified/>
+
+SELECT ?genre
+       (COUNT(DISTINCT ?film) as ?totalFilms)
+       (ROUND(AVG(?duration)) as ?avgDuration)
+       (ROUND(AVG(?rating)) as ?avgRating)
+       (MIN(?rating) as ?minRating)
+       (MAX(?rating) as ?maxRating)
+WHERE {
+  ?film a unified:film .
+
+  ?film unified:genre ?genre .
+  ?film unified:rating ?rating .
+  ?film unified:duration ?duration .
+}
+GROUP BY ?genre
+HAVING (COUNT(DISTINCT ?film) > 5)
+ORDER BY DESC(?totalFilms)

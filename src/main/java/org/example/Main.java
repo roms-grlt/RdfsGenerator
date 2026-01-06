@@ -35,7 +35,18 @@ public class Main {
                 break;
             case "query" :
                 executeQuery(args[1], args[2]);
+                break;
+            case "merge" :
+                mergeFile(args[1], args[2], args[3]);
         }
+    }
+
+    private static void mergeFile(String filePath1, String filePath2, String outputFile) throws IOException {
+        String content1 = new String (Files.readAllBytes(Paths.get(filePath1)));
+        String content2 = new String (Files.readAllBytes(Paths.get(filePath2)));
+
+        String result = content1.concat("\n").concat(content2);
+        Files.write(Paths.get(outputFile), result.getBytes());
     }
 
     private static void executeQuery(String requestFilePath, String turtleFilePath) throws IOException {
@@ -80,8 +91,8 @@ public class Main {
     }
 
     private static void integrateData(String[] args) throws IOException {
-        if (args.length < 4) {
-            System.err.println("Usage: integrate <output_file> <dataset1_name> <dataset1_file> <dataset2_name> <dataset2_file> ... [--no-ontology]");
+        if (args.length < 9) {
+            System.err.println("Usage: integrate <output_file> <number_of_datasets(>=1)> <dataset1_name> <dataset1_file> ... <name_of_property_identifier> <name_of_unified_class> <name_of_class_to_unify1> <name_of_class_to_unify2> ...");
             return;
         }
 

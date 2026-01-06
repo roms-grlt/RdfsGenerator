@@ -1,0 +1,23 @@
+# Requête OPTIONAL : récupère les informations de films avec des données optionnelles
+# Les champs optionnels peuvent être absents selon la source du film
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX imdb: <http://example.org/imdb/>
+
+SELECT ?title ?language ?violence ?certificate
+WHERE {
+  ?film a unified:film ;
+        unified:title ?title .
+
+  # Langue (disponible sur Netflix)
+  OPTIONAL { ?film netflix:language ?language }
+
+  # Violence (disponible sur IMDB)
+  OPTIONAL { ?film imdb:violence ?violence }
+
+  # Certificat (disponible sur IMDB)
+  OPTIONAL { ?film imdb:certificate ?certificate }
+}
+ORDER BY ?title
+LIMIT 30

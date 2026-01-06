@@ -1,0 +1,30 @@
+PREFIX unified: <http://example.org/unified/>
+PREFIX amazon: <http://example.org/amazon/>
+PREFIX netflix: <http://example.org/netflix/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?title ?ratingValue ?ratingSource
+WHERE {
+  ?film a unified:film .
+
+  # Utilise subPropertyOf* pour trouver tous les titres
+  ?titleProp rdfs:subPropertyOf* unified:title .
+  ?film ?titleProp ?title .
+
+  # Utilise subPropertyOf* pour trouver tous les ratings
+  OPTIONAL {
+    ?ratingProp rdfs:subPropertyOf* unified:rating .
+    ?film ?ratingProp ?ratingValue .
+    
+    # Détermine la source du rating
+    BIND(
+      IF(?ratingProp = amazon:rating, "Amazon",
+        IF(?ratingProp = netflix:rating, "Netflix", "Unknown"))
+      AS ?ratingSource
+    )
+  }
+
+  FILTER (?ratingSource != "Unknown" && BOUND(?ratingValue))
+}
+ORDER BY ?title
+LIMIT 30
