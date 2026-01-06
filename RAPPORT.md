@@ -1,3 +1,12 @@
+---
+title: "Rapport depProjet : Knowledge Graphs et Raisonnement RDFS"
+author: "Romain Groult & Alban Talagrand"
+date: "Janvier 2025"
+lang: fr
+geometry: margin=2.5cm
+fontsize: 11pt
+---
+
 # Projet : Knowledge Graphs et Raisonnement RDFS
 ## Intégration Multi-Sources de Données de Films
 
