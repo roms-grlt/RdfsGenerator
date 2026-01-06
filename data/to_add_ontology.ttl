@@ -25,10 +25,7 @@ imdb:date  rdfs:subPropertyOf  unified:releaseDate .
 
 imdb:certificate  rdfs:subPropertyOf  unified:contentRating .
 
-imdb:nudity  rdf:type  rdf:Property;
-        rdfs:domain         imdb:ImdbFilm;
-        rdfs:range          rdfs:Literal;
-        rdfs:subPropertyOf  unified:contentAdvisory .
+imdb:nudity  rdfs:subPropertyOf  unified:contentAdvisory .
 
 imdb:violence  rdfs:subPropertyOf  unified:contentAdvisory .
 
